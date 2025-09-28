@@ -220,6 +220,163 @@
       }
     }
   })();
+
+  // ==============================
+  // GIF 영상 루프 보정
+  // ==============================
+  (function () {
+    var TARGET_SELECTOR = ".article .contents_style video, .contents_style video, #content video";
+    function isGifVideo(videoEl) {
+      if (!videoEl) return false;
+
+      function hasGifKeyword(value) {
+        if (!value) return false;
+        return String(value).toLowerCase().indexOf("gif") !== -1;
+      }
+
+      function elementHasGifAttr(el, names) {
+        if (!el || typeof el.getAttribute !== "function") return false;
+        for (var idx = 0; idx < names.length; idx++) {
+          if (hasGifKeyword(el.getAttribute(names[idx]))) {
+            return true;
+          }
+        }
+        return false;
+      }
+
+      if (videoEl.getAttribute('data-force-loop') === 'true') {
+        return true;
+      }
+      if (typeof videoEl.closest === "function") {
+        var forceLoopHost = videoEl.closest('[data-force-loop="true"]');
+        if (forceLoopHost) {
+          return true;
+        }
+      }
+
+      var candidateAttrNames = [
+        "data-original",
+        "data-original-src",
+        "data-original-format",
+        "data-stream-type",
+        "data-format",
+        "data-file-type",
+        "poster",
+        "src"
+      ];
+      if (elementHasGifAttr(videoEl, candidateAttrNames)) {
+        return true;
+      }
+
+      if (videoEl.dataset) {
+        for (var key in videoEl.dataset) {
+          if (!Object.prototype.hasOwnProperty.call(videoEl.dataset, key)) continue;
+          if (hasGifKeyword(videoEl.dataset[key])) {
+            return true;
+          }
+        }
+      }
+
+      if (typeof videoEl.closest === "function") {
+        var figureEl = videoEl.closest('figure');
+        if (figureEl) {
+          var figureAttrNames = [
+            "data-original-format",
+            "data-origin-format",
+            "data-ke-format",
+            "data-ke-mime",
+            "data-file-type"
+          ];
+          if (elementHasGifAttr(figureEl, figureAttrNames)) {
+            return true;
+          }
+          if (figureEl.dataset) {
+            for (var fKey in figureEl.dataset) {
+              if (!Object.prototype.hasOwnProperty.call(figureEl.dataset, fKey)) continue;
+              if (hasGifKeyword(figureEl.dataset[fKey])) {
+                return true;
+              }
+            }
+          }
+        }
+      }
+
+      if (typeof videoEl.querySelectorAll === "function") {
+        var sources = videoEl.querySelectorAll('source');
+        for (var j = 0; j < sources.length; j++) {
+          if (elementHasGifAttr(sources[j], ["data-original", "data-original-src", "type", "src"])) {
+            return true;
+          }
+        }
+      }
+
+      var noControls = !videoEl.hasAttribute('controls') && !videoEl.controls;
+      var muted = videoEl.hasAttribute('muted') || videoEl.muted || videoEl.getAttribute('data-muted') === 'true';
+      var autoPlayLike = videoEl.hasAttribute('autoplay') || videoEl.autoplay || videoEl.getAttribute('data-autoplay') === 'true' || videoEl.getAttribute('data-keep-play') === 'true';
+      var inlinePlay = videoEl.hasAttribute('playsinline') || videoEl.hasAttribute('webkit-playsinline') || videoEl.getAttribute('data-ke-play-inline') === 'true';
+      var className = videoEl.className || '';
+      var gifClassHint = typeof className === 'string' && hasGifKeyword(className);
+
+      if (gifClassHint) {
+        return true;
+      }
+
+      if (noControls && (muted || inlinePlay) && (autoPlayLike || inlinePlay)) {
+        return true;
+      }
+
+      return false;
+    }
+
+    function applyLoop() {
+      $(TARGET_SELECTOR).each(function () {
+        var video = this;
+        if (!isGifVideo(video)) return;
+        if (!video.loop) {
+          video.loop = true;
+          video.setAttribute("loop", "loop");
+        }
+        var $video = $(video);
+        $video.off("ended.lumoraGifLoop").on("ended.lumoraGifLoop", function () {
+          if (video.currentTime !== 0) {
+            try {
+              video.currentTime = 0;
+            } catch (e) {}
+          }
+          var restart = video.play();
+          if (restart && typeof restart.catch === "function") {
+            restart.catch(function () {});
+          }
+        });
+        if (video.ended) {
+          try {
+            video.currentTime = 0;
+          } catch (err) {}
+          var playPromise = video.play();
+          if (playPromise && typeof playPromise.catch === "function") {
+            playPromise.catch(function () {});
+          }
+        }
+      });
+    }
+    applyLoop();
+    var observerTarget = document.querySelector("#detail_page") || document.querySelector(".article") || document.body;
+    if (!observerTarget || typeof MutationObserver !== "function") {
+      return;
+    }
+    var scheduled = false;
+    var observer = new MutationObserver(function () {
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(function () {
+        scheduled = false;
+        applyLoop();
+      }, 150);
+    });
+    observer.observe(observerTarget, { childList: true, subtree: true });
+  })();
 });
+
+
 
 

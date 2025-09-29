@@ -92,8 +92,15 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
 #sidebar .category a:hover{ text-decoration:none; background:#ccc; color:#333; }
 
 /* ============ 4) List (카드 그리드) ============ */
+/* 목록 카드 높이를 맞추기 위해 플렉스 컨테이너 적용 */
+#content{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:stretch;
+}
+
 #content .list_content{
-  float:left;
+  flex:0 0 22%;
   width:22%;
   margin-right:2.5%;
   margin-bottom:40px;
@@ -121,13 +128,16 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
 /* FIX: .category도 동일 스타일 적용 (HTML 오타 교정 대비) */
 #content .list_content .link_post .catgory,
 #content .list_content .link_post .category{
-  display:inline-block;
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  align-self:flex-start;
   font-size:12px;
   color:#fff;
-  padding:5px 15px;
+  padding:5px 16px 5px 12px;
   border-radius:20px;
   border:1px solid #fff;
-  text-align:center;
+  text-align:left;
   margin:0 0 12px;
 }
 #content .list_content .link_post .thumb{
@@ -516,5 +526,8 @@ html body #detail_page .container_postbtn .btn_post .ico_share::before { transfo
 #detail_page .container_postbtn .btn_post .ico_like {
   margin: 4.5px 4px 0 0 !important; /* 위쪽 여백 → 아이콘 내려감 */
 }
+
+
+
 
 

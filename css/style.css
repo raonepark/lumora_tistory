@@ -484,6 +484,9 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 
 /* ============ 10) Tables / Misc ============ */
 .contents_style table td{ color:#fff; font-size:16px; padding-left:15px; }
+#detail_page .article .contents_style table{ width:100%; border-collapse:collapse; }
+#detail_page .article .contents_style table th,
+#detail_page .article .contents_style table td{ color:#fff; font-size:16px; padding:10x 15px; border:1px solid #444; vertical-align:top; }
 #detail_page .article .tableofcontents p:last-child{ margin-bottom:0; }
 .article hr[data-ke-style], #tt-body-page hr[data-ke-style]{ margin:20px auto 0; }
 

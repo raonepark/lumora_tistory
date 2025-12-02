@@ -232,6 +232,8 @@ transform: translateX(-111px); /* 제목 전체를 왼쪽으로 이동 */
 #detail_page .article h3{ font-size:22px; font-weight:700; color:#fff; line-height:1.8; }
 #detail_page .article h4{ font-size:18px; font-weight:700; color:#fff; line-height:1.6; }
 #detail_page .article p{ font-size:16px; font-weight:100; color:#fff; line-height:1.8; }
+#detail_page .article p strong,
+#detail_page .article p b { font-weight:700; }
 
 /* 코드 */
 #detail_page .article code{ background:#555; color:#fff; font-size:16px; padding:3px 5px; border-radius:5px; border:none; }

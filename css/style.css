@@ -486,8 +486,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 .contents_style table td{ color:#fff; font-size:16px; padding-left:15px; }
 #detail_page .article table{ width:100%; border-collapse:collapse; }
 #detail_page .article table th,
-#detail_page .article table td{ color:#fff; font-size:16px; padding:8px 6px !important; border:1px solid #444; vertical-align:top; line-height: 1.6;}
-#detail_page .article table caption { caption-side: top; font-size:14px; color:#aaa; margin-bottom:6px; text-align:left; }
+#detail_page .article table td{ color:#fff; font-size:16px; font-weight: 100; padding:8px 10px !important; border:1px solid #444; vertical-align:top; line-height: 1.8;}
 #detail_page .article .tableofcontents p:last-child{ margin-bottom:0; }
 .article hr[data-ke-style], #tt-body-page hr[data-ke-style]{ margin:20px auto 0; }
 

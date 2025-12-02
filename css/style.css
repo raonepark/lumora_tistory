@@ -221,17 +221,17 @@ transform: translateX(-111px); /* 제목 전체를 왼쪽으로 이동 */
 #detail_page .titleWrap .author{ font-size:16px; color:#aaa; padding-bottom:20px; margin-bottom:40px; border-bottom:1px solid #444; }
 
 /* 본문 카드 */
-#detail_page .article{ position:relative; width:940px; margin-bottom:30px; padding:50px 33px 20px; background:#222; border-radius:30px; box-shadow:2px 2px 10px rgba(0,0,0,.3); font-family:"Noto Sans", sans-serif; }
+#detail_page .article{ position:relative; max-width:780px; width:100%; margin:0 auto 30px; padding:40px 28px 20px; background:#222; border-radius:30px; box-shadow:2px 2px 10px rgba(0,0,0,.3); font-family:"Noto Sans", sans-serif; }
 #detail_page .article .contents_style{ color:#fff; font-family:"Noto Sans", sans-serif; }
-#detail_page .article .contents_style ul{ margin:0; padding:0 0 0 23px; font-size:18px; line-height:1.5; }
-#detail_page .article .contents_style ul li{ line-height:1.5; padding-top:8px; }
-#detail_page .article .contents_style ol{ margin:0; font-size:18px; line-height:1.5; }
-#detail_page .article .contents_style ol li{ line-height:1.5; padding:4px 0; }
+#detail_page .article .contents_style ul{ margin:0; padding:0 0 0 23px; font-size:16px; line-height:1.6; }
+#detail_page .article .contents_style ul li{ line-height:1.6; padding:4px 0; margin-bottom:6px; }
+#detail_page .article .contents_style ol{ margin:0; font-size:16px; line-height:1.6; }
+#detail_page .article .contents_style ol li{ line-height:1.6; padding:4px 0; margin-bottom:6px }
 
-#detail_page .article h2{ font-size:32px; font-weight:700; color:#fff; line-height:2.5; }
-#detail_page .article h3{ font-size:26px; font-weight:700; color:#fff; line-height:2; }
-#detail_page .article h4{ font-size:20px; font-weight:700; color:#fff; line-height:2; }
-#detail_page .article p{ font-size:18px; font-weight:100; color:#fff; line-height:1.7; }
+#detail_page .article h2{ font-size:28px; font-weight:700; color:#fff; line-height:2.2; }
+#detail_page .article h3{ font-size:22px; font-weight:700; color:#fff; line-height:1.8; }
+#detail_page .article h4{ font-size:18px; font-weight:700; color:#fff; line-height:1.6; }
+#detail_page .article p{ font-size:16px; font-weight:100; color:#fff; line-height:1.8; }
 
 /* 코드 */
 #detail_page .article code{ background:#555; color:#fff; font-size:16px; padding:3px 5px; border-radius:5px; border:none; }

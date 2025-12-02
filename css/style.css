@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 
 /* =============================================================
    Lumora Tistory Skin — Cleaned & Structured CSS (v1.1)
@@ -347,7 +347,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
   float:right; 
   margin-right:217px; /* 여백 확보 → 답글 위치와 비슷하게 */
   background:#616161; 
-  text-align:right; 
+  text-align:left; 
 }
 
 #detail_page .commentlist .rp_general .com_box,
@@ -363,13 +363,14 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
   border-radius:9999px;
   font-size:13px;
   border:1px solid currentColor;
+  margin-bottom:6px;
 }
 
 /* 관리자(admin) 이름 pill */
 #detail_page .commentlist .rp_admin .com_box .name{
   color:#fff;
   border-color:#fff;
-  margin-left:auto;
+  /* margin-left:auto; */
 }
 #detail_page .commentlist .rp_admin .com_box .name a{
   color:#fff; text-decoration:none;
@@ -388,8 +389,9 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 
 /* 텍스트/날짜 */
 #detail_page .commentlist .com_box .com_txt{ padding:10px 0 15px 5px; font-size:16px; color:#eee; }
-#detail_page .commentlist .rp_admin .com_box .com_txt{ color:#fff; text-align:right; }
-#detail_page .commentlist .com_box .date{ padding-left:5px; }
+#detail_page .commentlist .rp_admin .com_box .com_txt{ color:#fff; text-align:left; }
+
+#detail_page .commentlist .com_box .date{ padding-left:5px; color:#bbb; }
 
 
 /* (구) s_rp 호환 */

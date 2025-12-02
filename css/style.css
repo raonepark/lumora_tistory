@@ -488,7 +488,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 #detail_page .article table th,
 #detail_page .article table td{ color:#fff; font-size:16px; font-weight: 100; padding:8px 10px !important; border:1px solid #444; vertical-align:top; line-height: 1.8;}
 #detail_page .article .tableofcontents p:last-child{ margin-bottom:0; }
-.article hr[data-ke-style], #tt-body-page hr[data-ke-style]{ margin:20px auto 0; }
+.article hr[data-ke-style], #tt-body-page hr[data-ke-style]{ margin:25px auto 5px; }
 
 /* ============ 11) Footer / Copyright ============ */
 .copyright{ width:90%; margin:0 auto; color:#bbb; text-indent:5px; font-size:14px; font-family:"Noto Sans"; }

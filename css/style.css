@@ -335,23 +335,29 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 #detail_page .commentlist ul > li .rp_secret::after{ content:""; display:block; clear:both; }
 #detail_page .commentlist .image{ width:60px; height:60px; border-radius:50px; overflow:hidden; }
 #detail_page .commentlist .image img{ width:100%;  }
+
 #detail_page .commentlist .rp_admin .image {
-  float: right;
-  position: relative;
-  right: 196px;
+ float:right;
+ position:relative;
+ /* 아바타를 댓글 카드 오른쪽에서 60px 떨어지게 조정 */
+ right:60px;
 }
+
 #detail_page .commentlist .rp_general .image,
 #detail_page .commentlist .rp_secret .image{ float:left; }
 
-#detail_page .commentlist .com_box{ max-width:600px; margin-top:20px; margin-bottom:10px; padding:20px 20px 15px; position:relative; border-radius:20px; box-sizing:border-box; box-shadow:2px 2px 10px rgba(0,0,0,.2); }
+#detail_page .commentlist .com_box{ max-width:calc(100% - 120px); width:100%; margin-top:20px; margin-bottom:10px; padding:20px 20px 15px; position:relative; border-radius:20px; box-sizing:border-box; box-shadow:2px 2px 10px rgba(0,0,0,.2);}
 
 /* 관리자 박스: 너무 오른쪽으로 붙지 않고 reply 위치처럼 */
-#detail_page .commentlist .rp_admin .com_box{ 
-  float:right; 
-  margin-right:217px; /* 여백 확보 → 답글 위치와 비슷하게 */
-  background:#616161; 
-  text-align:left; 
-}
+
+#detail_page .commentlist .rp_admin .com_box{
+ float:right;
+ /* 댓글 풍선이 본문 안에 머무르도록 여백 축소 */
+ margin-right:60px;
+ background:#616161;
+ text-align:left;
+ }
+
 
 #detail_page .commentlist .rp_general .com_box,
 #detail_page .commentlist .rp_secret .com_box{ float:left; margin-left:20px; background:#222; text-align:left; }

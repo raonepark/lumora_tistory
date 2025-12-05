@@ -328,6 +328,23 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 /* 접근성용 숨김 라벨 (HTML에 포함됨) */
 .sr-only{ position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
+
+/* =====================
+   댓글 전체 폭을 본문과 동일하게 정중앙 정렬
+   ===================== */
+#detail_page .commentlist{
+   max-width:836px;
+   width:100%;
+   margin:0 auto 40px;
+}
+
+#detail_page #rp,
+#detail_page .rp_write_box{
+   max-width:836px;
+   width:100%;
+   margin:0 auto 30px;
+}
+
 /* ===== Comment list (PROFILE 배지 제거 버전) ===== */
 #detail_page .commentlist ul { list-style:none; padding:0; }
 #detail_page .commentlist ul > li .rp_admin::after,
@@ -346,14 +363,23 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 #detail_page .commentlist .rp_general .image,
 #detail_page .commentlist .rp_secret .image{ float:left; }
 
-#detail_page .commentlist .com_box{ max-width:calc(100% - 120px); width:100%; margin-top:20px; margin-bottom:10px; padding:20px 20px 15px; position:relative; border-radius:20px; box-sizing:border-box; box-shadow:2px 2px 10px rgba(0,0,0,.2);}
+#detail_page .commentlist .com_box{
+   max-width:100%;          /* 부모(836px) 안에서만 */
+   box-sizing:border-box;
+   position:relative;
+   margin-top:20px;
+   margin-bottom:10px;
+   padding:20px 20px 15px;
+   border-radius:20px;
+   box-shadow:2px 2px 10px rgba(0,0,0,.2);
+ }
 
 /* 관리자 박스: 너무 오른쪽으로 붙지 않고 reply 위치처럼 */
 
 #detail_page .commentlist .rp_admin .com_box{
  float:right;
  /* 댓글 풍선이 본문 안에 머무르도록 여백 축소 */
- margin-right:60px;
+ margin-right:80px;
  background:#616161;
  text-align:left;
  }

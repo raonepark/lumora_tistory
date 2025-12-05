@@ -60,7 +60,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
 #container .paging .numbox .num span.selected { background:#eee; border-color:#eee; color:#111; }
 
 /* 본문 래퍼 */
-#contentWrap{ margin-left:250px; width:calc(100% - 250px); min-height:93vh; background:#333; box-sizing:border-box; padding:60px 0 0 60px; }
+#contentWrap{ margin-left:250px; width:calc(100% - 250px); min-height:93vh; background:#333; box-sizing:border-box; padding:60px 60px 0; }
 #content::after { content:""; display:block; clear:both; }
 
 /* ============ 3) Sidebar ============ */

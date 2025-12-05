@@ -306,7 +306,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 
 /* ============ 8) Comments ============ */
 #detail_page .comment h3{ font-size:22px; font-weight:700; margin-bottom:20px; }
-#detail_page .commentWrite{ width: 7806px; width:100%; margin: 0 auto 20px; padding:30px 30px 15px; background:#222; border-radius:20px; box-shadow:2px 2px 10px rgba(0,0,0,.3); box-sizing:border-box; }
+#detail_page .commentWrite{ max-width: 836px; width:100%; margin: 0 auto 20px; padding:30px 30px 15px; background:#222; border-radius:20px; box-shadow:2px 2px 10px rgba(0,0,0,.3); box-sizing:border-box; }
 #detail_page .commentWrite::after{ content:""; display:block; clear:both; }
 #detail_page .commentWrite .comment_name,
 #detail_page .commentWrite .commemt_pwd{ float:left; width:49%; padding:10px; margin-bottom:20px; background:#444; border-radius:10px; box-sizing:border-box; }

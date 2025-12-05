@@ -208,10 +208,11 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
 
 /* 제목 영역 */
 #detail_page .titleWrap{
-width: 900px; /* 본문 박스와 동일한 폭 */
+max-width:780px;
+width: 100%; /* 본문 박스와 동일한 폭 */
 margin: 0 auto; /* 본문 기준 중앙 */
 text-align: center; /* 텍스트는 가운데 */
-transform: translateX(-111px); /* 제목 전체를 왼쪽으로 이동 */
+transform: none; /* 제목 전체를 왼쪽으로 이동 */
 }
 
 #detail_page .titleWrap .category{ margin-bottom:10px; }
@@ -305,7 +306,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 
 /* ============ 8) Comments ============ */
 #detail_page .comment h3{ font-size:22px; font-weight:700; margin-bottom:20px; }
-#detail_page .commentWrite{ width: 1006px; padding:30px 30px 15px; background:#222; border-radius:20px; box-shadow:2px 2px 10px rgba(0,0,0,.3); box-sizing:border-box; margin-bottom:20px; }
+#detail_page .commentWrite{ width: 7806px; width:100%; margin: 0 auto 20px; padding:30px 30px 15px; background:#222; border-radius:20px; box-shadow:2px 2px 10px rgba(0,0,0,.3); box-sizing:border-box; }
 #detail_page .commentWrite::after{ content:""; display:block; clear:both; }
 #detail_page .commentWrite .comment_name,
 #detail_page .commentWrite .commemt_pwd{ float:left; width:49%; padding:10px; margin-bottom:20px; background:#444; border-radius:10px; box-sizing:border-box; }

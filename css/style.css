@@ -363,7 +363,15 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 #detail_page .commentlist .rp_admin .com_box .name{
   /* 관리자 댓글의 이름 배지를 말풍선 오른쪽 끝에 붙임 */
   float:right;
+  /* 관리자 댓글의 프로필(이름) 뱃지 숨기기 */
+  /* display:none; */
  }
+
+/* 관리자의 댓글 내용(com_txt)이 프로필(float:right) 아래에서 시작되도록 설정 */
+#detail_page .commentlist .rp_admin .com_box .com_txt{
+   clear:both;
+   margin-top:4px; /* 텍스트와 프로필 사이에 약간의 여백 */
+}
 
 #detail_page .commentlist .rp_general .image,
 #detail_page .commentlist .rp_secret .image{ float:left; }

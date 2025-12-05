@@ -360,6 +360,11 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
  right:15px;
 }
 
+#detail_page .commentlist .rp_admin .com_box .name{
+  /* 관리자 댓글의 이름 배지를 말풍선 오른쪽 끝에 붙임 */
+  float:right;
+ }
+
 #detail_page .commentlist .rp_general .image,
 #detail_page .commentlist .rp_secret .image{ float:left; }
 

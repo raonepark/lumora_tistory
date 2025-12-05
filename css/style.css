@@ -201,7 +201,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
 }
 #content .list_content .detail_info .no-link:hover{ text-decoration:none; }
 /* ============ 5) Detail Page 기본 (본문 폭 900px 맞춤) ============ */
-#detail_page{ color:#fff; width:1200px; margin:0 auto; padding-bottom:30px; box-sizing:border-box; }
+#detail_page{ color:#fff; width:100%; margin:0 auto; padding-bottom:30px; box-sizing:border-box; }
 #detail_page a{ color:#fff; text-decoration:none; }
 #detail_page .another_category{ display:none; }
 

@@ -357,32 +357,46 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
  float:right;
  position:relative;
  /* 아바타를 댓글 카드 오른쪽에서 60px 떨어지게 조정 */
- right:60px;
+ right:15px;
 }
 
 #detail_page .commentlist .rp_general .image,
 #detail_page .commentlist .rp_secret .image{ float:left; }
 
+
 #detail_page .commentlist .com_box{
-   max-width:100%;          /* 부모(836px) 안에서만 */
-   box-sizing:border-box;
-   position:relative;
-   margin-top:20px;
-   margin-bottom:10px;
+   max-width:calc(100% - 120px);
+   margin:20px 0 10px;   /* 양옆 auto 제거 → 가운데 정렬 방지 */
    padding:20px 20px 15px;
+   position:relative;
    border-radius:20px;
+   box-sizing:border-box;
    box-shadow:2px 2px 10px rgba(0,0,0,.2);
  }
+
+ /* 관리자 댓글 카드: 오른쪽 정렬 */
+#detail_page .commentlist .rp_admin .com_box{
+   margin-left:auto;     /* 오른쪽으로 붙이기 */
+ }
+
+ /* 일반/비밀 댓글 카드: 왼쪽 정렬 */
+#detail_page .commentlist .rp_general .com_box,
+#detail_page .commentlist .rp_secret .com_box{
+   margin-right:auto;    /* 왼쪽으로 붙이기 */
+ }
+
 
 /* 관리자 박스: 너무 오른쪽으로 붙지 않고 reply 위치처럼 */
 
 #detail_page .commentlist .rp_admin .com_box{
  float:right;
  /* 댓글 풍선이 본문 안에 머무르도록 여백 축소 */
- margin-right:80px;
+ margin-right:30px;
  background:#616161;
  text-align:left;
  }
+
+
 
 
 #detail_page .commentlist .rp_general .com_box,

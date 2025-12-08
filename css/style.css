@@ -115,6 +115,25 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   flex-direction:column;
   overflow:hidden;
 }
+.list_area .list_content {
+ /* 목록 카드 전체를 클릭할 수 있도록 위치 기준을 설정 */
+ position: relative;
+ }
+.list_area .link_post {
+ /* 앵커를 카드 전체에 겹치도록 설정 */
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ z-index: 10;
+ display: block;
+ padding: 0;
+ /* 앵커 내부의 텍스트 레이아웃을 유지하고 싶다면 */
+ /* justify-content: space-between; flex-direction: column; 등 기존 flex 속성을 그대로 둘 수 있습니다. */
+ }
+
+
 #content .list_content:nth-of-type(4n){ margin-right:0; }
 #content .list_content:hover{ box-shadow:5px 5px 15px #141414, -5px -5px 15px #525252; }
 #content .list_content .link_post{
@@ -631,8 +650,4 @@ html body #detail_page .container_postbtn .btn_post .ico_share::before { transfo
 #detail_page .container_postbtn .btn_post .ico_like {
   margin: 4.5px 4px 0 0 !important; /* 위쪽 여백 → 아이콘 내려감 */
 }
-
-
-
-
 

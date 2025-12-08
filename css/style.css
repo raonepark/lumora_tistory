@@ -100,50 +100,45 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
 }
 
 #content .list_content{
-  flex:0 0 22%;
-  width:22%;
-  margin-right:2.5%;
-  margin-bottom:40px;
-  padding:19px 17px 24px;
-  font-size:16px;
-  background:#333333;
-  border-radius:15px;
-  box-sizing:border-box;
-  box-shadow:15px 15px 30px #2b2b2b, -15px -15px 30px #3b3b3b;
-  transition:.4s;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
+    flex:0 0 22%;
+    width:22%;
+    margin-right:2.5%;
+    margin-bottom:40px;
+    position:relative;   /* 레이아웃만 담당 */
 }
-.list_area .list_content {
- /* 목록 카드 전체를 클릭할 수 있도록 위치 기준을 설정 */
- position: relative;
- }
-.list_area .link_post {
- /* 앵커를 카드 전체에 겹치도록 설정 */
- position: absolute;
- top: 0;
- left: 0;
- right: 0;
- bottom: 0;
- z-index: 10;
- display: block;
- padding: 0;
- /* 앵커 내부의 텍스트 레이아웃을 유지하고 싶다면 */
- /* justify-content: space-between; flex-direction: column; 등 기존 flex 속성을 그대로 둘 수 있습니다. */
- }
 
-
-#content .list_content:nth-of-type(4n){ margin-right:0; }
-#content .list_content:hover{ box-shadow:5px 5px 15px #141414, -5px -5px 15px #525252; }
+/* 카드 전체를 a 태그가 맡도록 스타일 이동 */
 #content .list_content .link_post{
-  display:flex;
-  flex-direction:column;
-  width:100%;
-  height:auto;
-  text-decoration:none;
-  flex-grow:1;
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    height:100%;
+    padding:19px 17px 60px;
+    font-size:16px;
+    background:#333333;
+    border-radius:15px;
+    box-shadow:15px 15px 30px #2b2b2b, -15px -15px 30px #3b3b3b;
+    box-sizing:border-box;
+    overflow:hidden;
+    text-decoration:none;
+    color:#fff;
+    cursor:pointer;
 }
+
+#content .list_content .link_post:hover{
+    box-shadow:5px 5px 15px #141414, -5px -5px 15px #525252;
+}
+#content .list_content:nth-of-type(4n){ margin-right:0; }
+/* 목록 카드 - 등록 날짜를 카드 안쪽 왼쪽 하단으로 위치시키기 */
+#content .list_content .detail_info{
+  position:absolute;
+  left:24px;      /* 카드 안쪽 왼쪽 여백에 맞게 값 조절 가능 */
+  bottom:20px;    /* 카드 안쪽 아래 여백에 맞게 값 조절 가능 */
+  font-size:14px;
+  color:#aaaaaa;
+  pointer-events:none;  /* 날짜 위를 클릭해도 카드 클릭이 되도록 */
+}
+
 /* FIX: .category도 동일 스타일 적용 (HTML 오타 교정 대비) */
 #content .list_content .link_post .catgory,
 #content .list_content .link_post .category{

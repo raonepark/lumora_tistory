@@ -210,7 +210,9 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
 #detail_page .titleWrap{
 max-width:780px;
 width: 100%; /* 본문 박스와 동일한 폭 */
-margin: 0 auto; /* 본문 기준 중앙 */
+/* 사이드바에서 40px 떨어지게 왼쪽 여백을 줌 */
+margin-left:40px;
+margin-right:0;
 text-align: center; /* 텍스트는 가운데 */
 transform: none; /* 제목 전체를 왼쪽으로 이동 */
 }
@@ -222,7 +224,20 @@ transform: none; /* 제목 전체를 왼쪽으로 이동 */
 #detail_page .titleWrap .author{ font-size:16px; color:#aaa; padding-bottom:20px; margin-bottom:40px; border-bottom:1px solid #444; }
 
 /* 본문 카드 */
-#detail_page .article{ position:relative; max-width:780px; width:100%; margin:0 auto 30px; padding:40px 28px 20px; background:#222; border-radius:30px; box-shadow:2px 2px 10px rgba(0,0,0,.3); font-family:"Noto Sans", sans-serif; }
+#detail_page .article{ 
+ position:relative;
+ max-width:780px;
+ width:100%; 
+ /* 제목과 동일하게 왼쪽 여백을 주고 아래 여백은 유지 */
+ margin-left:40px;
+ margin-right:0;
+ margin-bottom:30px;
+ padding:40px 28px 20px;
+ background:#222;
+ border-radius:30px;
+ box-shadow:2px 2px 10px rgba(0,0,0,.3);
+ font-family:"Noto Sans", sans-serif; 
+ }
 #detail_page .article .contents_style{ color:#fff; font-family:"Noto Sans", sans-serif; }
 #detail_page .article .contents_style ul{ margin:12px 0; padding:0 0 0 30px; font-size:16px; line-height:1.6; }
 #detail_page .article .contents_style ul li{ line-height:1.6; padding:4px 0; margin-bottom:6px; }
@@ -305,8 +320,20 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 #detail_page .area_related .list_related li::marker{ content: none !important; }
 
 /* ============ 8) Comments ============ */
-#detail_page .comment h3{ font-size:22px; font-weight:700; max-width: 836px; width: 100%; margin:0 auto 20px; }
-#detail_page .commentWrite{ max-width: 836px; width:100%; margin: 0 auto 20px; padding:30px 30px 15px; background:#222; border-radius:20px; box-shadow:2px 2px 10px rgba(0,0,0,.3); box-sizing:border-box; }
+#detail_page .comment h3{ font-size:22px; font-weight:700; max-width: 836px; width: 100%; margin-left:40px; margin-right:0; margin-bottom:20px; }
+#detail_page .commentWrite{ 
+  max-width: 836px; 
+  width:100%; 
+  /* 댓글 쓰기 박스도 왼쪽 여백을 지정 */
+  margin-left:40px;
+  margin-right:0;
+  margin-bottom:20px; 
+  padding:30px 30px 15px; 
+  background:#222; 
+  border-radius:20px; 
+  box-shadow:2px 2px 10px rgba(0,0,0,.3); 
+  box-sizing:border-box; 
+  }
 #detail_page .commentWrite::after{ content:""; display:block; clear:both; }
 #detail_page .commentWrite .comment_name,
 #detail_page .commentWrite .commemt_pwd{ float:left; width:49%; padding:10px; margin-bottom:20px; background:#444; border-radius:10px; box-sizing:border-box; }
@@ -335,14 +362,20 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 #detail_page .commentlist{
    max-width:836px;
    width:100%;
-   margin:0 auto 40px;
+  /* 댓글 리스트 전체도 왼쪽 여백을 지정 */
+  margin-left:40px;
+  margin-right:0;
+  margin-bottom:40px;
 }
 
 #detail_page #rp,
 #detail_page .rp_write_box{
    max-width:836px;
    width:100%;
-   margin:0 auto 30px;
+   /* 댓글 입력 영역도 왼쪽 여백을 지정 */
+   margin-left:40px;
+   margin-right:0;
+   margin-bottom:30px;
 }
 
 /* ===== Comment list (PROFILE 배지 제거 버전) ===== */
@@ -357,7 +390,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
  float:right;
  position:relative;
  /* 아바타를 댓글 카드 오른쪽에서 60px 떨어지게 조정 */
- right:15px;
+ /*right:5px;*/
 }
 
 #detail_page .commentlist .rp_admin .com_box .name{
@@ -404,7 +437,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 #detail_page .commentlist .rp_admin .com_box{
  float:right;
  /* 댓글 풍선이 본문 안에 머무르도록 여백 축소 */
- margin-right:30px;
+ margin-right:20px;
  background:#616161;
  text-align:left;
  }

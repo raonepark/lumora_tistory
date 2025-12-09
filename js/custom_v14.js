@@ -32,30 +32,30 @@ $(document).ready(function () {
     var target = tableOfContent.find(".target");
     if (target.length > 0) {
       var targetHight = [];
+      // 먼저 모든 목차 항목을 생성하고 높이를 기록
       for (var i = 0; i < target.length; i++) {
-        // 헤딩 태그명(h1, h2, h3, h4)을 기반으로 클래스를 부여해 TOC에서 레벨을 구분
-        var tagName = target.eq(i).prop("tagName").toLowerCase();
-        toc.append("<p class='toc-" + tagName + "'>" + target.eq(i).text() + "</p>");
-        // 각 타겟의 화면 기준 Y축 값을 미리 보관
-        targetHight.push(target.eq(i).offset().top);
-
+        var $heading = target.eq(i);
+        var tagName = $heading.prop("tagName").toLowerCase();
+        toc.append("<p class='toc-" + tagName + "'>" + $heading.text() + "</p>");
+        targetHight.push($heading.offset().top);
+      }
+      // 생성된 TOC 항목을 찾아 첫 번째 항목을 선택 표시
       var targetp = toc.find("p");
       if (targetp.length) targetp.eq(0).addClass("on");
       tocheight = toc.innerHeight();
-
+      // 클릭 시 해당 제목 위치로 스크롤
       $(targetp).on("click", function () {
         var idx = $(this).index();
         targetp.removeClass("on");
         $(this).addClass("on");
         if (targetHight[idx] != null) {
-          $("html, body").animate({ scrollTop: targetHight[idx] }, 500);
+         $("html, body").animate({ scrollTop: targetHight[idx] }, 500);
         }
       });
-
+      // 스크롤 시 현재 위치에 맞게 TOC 하이라이트 및 고정 위치 조정
       $(window).on("scroll", function () {
         var scroll = $(window).scrollTop();
         var maxTop = cb ? Math.max(0, cb - tocheight) : 0; // 댓글 박스 위까지만
-
         if (cb) {
           if (scroll < maxTop) {
             toc.css("top", scroll);
@@ -63,7 +63,6 @@ $(document).ready(function () {
             toc.css("top", maxTop);
           }
         }
-
         if (targetHight.length > 0) {
           if (scroll <= targetHight[0] - 50 && scroll >= 0) {
             targetp.removeClass("on");
@@ -77,8 +76,6 @@ $(document).ready(function () {
           }
         }
       });
-    }
-  }
 
   // ==============================
   // 날짜만 표시 (시간 제거)

@@ -315,23 +315,23 @@ transform: none; /* 제목 전체를 왼쪽으로 이동 */
 /* TOC level styles: differentiate heading levels */
 #detail_page .article .tableofcontents p.toc-h1{
   font-size:16px;
-  font-weight:700;
+  font-weight:450;
   color:#ccc;
   margin-left:0;
 }
 #detail_page .article .tableofcontents p.toc-h2{
   font-size:15px;
-  font-weight:600;
+  font-weight:400;
   color:#bbb;
   margin-left:4px;
 }
 #detail_page .article .tableofcontents p.toc-h3{
-  font-size:14px;
+  font-size:15px;
   color:#999;
   margin-left:12px;
 }
 #detail_page .article .tableofcontents p.toc-h4{
-  font-size:13px;
+  font-size:15px;
   color:#888;
   margin-left:20px;
 }

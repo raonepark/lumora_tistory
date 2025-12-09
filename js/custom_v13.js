@@ -33,10 +33,11 @@ $(document).ready(function () {
     if (target.length > 0) {
       var targetHight = [];
       for (var i = 0; i < target.length; i++) {
-        toc.append("<p>" + target.eq(i).text() + "</p>");
+        // 헤딩 태그명(h1, h2, h3, h4)을 기반으로 클래스를 부여해 TOC에서 레벨을 구분
+        var tagName = target.eq(i).prop("tagName").toLowerCase();
+        toc.append("<p class='toc-" + tagName + "'>" + target.eq(i).text() + "</p>");
         // 각 타겟의 화면 기준 Y축 값을 미리 보관
         targetHight.push(target.eq(i).offset().top);
-      }
 
       var targetp = toc.find("p");
       if (targetp.length) targetp.eq(0).addClass("on");

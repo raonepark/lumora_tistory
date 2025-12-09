@@ -320,19 +320,19 @@ transform: none; /* 제목 전체를 왼쪽으로 이동 */
   margin-left:0;
 }
 #detail_page .article .tableofcontents p.toc-h2{
-  font-size:14px;
+  font-size:15px;
   font-weight:600;
-  color:#aaa;
-  margin-left:0;
+  color:#bbb;
+  margin-left:4px;
 }
 #detail_page .article .tableofcontents p.toc-h3{
-  font-size:13px;
-  color:#888;
-  margin-left:10px;
+  font-size:14px;
+  color:#999;
+  margin-left:12px;
 }
 #detail_page .article .tableofcontents p.toc-h4{
-  font-size:12px;
-  color:#777;
+  font-size:13px;
+  color:#888;
   margin-left:20px;
 }
 

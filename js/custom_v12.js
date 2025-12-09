@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
   var list = $(".list_content");
 
   /* --- (기존 썸네일 텍스트 대체 로직, 미사용) ---
@@ -24,6 +24,7 @@
   var tocheight = 100;
 
   if (tableOfContent.length > 0 && toc.length) {
+    tableOfContent.find("h1").addClass("target");
     tableOfContent.find("h2").addClass("target");
     tableOfContent.find("h3").addClass("target");
     tableOfContent.find("h4").addClass("target");
@@ -621,5 +622,4 @@
     observer.observe(observerTarget, { childList: true, subtree: true });
   })();
 });
-
 

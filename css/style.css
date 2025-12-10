@@ -225,8 +225,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
 max-width:780px;
 width: 100%; /* 본문 박스와 동일한 폭 */
 /* 사이드바에서 40px 떨어지게 왼쪽 여백을 줌 */
-margin-left:0px;
-margin-right:0;
+margin: 0 auto;
 text-align: center; /* 텍스트는 가운데 */
 transform: none; /* 제목 전체를 왼쪽으로 이동 */
 }
@@ -243,8 +242,7 @@ transform: none; /* 제목 전체를 왼쪽으로 이동 */
  max-width:780px;
  width:100%; 
  /* 제목과 동일하게 왼쪽 여백을 주고 아래 여백은 유지 */
- margin-left:0px;
- margin-right:0;
+ margin: 0 auto;
  margin-bottom:30px;
  padding:40px 28px 20px;
  background:#222;
@@ -376,13 +374,12 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 #detail_page .area_related .list_related li::marker{ content: none !important; }
 
 /* ============ 8) Comments ============ */
-#detail_page .comment h3{ font-size:22px; font-weight:700; max-width: 836px; width: 100%; margin-left:0px; margin-right:0; margin-bottom:20px; }
+#detail_page .comment h3{ font-size:22px; font-weight:700; max-width: 836px; width: 100%; margin: 0 auto; margin-bottom:20px; }
 #detail_page .commentWrite{ 
   max-width: 836px; 
   width:100%; 
   /* 댓글 쓰기 박스도 왼쪽 여백을 지정 */
-  margin-left:0px;
-  margin-right:0;
+  margin: 0 auto;
   margin-bottom:20px; 
   padding:30px 30px 15px; 
   background:#222; 
@@ -419,8 +416,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
    max-width:836px;
    width:100%;
   /* 댓글 리스트 전체도 왼쪽 여백을 지정 */
-  margin-left:0px;
-  margin-right:0;
+  margin: 0 auto;
   margin-bottom:40px;
 }
 
@@ -429,8 +425,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
    max-width:836px;
    width:100%;
    /* 댓글 입력 영역도 왼쪽 여백을 지정 */
-   margin-left:0px;
-   margin-right:0;
+   margin: 0 auto;
    margin-bottom:30px;
 }
 

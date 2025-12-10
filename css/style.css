@@ -227,7 +227,7 @@ width: 100%; /* 본문 박스와 동일한 폭 */
 /* 사이드바에서 40px 떨어지게 왼쪽 여백을 줌 */
 margin: 0 auto;
 text-align: center; /* 텍스트는 가운데 */
-transform: none; /* 제목 전체를 왼쪽으로 이동 */
+transform: translateX(-20px); /* 딱 20px 왼쪽으로 이동 */
 }
 
 #detail_page .titleWrap .category{ margin-bottom:10px; }
@@ -243,6 +243,7 @@ transform: none; /* 제목 전체를 왼쪽으로 이동 */
  width:100%; 
  /* 제목과 동일하게 왼쪽 여백을 주고 아래 여백은 유지 */
  margin: 0 auto;
+ transform: translateX(-20px); /* 딱 20px 왼쪽으로 이동 */
  margin-bottom:30px;
  padding:40px 28px 20px;
  background:#222;
@@ -250,6 +251,7 @@ transform: none; /* 제목 전체를 왼쪽으로 이동 */
  box-shadow:2px 2px 10px rgba(0,0,0,.3);
  font-family:"Noto Sans", sans-serif; 
  }
+ 
 #detail_page .article .contents_style{ color:#fff; font-family:"Noto Sans", sans-serif; }
 #detail_page .article .contents_style ul{ margin:12px 0; padding:0 0 0 30px; font-size:16px; line-height:1.6; }
 #detail_page .article .contents_style ul li{ line-height:1.6; padding:4px 0; margin-bottom:6px; }
@@ -374,7 +376,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 #detail_page .area_related .list_related li::marker{ content: none !important; }
 
 /* ============ 8) Comments ============ */
-#detail_page .comment h3{ font-size:22px; font-weight:700; max-width: 836px; width: 100%; margin: 0 auto; margin-bottom:20px; }
+#detail_page .comment h3{ font-size:22px; font-weight:700; max-width: 836px; width: 100%; margin: 0 auto; transform: translateX(-20px); /* 딱 20px 왼쪽으로 이동 */ margin-bottom:20px; }
 #detail_page .commentWrite{ 
   max-width: 836px; 
   width:100%; 
@@ -386,6 +388,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
   border-radius:20px; 
   box-shadow:2px 2px 10px rgba(0,0,0,.3); 
   box-sizing:border-box; 
+  transform: translateX(-20px); /* 딱 20px 왼쪽으로 이동 */
   }
 #detail_page .commentWrite::after{ content:""; display:block; clear:both; }
 #detail_page .commentWrite .comment_name,
@@ -417,6 +420,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
    width:100%;
   /* 댓글 리스트 전체도 왼쪽 여백을 지정 */
   margin: 0 auto;
+  transform: translateX(-20px); /* 딱 20px 왼쪽으로 이동 */
   margin-bottom:40px;
 }
 
@@ -426,6 +430,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
    width:100%;
    /* 댓글 입력 영역도 왼쪽 여백을 지정 */
    margin: 0 auto;
+   transform: translateX(-20px); /* 딱 20px 왼쪽으로 이동 */
    margin-bottom:30px;
 }
 

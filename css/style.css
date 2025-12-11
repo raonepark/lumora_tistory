@@ -317,6 +317,21 @@ background:#333;
 border-radius:10px; 
 font-size:18px; }
 
+/* 코드 블록 가독성 향상 */
+#detail_page .contents_style pre,
+#detail_page .contents_style code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+#detail_page .contents_style pre code{
+  color:#e4f0ff;          /* 본문보다 살짝 밝은 톤 */
+}
+
+/* 코드 블록 안의 숫자만 아주 살짝 더 강조하고 싶다면 (선택 사항) */
+#detail_page .contents_style pre code span.code-num{
+  color:#a3d5ff;
+}
+
 /* 우측 TOC */
 #detail_page .article .tableofcontents{
   position: absolute;               

@@ -222,7 +222,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
 
 /* 제목 영역 */
 #detail_page .titleWrap{
-max-width:720px;
+max-width:750px;
 width: 100%; /* 본문 박스와 동일한 폭 */
 /* 사이드바에서 40px 떨어지게 왼쪽 여백을 줌 */
 margin: 0 auto;
@@ -239,7 +239,7 @@ transform: translateX(-30px); /* 딱 30px 왼쪽으로 이동 */
 /* 본문 카드 */
 #detail_page .article{ 
  position:relative;
- max-width:720px;
+ max-width:750px;
  width:100%; 
  /* 제목과 동일하게 왼쪽 여백을 주고 아래 여백은 유지 */
  margin: 0 auto;
@@ -435,9 +435,9 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 #detail_page .area_related .list_related li::marker{ content: none !important; }
 
 /* ============ 8) Comments ============ */
-#detail_page .comment h3{ font-size:22px; font-weight:700; max-width: 775px; width: 100%; margin: 0 auto; transform: translateX(-30px); /* 딱 30px 왼쪽으로 이동 */ margin-bottom:20px; }
+#detail_page .comment h3{ font-size:22px; font-weight:700; max-width: 807px; width: 100%; margin: 0 auto; transform: translateX(-30px); /* 딱 30px 왼쪽으로 이동 */ margin-bottom:20px; }
 #detail_page .commentWrite{ 
-  max-width: 775px; 
+  max-width: 807px; 
   width:100%; 
   /* 댓글 쓰기 박스도 왼쪽 여백을 지정 */
   margin: 0 auto;
@@ -475,7 +475,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
    댓글 전체 폭을 본문과 동일하게 정중앙 정렬
    ===================== */
 #detail_page .commentlist{
-   max-width:775px;
+   max-width:807px;
    width:100%;
   /* 댓글 리스트 전체도 왼쪽 여백을 지정 */
   margin: 0 auto;
@@ -485,7 +485,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 
 #detail_page #rp,
 #detail_page .rp_write_box{
-   max-width:775px;
+   max-width:807px;
    width:100%;
    /* 댓글 입력 영역도 왼쪽 여백을 지정 */
    margin: 0 auto;
@@ -510,7 +510,7 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
 
 #detail_page .commentlist .rp_admin .com_box .name{
   /* 관리자 댓글의 이름 배지를 말풍선 오른쪽 끝에 붙임 */
-  float:right;
+  float:left;
   /* 관리자 댓글의 프로필(이름) 뱃지 숨기기 */
   /* display:none; */
  }
@@ -556,9 +556,6 @@ transition: background .15s ease, border-color .15s ease, color .15s ease;
  background:#616161;
  text-align:left;
  }
-
-
-
 
 #detail_page .commentlist .rp_general .com_box,
 #detail_page .commentlist .rp_secret .com_box{ float:left; margin-left:20px; background:#222; text-align:left; }

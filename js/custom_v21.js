@@ -22,8 +22,10 @@ $(document).ready(function () {
   var content = $("#detail_page .comment");
   var cb = content.offset() ? content.offset().top : 0;
   var tocheight = 100;
+  var scrollOffset = 0; // 목차 클릭 시 제목이 화면 상단에서 떨어질 여백(px)
 
   if (tableOfContent.length > 0 && toc.length) {
+    // 대상으로 쓸 heading 들에 공통 클래스 부여
     tableOfContent.find("h1").addClass("target");
     tableOfContent.find("h2").addClass("target");
     tableOfContent.find("h3").addClass("target");
@@ -32,30 +34,51 @@ $(document).ready(function () {
     var target = tableOfContent.find(".target");
     if (target.length > 0) {
       var targetHight = [];
-      // 먼저 모든 목차 항목을 생성하고 높이를 기록
+
+      // 목차 p 요소 생성 + 각 heading 의 문서 내 Y 위치 기록
       for (var i = 0; i < target.length; i++) {
         var $heading = target.eq(i);
-        var tagName = $heading.prop("tagName").toLowerCase();
+        var tagName = $heading.prop("tagName").toLowerCase(); // h1, h2, ...
         toc.append("<p class='toc-" + tagName + "'>" + $heading.text() + "</p>");
         targetHight.push($heading.offset().top);
       }
-      // 생성된 TOC 항목을 찾아 첫 번째 항목을 선택 표시
+
       var targetp = toc.find("p");
       if (targetp.length) targetp.eq(0).addClass("on");
       tocheight = toc.innerHeight();
-      // 클릭 시 해당 제목 위치로 스크롤
+
+      // --- 클릭 시 해당 제목 위치로 스크롤 (여백 포함) ---
       $(targetp).on("click", function () {
         var idx = $(this).index();
         targetp.removeClass("on");
         $(this).addClass("on");
-        if (targetHight[idx] != null) {
-         $("html, body").animate({ scrollTop: targetHight[idx] }, 500);
+
+        // 클릭 시점에 현재 위치를 다시 계산(광고/이미지 로딩으로 밀리는 문제 방지)
+        var $h = target.eq(idx);
+        if ($h.length) {
+          var nowTop = $h.offset().top;
+          var dst = nowTop - scrollOffset;          if (dst < 0) dst = 0;
+          $("html, body").animate({ scrollTop: dst }, 500);
         }
       });
-      // 스크롤 시 현재 위치에 맞게 TOC 하이라이트 및 고정 위치 조정
+
+      // 로딩 완료/리사이즈 때도 좌표 갱신(하이라이트 정확도 개선)
+      function refreshTargetHeights() {
+        targetHight = [];
+        target.each(function () {
+          targetHight.push($(this).offset().top);
+        });
+        tocheight = toc.innerHeight();
+        cb = content.offset() ? content.offset().top : 0;
+      }
+      $(window).on("load resize", refreshTargetHeights);      
+
+      // --- 스크롤 시 TOC 위치/하이라이트 업데이트 ---
       $(window).on("scroll", function () {
         var scroll = $(window).scrollTop();
         var maxTop = cb ? Math.max(0, cb - tocheight) : 0; // 댓글 박스 위까지만
+
+        // 우측 TOC 박스 자체의 top 값(위아래 이동) 조정
         if (cb) {
           if (scroll < maxTop) {
             toc.css("top", scroll);
@@ -63,13 +86,18 @@ $(document).ready(function () {
             toc.css("top", maxTop);
           }
         }
+
+        // 현재 스크롤 위치에 맞춰 on 클래스 갱신
         if (targetHight.length > 0) {
-          if (scroll <= targetHight[0] - 50 && scroll >= 0) {
+          // 화면 기준으로는 "현재 스크롤 + scrollOffset" 시점을 기준으로 판단
+          var current = scroll + scrollOffset;
+
+          if (current <= targetHight[0] - 50 && current >= 0) {
             targetp.removeClass("on");
             targetp.eq(0).addClass("on");
           }
           for (var j = 1; j < targetp.length; j++) {
-            if (scroll <= targetHight[j] && scroll >= targetHight[j - 1]) {
+            if (current <= targetHight[j] && current >= targetHight[j - 1]) {
               targetp.removeClass("on");
               targetp.eq(j).addClass("on");
             }
@@ -77,7 +105,7 @@ $(document).ready(function () {
         }
       });
     }
-}
+  }
 
   // ==============================
   // 날짜만 표시 (시간 제거)
@@ -622,4 +650,3 @@ $(document).ready(function () {
     observer.observe(observerTarget, { childList: true, subtree: true });
   })();
 });
-

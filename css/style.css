@@ -347,6 +347,7 @@ font-size:18px; }
   box-shadow:2px 2px 10px rgba(0,0,0,.3);
   overflow-y:auto;                  /* 목차 안에서만 세로 스크롤 */
   transition:.2s;
+  transform: translateY(-120px);   /* 화면에서만 위로 60px 올리기 */
   z-index:5;                        /* 카드보다 살짝 위, 너무 앞으로는 X */
 }
 

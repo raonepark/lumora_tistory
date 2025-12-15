@@ -651,20 +651,29 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     background:transparent !important;
   }
 
-  /* Like (reaction): icon-only to match other buttons */
+  /* Like (reaction): icon + count to match other buttons */
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post{
-    width:40px;
+    min-width:40px;
     height:40px;
-    padding:0 !important;
+    padding:0 6px !important;
     margin:0 !important;
     border-radius:12px;
     background:transparent !important;
     display:inline-flex !important;
     align-items:center !important;
     justify-content:center !important;
-    gap:0 !important;
+    gap:6px !important;
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .txt_like{ display:none !important; }
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post .count{
+    display:inline !important;
+    font-size:12px;
+    font-weight:800;
+    line-height:1;
+    color:#ddd;
+  }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_postbtn{
     display:block;
     width:16px;
@@ -679,6 +688,22 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M12.1%2021.35l-1.1-1.02C5.14%2015.24%202%2012.39%202%208.94%202%206.5%203.99%204.5%206.5%204.5c1.74%200%203.41.81%204.5%202.09C12.09%205.31%2013.76%204.5%2015.5%204.5%2018.01%204.5%2020%206.5%2020%208.94c0%203.45-3.14%206.3-8.9%2011.39l-1%201.02z'/%3E%3C/svg%3E");
     margin:0 !important;
   }
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.on .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.active .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post[aria-pressed="true"] .ico_like{
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23f9f871'%20d='M12.1%2021.35l-1.1-1.02C5.14%2015.24%202%2012.39%202%208.94%202%206.5%203.99%204.5%206.5%204.5c1.74%200%203.41.81%204.5%202.09C12.09%205.31%2013.76%204.5%2015.5%204.5%2018.01%204.5%2020%206.5%2020%208.94c0%203.45-3.14%206.3-8.9%2011.39l-1%201.02z'/%3E%3C/svg%3E");
+  }
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.on em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.on .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.on .count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.active em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.active .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.active .count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post[aria-pressed="true"] em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post[aria-pressed="true"] .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post[aria-pressed="true"] .count{
+    color:#f9f871;
+  }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_postbtn{ margin:0 !important; }
 
   #tt-body-page #detail_page .container_postbtn .share_menu,
@@ -690,6 +715,10 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   }
 
   /* Mobile: comment overlay (opened from bottom bar) */
+  html.m-lock-scroll,
+  body.m-lock-scroll{
+    overflow:hidden;
+  }
   .m-comment-toggle{
     position:fixed;
     left:-9999px;
@@ -748,6 +777,33 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   .m-comment-btn .m-comment-count:empty{ display:none; }
   .m-comment-toggle:checked ~ .m-comment-btn{ opacity:0; pointer-events:none; }
 
+  /* When the comment button is injected into the bottom bar, make it inline and show count next to icon */
+  #tt-body-page #detail_page .container_postbtn .m-comment-btn{
+    position:static;
+    left:auto;
+    bottom:auto;
+    z-index:auto;
+    width:auto;
+    height:40px;
+    padding:0 6px;
+    gap:6px;
+  }
+  #tt-body-page #detail_page .container_postbtn .m-comment-btn .ico_comment{ transform:none; }
+  #tt-body-page #detail_page .container_postbtn .m-comment-btn .m-comment-count{
+    position:static;
+    top:auto;
+    right:auto;
+    min-width:0;
+    height:auto;
+    padding:0;
+    border-radius:0;
+    background:transparent;
+    color:#ddd;
+    font-size:12px;
+    font-weight:800;
+    line-height:1;
+  }
+
   .m-comments-overlay{
     position:fixed;
     inset:0;
@@ -805,7 +861,10 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     overflow:auto;
     padding:16px 16px calc(160px + env(safe-area-inset-bottom));
     box-sizing:border-box;
+    -ms-overflow-style:none;       /* IE/Edge legacy */
+    scrollbar-width:none;          /* Firefox */
   }
+  .m-comments-body::-webkit-scrollbar{ width:0; height:0; }
   #tt-body-page .m-comments-overlay .comment{ display:none; }
 
   /* Comment form: fixed at bottom inside overlay */
@@ -831,8 +890,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
       "name name"
       "pwd pwd"
       "txt txt"
-      "secret secret"
-      "submit submit";
+      "submit secret";
     gap:10px 12px;
   }
   #tt-body-page .m-comments-overlay .commentWrite::after{ display:none; }
@@ -867,7 +925,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     background:transparent;
     border:0;
     justify-self:end;
-    align-self:start;
+    align-self:center;
     color:#bdbdbd;
     font-size:12px;
   }
@@ -943,11 +1001,15 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     padding:0;
     font-size:12px;
     color:#8f8f8f;
+    display:inline-block;
+    margin-right:6px;
   }
   /* Comment actions: reply + "..." (manage) */
   #tt-body-page #detail_page .m-comments-overlay .commentlist .control{
-    display:block;
-    margin-top:8px;
+    display:inline-flex;
+    align-items:center;
+    margin-top:0;
+    margin-left:6px;
   }
   #tt-body-page #detail_page .m-comments-overlay .commentlist .control .modify,
   #tt-body-page #detail_page .m-comments-overlay .commentlist .control .address{
@@ -975,16 +1037,17 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     color:#ddd;
   }
   #tt-body-page #detail_page .m-comments-overlay .commentlist .control .write{
-    display:inline-block;
-    padding:6px 10px;
-    border-radius:999px;
-    background:rgba(255,255,255,0.06);
-    color:#ddd;
-    font-size:0;
+    display:inline-flex;
+    align-items:center;
+    padding:0;
+    border-radius:0;
+    background:transparent;
+    color:#8f8f8f;
+    font-size:12px;
     text-decoration:none;
   }
   #tt-body-page #detail_page .m-comments-overlay .commentlist .control .write span{ display:none; }
-  #tt-body-page #detail_page .m-comments-overlay .commentlist .control .write::after{ content:"답글"; display:inline; font-size:12px; }
+  #tt-body-page #detail_page .m-comments-overlay .commentlist .control .write::after{ content:"답글"; }
 
   #tt-body-page #detail_page .m-comments-overlay .commentlist ul ul{
     margin-left:56px;

@@ -490,11 +490,30 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .titleWrap .author{ font-size:13px; color:#9a9a9a; margin-bottom:18px; }
 
   #tt-body-page #detail_page .article{
-    margin:0 0 22px;
-    padding:26px 18px 18px;
-    border-radius:22px;
+    margin:0 0 14px;
+    padding:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
   }
   #tt-body-page #detail_page .article .tableofcontents{ display:none !important; }
+
+  /* Tags: show after article like plain hashtag list */
+  #tt-body-page #detail_page .tagTrail{
+    margin:18px 0 0;
+    padding:14px 0 0;
+    border-top:1px solid rgba(255,255,255,0.08);
+    row-gap:8px;
+  }
+  #tt-body-page #detail_page .tagTrail a{
+    padding:0;
+    background:transparent;
+    border:0;
+    border-radius:0;
+    color:#bdbdbd !important;
+    font-size:14px;
+  }
+  #tt-body-page #detail_page .tagTrail a::before{ color:#777; }
 
   /* Bottom action bar (like/comment/share/...) */
   #tt-body-page #contentWrap{
@@ -507,6 +526,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     bottom:0 !important;
     z-index:1100 !important;
     padding:12px 16px calc(12px + env(safe-area-inset-bottom)) !important;
+    padding-left:72px !important;
     background:#111 !important;
     border-top:1px solid rgba(255,255,255,0.08) !important;
     box-sizing:border-box !important;
@@ -531,6 +551,229 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     top:auto !important;
     bottom:calc(100% + 10px) !important;
     z-index:1300 !important;
+  }
+
+  /* Mobile: comment overlay (opened from bottom bar) */
+  .m-comment-toggle{
+    position:fixed;
+    left:-9999px;
+    top:0;
+    width:1px;
+    height:1px;
+    opacity:0;
+  }
+  .m-comment-btn{
+    position:fixed;
+    left:16px;
+    bottom:calc(12px + env(safe-area-inset-bottom));
+    z-index:1150;
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,0.06);
+    cursor:pointer;
+    user-select:none;
+  }
+  .m-comment-btn:hover{ background:rgba(255,255,255,0.10); }
+  .m-comment-btn svg{ width:20px; height:20px; fill:#ddd; }
+  .m-comment-toggle:checked ~ .m-comment-btn{ opacity:0; pointer-events:none; }
+
+  .m-comments-overlay{
+    position:fixed;
+    inset:0;
+    z-index:1250;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease;
+    background:#111;
+  }
+  .m-comment-toggle:checked ~ .m-comments-overlay{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .m-comments-sheet{
+    position:relative;
+    height:100%;
+    background:#111;
+    color:#fff;
+    transform:translateY(10px);
+    transition:transform .2s ease;
+    display:flex;
+    flex-direction:column;
+  }
+  .m-comment-toggle:checked ~ .m-comments-overlay .m-comments-sheet{ transform:translateY(0); }
+  .m-comments-backdrop{ display:none; }
+  .m-comments-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:calc(12px + env(safe-area-inset-top)) 16px 12px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .m-comments-header strong{ font-size:26px; font-weight:900; }
+  .m-comments-back{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.06);
+    cursor:pointer;
+    user-select:none;
+  }
+  .m-comments-back:hover{ background:rgba(255,255,255,0.10); }
+  .m-comments-body{
+    flex:1;
+    overflow:auto;
+    padding:16px 16px calc(160px + env(safe-area-inset-bottom));
+    box-sizing:border-box;
+  }
+  #tt-body-page .m-comments-overlay .comment{ display:none; }
+
+  /* Comment form: fixed at bottom inside overlay */
+  #tt-body-page .m-comments-overlay .commentWrite{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:1300;
+    width:100%;
+    max-width:none;
+    margin:0;
+    transform:none;
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    background:#111;
+    border-top:1px solid rgba(255,255,255,0.08);
+    border-radius:0;
+    box-shadow:none;
+    box-sizing:border-box;
+  }
+  #tt-body-page .m-comments-overlay .commentWrite::after{ display:none; }
+  #tt-body-page .m-comments-overlay .commentWrite .comment_name,
+  #tt-body-page .m-comments-overlay .commentWrite .commemt_pwd{
+    float:none;
+    width:100%;
+    margin-right:0;
+  }
+  #tt-body-page .m-comments-overlay .commentWrite .comment_txt{ margin-bottom:10px; }
+  #tt-body-page .m-comments-overlay .commentWrite .comment_txt textarea{
+    height:84px;
+    border-radius:12px;
+    background:#222;
+  }
+  #tt-body-page .m-comments-overlay .commentWrite .comment_submit input[type="submit"],
+  #tt-body-page .m-comments-overlay .commentWrite .comment_submit button[type="submit"]{
+    padding:10px 14px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.06);
+    color:#fff;
+  }
+  #tt-body-page .m-comments-overlay .commentWrite .secretWrap{
+    float:none;
+    margin-top:10px;
+    padding:0;
+    background:transparent;
+    border:0;
+  }
+
+  /* Comment list: simple rows */
+  #tt-body-page .m-comments-overlay .commentlist{
+    max-width:none;
+    width:100%;
+    margin:0;
+    transform:none;
+  }
+  #tt-body-page .m-comments-overlay .commentlist ul{ padding:0; }
+  #tt-body-page .m-comments-overlay .commentlist ul > li{
+    padding:16px 0;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  #tt-body-page .m-comments-overlay .commentlist ul > li:last-child{ border-bottom:0; }
+
+  #tt-body-page .m-comments-overlay .commentlist .rp_admin,
+  #tt-body-page .m-comments-overlay .commentlist .rp_general,
+  #tt-body-page .m-comments-overlay .commentlist .rp_secret{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    float:none;
+  }
+  #tt-body-page .m-comments-overlay .commentlist .image{
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    overflow:hidden;
+    flex:0 0 auto;
+  }
+  #tt-body-page .m-comments-overlay .commentlist .image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  #tt-body-page .m-comments-overlay .commentlist .com_box{
+    max-width:none;
+    margin:0;
+    padding:0;
+    background:transparent;
+    box-shadow:none;
+    border-radius:0;
+    float:none;
+  }
+  #tt-body-page .m-comments-overlay .commentlist .com_box::after{ content:none !important; display:none !important; }
+  #tt-body-page .m-comments-overlay .commentlist .com_box .name{
+    padding:0;
+    border:0;
+    margin:0 0 6px;
+    font-size:14px;
+    font-weight:900;
+    color:#fff;
+  }
+  #tt-body-page .m-comments-overlay .commentlist .com_box .name a{ color:#fff; }
+  #tt-body-page .m-comments-overlay .commentlist .com_box .com_txt{
+    padding:0;
+    margin:0 0 10px;
+    font-size:14px;
+    color:#ddd;
+    line-height:1.55;
+  }
+  #tt-body-page .m-comments-overlay .commentlist .com_box .date{
+    padding:0;
+    font-size:12px;
+    color:#8f8f8f;
+  }
+  #tt-body-page .m-comments-overlay .commentlist .control{ display:none; }
+  #tt-body-page .m-comments-overlay .commentlist ul ul{
+    margin-left:56px;
+    padding-left:0;
+  }
+
+  /* Dropdown menus: ensure readable colors on mobile */
+  #tt-body-page #detail_page .container_postbtn .share_menu,
+  #tt-body-page #detail_page .container_postbtn .etc_menu,
+  #tt-body-page #detail_page .container_postbtn .menu_layer{
+    background:#222 !important;
+    border:1px solid #444 !important;
+    color:#ddd !important;
+  }
+  #tt-body-page #detail_page .container_postbtn .share_menu a,
+  #tt-body-page #detail_page .container_postbtn .etc_menu a,
+  #tt-body-page #detail_page .container_postbtn .menu_layer a,
+  #tt-body-page #detail_page .container_postbtn .share_menu button,
+  #tt-body-page #detail_page .container_postbtn .etc_menu button,
+  #tt-body-page #detail_page .container_postbtn .menu_layer button{
+    color:#ddd !important;
+  }
+  #tt-body-page #detail_page .container_postbtn .share_menu a:hover,
+  #tt-body-page #detail_page .container_postbtn .etc_menu a:hover,
+  #tt-body-page #detail_page .container_postbtn .menu_layer a:hover{
+    background:#333 !important;
+    color:#fff !important;
   }
 }
 

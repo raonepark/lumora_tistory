@@ -199,95 +199,100 @@
 								</div>
 
 								<s_rp>
-									<div class="comment">
-										<h3>댓글달기&nbsp;<i class="fa-solid fa-comment"></i></h3>
-									</div>
+									<!-- Mobile: comment overlay toggle -->
+									<input id="m-comment-toggle" class="m-comment-toggle m-only" type="checkbox" />
+									<label class="m-comment-btn m-only" for="m-comment-toggle" aria-label="댓글">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+											<path
+												d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.3 95.5 56.8 132.8c-14.1 26.2-33.9 60.6-34 60.8c-3.2 5.6-2.6 12.6 1.6 17.5s11 7.1 17 5.2c.5-.2 44.4-14.1 87.9-35.7C165.6 438.2 209.1 448 256 448c141.4 0 256-93.1 256-208S397.4 32 256 32z" />
+										</svg>
+									</label>
 
-									<s_rp_input_form>
-										<div class="commentWrite">
-											<p class="comment_txt">
-												<textarea placeholder="댓글을 달아주세요 :)" name="[##_rp_input_comment_##]"
-													rows="10" cols="50"></textarea>
-											</p>
-											<p class="comment_submit">
-												<input type="submit" value="댓글 달기"
-													onclick="[##_rp_onclick_submit_##]" />
-											</p>
-											<p class="secretWrap">
-												<input id="secret" type="checkbox" name="[##_rp_input_is_secret_##]"
-													class="checkbox" />
-												<label for="secret"> 비밀글 </label>
-											</p>
-										</div>
-									</s_rp_input_form>
+									<div class="m-comments-overlay">
+										<label class="m-comments-backdrop m-only" for="m-comment-toggle"
+											aria-hidden="true"></label>
+										<div class="m-comments-sheet" role="dialog" aria-modal="true" aria-label="댓글">
+											<div class="m-comments-header m-only">
+												<label class="m-comments-back" for="m-comment-toggle" aria-label="닫기">←</label>
+												<strong>댓글</strong>
+											</div>
 
-									<div class="commentlist">
-										<s_rp>
-											<s_rp_container>
-												<ul>
-													<s_rp_rep>
-														<li id='[##_rp_rep_id_##]'>
-															<div class="[##_rp_rep_class_##]">
-																<div class="image"><img src="[##_rp_rep_logo_##]"
-																		alt=""></div>
-																<div class="com_box">
-																	<p class="name">[##_rp_rep_name_##]</p>
-																	<p class="com_txt">[##_rp_rep_desc_##]</p>
-																	<span class="date"> [##_rp_rep_date_##]</span>
-																	<span class="control">
-																		<a href="#"
-																			onclick="[##_rp_rep_onclick_delete_##]"
-																			class="modify">&nbsp;
-																			<span>수정/삭제</span>
-																		</a>
-																		<a href="#"
-																			onclick="[##_rp_rep_onclick_reply_##]"
-																			class="write">&nbsp;
-																			<span>댓글쓰기</span>
-																		</a>
-																	</span>
+											<div class="m-comments-body">
+												<div class="comment">
+													<h3>댓글달기&nbsp;<i class="fa-solid fa-comment"></i></h3>
+												</div>
 
-																</div>
+												<s_rp_input_form>
+													<div class="commentWrite">
+														<p class="comment_txt">
+															<textarea placeholder="댓글을 달아주세요 :)" name="[##_rp_input_comment_##]"
+																rows="10" cols="50"></textarea>
+														</p>
+														<p class="comment_submit">
+															<input type="submit" value="댓글 달기" onclick="[##_rp_onclick_submit_##]" />
+														</p>
+														<p class="secretWrap">
+															<input id="secret" type="checkbox" name="[##_rp_input_is_secret_##]"
+																class="checkbox" />
+															<label for="secret"> 비밀글 </label>
+														</p>
+													</div>
+												</s_rp_input_form>
 
-															</div>
-															<s_rp2_container>
-																<ul>
-																	<s_rp2_rep>
-																		<li id='[##_rp_rep_id_##]'>
-																			<div class="[##_rp_rep_class_##]">
-																				<div class="image"><img
-																						src="[##_rp_rep_logo_##]"
-																						alt=""></div>
-																				<div class="com_box">
-																					<p class="name">[##_rp_rep_name_##]
-																					</p>
-																					<p class="com_txt">
-																						[##_rp_rep_desc_##]</p>
-																					<span class="date">
-																						[##_rp_rep_date_##]</span>
-																					<span class="control">
-																						<a href="[##_rp_rep_link_##]"
-																							class="address">&nbsp;
-																							<span>댓글주소</span>
-																						</a>
-																						<a href="#"
-																							onclick="[##_rp_rep_onclick_delete_##]"
-																							class="modify">&nbsp;
-																							<span>수정/삭제</span>
-																						</a>
-																					</span>
-																				</div>
-
+												<div class="commentlist">
+													<s_rp>
+														<s_rp_container>
+															<ul>
+																<s_rp_rep>
+																	<li id='[##_rp_rep_id_##]'>
+																		<div class="[##_rp_rep_class_##]">
+																			<div class="image"><img src="[##_rp_rep_logo_##]" alt=""></div>
+																			<div class="com_box">
+																				<p class="name">[##_rp_rep_name_##]</p>
+																				<p class="com_txt">[##_rp_rep_desc_##]</p>
+																				<span class="date"> [##_rp_rep_date_##]</span>
+																				<span class="control">
+																					<a href="#" onclick="[##_rp_rep_onclick_delete_##]" class="modify">&nbsp;
+																						<span>수정/삭제</span>
+																					</a>
+																					<a href="#" onclick="[##_rp_rep_onclick_reply_##]" class="write">&nbsp;
+																						<span>댓글쓰기</span>
+																					</a>
+																				</span>
 																			</div>
-																		</li>
-																	</s_rp2_rep>
-																</ul>
-															</s_rp2_container>
-														</li>
-													</s_rp_rep>
-												</ul>
-											</s_rp_container>
-										</s_rp>
+																		</div>
+																		<s_rp2_container>
+																			<ul>
+																				<s_rp2_rep>
+																					<li id='[##_rp_rep_id_##]'>
+																						<div class="[##_rp_rep_class_##]">
+																							<div class="image"><img src="[##_rp_rep_logo_##]" alt=""></div>
+																							<div class="com_box">
+																								<p class="name">[##_rp_rep_name_##]</p>
+																								<p class="com_txt">[##_rp_rep_desc_##]</p>
+																								<span class="date"> [##_rp_rep_date_##]</span>
+																								<span class="control">
+																									<a href="[##_rp_rep_link_##]" class="address">&nbsp;
+																										<span>댓글주소</span>
+																									</a>
+																									<a href="#" onclick="[##_rp_rep_onclick_delete_##]" class="modify">&nbsp;
+																										<span>수정/삭제</span>
+																									</a>
+																								</span>
+																							</div>
+																						</div>
+																					</li>
+																				</s_rp2_rep>
+																			</ul>
+																		</s_rp2_container>
+																	</li>
+																</s_rp_rep>
+															</ul>
+														</s_rp_container>
+													</s_rp>
+												</div>
+											</div>
+										</div>
 									</div>
 								</s_rp>
 

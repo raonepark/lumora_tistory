@@ -277,21 +277,23 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   }
   .m-cat-body a:hover{ background:rgba(255,255,255,0.06); }
   .m-cat-body .c_cnt{ margin-left:12px; color:#f9f871; font-weight:800; }
-  /* Hide sub-sub categories (you said you won't use them) */
-  .m-cat-body ul ul{ display:none; }
+  /* Tistory 마크업: 카테고리 목록은 중첩 ul(서브 리스트)에 들어감 */
+  .m-cat-body ul ul{ display:block; }
+  .m-cat-body ul ul ul{ display:none; }
 
-  /* List: desktop grid -> mobile single column cards (#222) */
-  #content{ display:block; }
-  #content .list_content{
+  /* List: desktop grid -> mobile simple rows */
+  body:not(#tt-body-page) #content{ display:block; }
+  body:not(#tt-body-page) #content .list_content{
     width:100%;
     margin-right:0;
     margin-bottom:0;
     padding:16px 0;
     border-bottom:1px solid rgba(255,255,255,0.08);
     position:static;
+    flex:none;
   }
-  #content .list_content:last-child{ border-bottom:0; }
-  #content .list_content .link_post{
+  body:not(#tt-body-page) #content .list_content:last-child{ border-bottom:0; }
+  body:not(#tt-body-page) #content .list_content .link_post{
     padding:0;
     height:auto;
     background:transparent;
@@ -299,11 +301,11 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     border:0;
     box-shadow:none;
   }
-  #content .list_content .link_post:hover{ box-shadow:none; }
-  #content .list_content .link_post .category{ display:none; }
-  #content .list_content .link_post .tit_post{ font-size:18px; font-weight:800; line-height:1.35; margin:0 0 6px; -webkit-line-clamp:2; }
-  #content .list_content .link_post .txt_post{ font-size:13px; color:#bdbdbd; margin:0; -webkit-line-clamp:2; }
-  #content .list_content .detail_info{
+  body:not(#tt-body-page) #content .list_content .link_post:hover{ box-shadow:none; }
+  body:not(#tt-body-page) #content .list_content .link_post .category{ display:none; }
+  body:not(#tt-body-page) #content .list_content .link_post .tit_post{ font-size:18px; font-weight:800; line-height:1.35; margin:0 0 6px; -webkit-line-clamp:2; }
+  body:not(#tt-body-page) #content .list_content .link_post .txt_post{ font-size:13px; color:#bdbdbd; margin:0; -webkit-line-clamp:2; }
+  body:not(#tt-body-page) #content .list_content .detail_info{
     position:static;
     margin-top:8px;
     padding:0;

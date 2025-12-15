@@ -270,13 +270,22 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   .m-cat-body a{
     display:flex;
     align-items:center;
-    justify-content:space-between;
+    justify-content:flex-start;
     padding:16px 18px;
     color:#fff;
     text-decoration:none;
   }
   .m-cat-body a:hover{ background:rgba(255,255,255,0.06); }
-  .m-cat-body .c_cnt{ margin-left:12px; color:#f9f871; font-weight:800; }
+  .m-cat-body .c_cnt{ margin-left:auto; color:#fff; font-weight:800; order:2; }
+  .m-cat-body img[alt*="N"],
+  .m-cat-body img[alt*="new"],
+  .m-cat-body img[src*="ico_new"],
+  .m-cat-body img[src*="new"],
+  .m-cat-body [class*="new"]{
+    order:1;
+    margin-left:6px;
+    flex:0 0 auto;
+  }
   /* Tistory 마크업: 카테고리 목록은 중첩 ul(서브 리스트)에 들어감 */
   .m-cat-body ul ul{ display:block; }
   .m-cat-body ul ul ul{ display:none; }

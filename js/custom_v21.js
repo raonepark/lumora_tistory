@@ -649,4 +649,45 @@ $(document).ready(function () {
     });
     observer.observe(observerTarget, { childList: true, subtree: true });
   })();
+
+  // ==============================
+  // Mobile: comment count badge/header
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!$(".m-comment-count--btn, .m-comment-count--header").length) return;
+
+    function getCommentCount() {
+      var $list = $("#detail_page .commentlist");
+      if (!$list.length) return 0;
+      return $list.find('li[id^="comment"]').length;
+    }
+
+    function render() {
+      var count = getCommentCount();
+      var text = count > 0 ? String(count) : "";
+      $(".m-comment-count--btn").text(text);
+      $(".m-comment-count--header").text(text);
+    }
+
+    render();
+    $(window).on("load", render);
+
+    var target =
+      document.querySelector("#detail_page .commentlist") ||
+      document.querySelector("#detail_page") ||
+      document.body;
+    if (!target || typeof MutationObserver !== "function") return;
+
+    var scheduled = false;
+    var observer = new MutationObserver(function () {
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(function () {
+        scheduled = false;
+        render();
+      }, 100);
+    });
+    observer.observe(target, { childList: true, subtree: true });
+  })();
 });

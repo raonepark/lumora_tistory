@@ -202,7 +202,8 @@
 									<!-- Mobile: comment overlay toggle -->
 									<input id="m-comment-toggle" class="m-comment-toggle m-only" type="checkbox" />
 									<label class="m-comment-btn m-only" for="m-comment-toggle" aria-label="댓글">
-										<span class="ico_postbtn ico_comment">댓글</span>
+										<span class="ico_postbtn ico_comment" aria-hidden="true">댓글</span>
+										<span class="m-comment-count m-comment-count--btn" aria-hidden="true"></span>
 									</label>
 
 									<div class="m-comments-overlay">
@@ -211,7 +212,7 @@
 										<div class="m-comments-sheet" role="dialog" aria-modal="true" aria-label="댓글">
 											<div class="m-comments-header m-only">
 												<label class="m-comments-back" for="m-comment-toggle" aria-label="닫기">←</label>
-												<strong>댓글</strong>
+												<strong>댓글<span class="m-comment-count m-comment-count--header" aria-hidden="true"></span></strong>
 											</div>
 
 											<div class="m-comments-body">

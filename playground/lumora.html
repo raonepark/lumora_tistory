@@ -43,6 +43,11 @@
 						</s_search>
 					</div>
 
+					<!-- 방명록 (모바일 전용) -->
+					<div class="m-guestbook m-only">
+						<a class="m-guestbook__btn" href="/guestbook">방명록</a>
+					</div>
+
 					<!-- 방문자수 -->
 					<div class="counter">
 						<p class="total">[##_count_total_##] <span>총방문자</span></p>
@@ -91,6 +96,27 @@
 			</div> <!-- sidebar close -->
 
 			<div id="contentWrap">
+				<!-- Mobile: category overlay -->
+				<input id="m-cat-toggle" class="m-cat-toggle m-list-only" type="checkbox" />
+				<div class="m-topbar m-list-only">
+					<label class="m-topbar__btn" for="m-cat-toggle">
+						<span class="m-topbar__icon" aria-hidden="true"></span>
+						<span class="m-topbar__text">분류 전체보기</span>
+					</label>
+				</div>
+				<div class="m-cat-overlay m-list-only">
+					<label class="m-cat-backdrop" for="m-cat-toggle" aria-hidden="true"></label>
+					<div class="m-cat-sheet" role="dialog" aria-modal="true" aria-label="카테고리">
+						<div class="m-cat-header">
+							<strong>카테고리</strong>
+							<label class="m-cat-close" for="m-cat-toggle" aria-label="닫기">×</label>
+						</div>
+						<div class="m-cat-body">
+							[##_category_list_##]
+						</div>
+					</div>
+				</div>
+
 				<div id="content">
 					<s_article_rep>
 						<s_index_article_rep>

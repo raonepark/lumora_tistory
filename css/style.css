@@ -87,9 +87,212 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
 #sidebar .search{ padding:15px; text-align:center; }
 #sidebar .search > i{ color:#aaa; font-size:16px; margin-left:10px; }
 #sidebar .search > input{ background:#333; border:none; color:#fff; }
-
+ 
 #sidebar .category a{ display:block; width:90%; margin:0 auto 15px; padding:15px; background:#333; border-radius:10px; color:#ccc; font: 12px/1.4 "Noto Sans"; transition:.2s; }
 #sidebar .category a:hover{ text-decoration:none; background:#ccc; color:#333; }
+
+/* Mobile-only UI helpers */
+.m-only,
+.m-list-only{ display:none; }
+
+/* ============ 2-1) Mobile List UI (<=1024px) ============ */
+@media screen and (max-width:1024px){
+  html, body{ overflow-x:hidden; }
+  body{ background:#111; }
+
+  /* Layout: sidebar -> top, content -> full width */
+  #sidebar{
+    position:relative;
+    top:auto;
+    left:auto;
+    width:100%;
+    height:auto;
+    padding-top:24px;
+    padding-bottom:8px;
+    background:#111;
+    overflow:visible;
+    box-shadow:none;
+  }
+
+  #contentWrap{
+    margin-left:0;
+    width:100%;
+    padding:18px 16px 0;
+    background:#111;
+  }
+
+  .non-paging,
+  #container .paging{
+    margin-left:0;
+    width:100%;
+    background:#111;
+  }
+
+  /* Sidebar: keep only profile/search/guestbook */
+  #sidebar .counter,
+  #sidebar .link,
+  #sidebar .category{ display:none; }
+
+  .m-only{ display:block; }
+  .m-list-only{ display:block; }
+  #tt-body-page .m-list-only{ display:none; }
+
+  /* Guestbook button (mobile) */
+  #sidebar .m-guestbook{ width:90%; margin:0 auto 15px; }
+  #sidebar .m-guestbook__btn{
+    display:block;
+    padding:14px 15px;
+    background:#222;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.08);
+    color:#fff;
+    text-align:center;
+    font: 14px/1.2 "Noto Sans", sans-serif;
+    text-decoration:none;
+  }
+  #sidebar .m-guestbook__btn:hover{ border-color:rgba(255,255,255,0.18); }
+
+  /* List header (category open) */
+  .m-topbar{ margin:10px 0 16px; }
+  .m-topbar__btn{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    padding:14px 16px;
+    background:#222;
+    border-radius:14px;
+    box-sizing:border-box;
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.08);
+    cursor:pointer;
+  }
+  .m-topbar__btn:hover{ border-color:rgba(255,255,255,0.18); }
+  .m-topbar__icon{
+    position:relative;
+    width:18px;
+    height:12px;
+    border-top:2px solid #bdbdbd;
+    border-bottom:2px solid #bdbdbd;
+  }
+  .m-topbar__icon::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:50%;
+    transform:translateY(-50%);
+    border-top:2px solid #bdbdbd;
+  }
+  .m-topbar__text{ font-size:16px; font-weight:800; color:#fff; }
+
+  /* Category overlay (checkbox toggle; no URL hash) */
+  .m-cat-toggle{
+    position:fixed;
+    left:-9999px;
+    top:0;
+    width:1px;
+    height:1px;
+    opacity:0;
+  }
+
+  .m-cat-overlay{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease;
+    background:rgba(0,0,0,0.55);
+  }
+
+  .m-cat-toggle:checked ~ .m-cat-overlay{
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  .m-cat-backdrop{
+    position:absolute;
+    inset:0;
+    cursor:pointer;
+  }
+
+  .m-cat-sheet{
+    position:relative;
+    height:100%;
+    background:#111;
+    color:#fff;
+    transform:translateY(10px);
+    transition:transform .2s ease;
+  }
+
+  .m-cat-toggle:checked ~ .m-cat-overlay .m-cat-sheet{ transform:translateY(0); }
+
+  .m-cat-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 18px 14px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .m-cat-header strong{ font-size:26px; font-weight:900; }
+  .m-cat-close{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    color:#fff;
+    background:rgba(255,255,255,0.06);
+    cursor:pointer;
+    user-select:none;
+  }
+  .m-cat-close:hover{ background:rgba(255,255,255,0.10); }
+
+  .m-cat-body{ padding:8px 0 24px; }
+  .m-cat-body ul{ margin:0; padding:0; list-style:none; }
+  .m-cat-body li{ margin:0; padding:0; }
+  .m-cat-body a{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 18px;
+    color:#fff;
+    text-decoration:none;
+  }
+  .m-cat-body a:hover{ background:rgba(255,255,255,0.06); }
+  .m-cat-body .c_cnt{ margin-left:12px; color:#f9f871; font-weight:800; }
+  /* Hide sub-sub categories (you said you won't use them) */
+  .m-cat-body ul ul ul{ display:none; }
+
+  /* List: desktop grid -> mobile single column cards (#222) */
+  #content{ display:block; }
+  #content .list_content{
+    width:100%;
+    margin-right:0;
+    margin-bottom:14px;
+  }
+  #content .list_content .link_post{
+    padding:18px 16px;
+    background:#222;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,0.06);
+    box-shadow:none;
+  }
+  #content .list_content .link_post:hover{ box-shadow:none; }
+  #content .list_content .link_post .category{ display:none; }
+  #content .list_content .link_post .tit_post{ font-size:18px; font-weight:800; -webkit-line-clamp:2; }
+  #content .list_content .link_post .txt_post{ font-size:13px; color:#bdbdbd; -webkit-line-clamp:2; }
+  #content .list_content .detail_info{
+    position:static;
+    margin-top:10px;
+    padding:0 4px;
+    font-size:12px;
+    color:#8f8f8f;
+    pointer-events:none;
+  }
+}
 
 /* ============ 4) List (카드 그리드) ============ */
 /* 목록 카드 높이를 맞추기 위해 플렉스 컨테이너 적용 */
@@ -744,4 +947,3 @@ html body #detail_page .container_postbtn .btn_post .ico_share::before { transfo
 #detail_page .container_postbtn .btn_post .ico_like {
   margin: 4.5px 4px 0 0 !important; /* 위쪽 여백 → 아이콘 내려감 */
 }
-

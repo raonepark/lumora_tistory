@@ -137,6 +137,47 @@
 						<s_permalink_article_rep>
 							<section id="detail_page">
 
+								<!-- Mobile: permalink top bar + search -->
+								<input id="m-search-toggle" class="m-search-toggle m-only" type="checkbox" />
+								<div class="m-postbar m-only">
+									<a class="m-postbar__title" href="[##_blog_link_##]">[##_title_##]</a>
+									<label class="m-postbar__icon" for="m-search-toggle" aria-label="검색">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+											<path
+												d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z" />
+										</svg>
+									</label>
+									<a class="m-postbar__profile" href="[##_blog_link_##]" aria-label="블로그 홈">
+										<img src="[##_image_##]" alt="프로필" />
+									</a>
+								</div>
+								<div class="m-search-overlay m-only">
+									<label class="m-search-backdrop" for="m-search-toggle" aria-hidden="true"></label>
+									<div class="m-search-sheet" role="dialog" aria-modal="true" aria-label="검색">
+										<div class="m-search-header">
+											<strong>검색</strong>
+											<label class="m-search-close" for="m-search-toggle" aria-label="닫기">×</label>
+										</div>
+										<div class="m-search-body">
+											<s_search>
+												<div class="m-search-form">
+													<input placeholder="검색어를 입력하세요." type="text" name="[##_search_name_##]"
+														value="[##_search_text_##]"
+														onkeypress="if (event.keyCode == 13) { [##_search_onclick_submit_##] }" />
+													<button class="m-search-submit" type="button"
+														onclick="[##_search_onclick_submit_##]" aria-label="검색">
+														<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+															aria-hidden="true">
+															<path
+																d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z" />
+														</svg>
+													</button>
+												</div>
+											</s_search>
+										</div>
+									</div>
+								</div>
+
 								<div class="titleWrap">
 									<div class="category">
 										<a href="[##_article_rep_category_link_##]">[##_article_rep_category_##]</a>

@@ -591,7 +591,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     bottom:0 !important;
     z-index:1100 !important;
     padding:12px 16px calc(12px + env(safe-area-inset-bottom)) !important;
-    padding-left:56px !important;
+    padding-left:16px !important;
     background:#111 !important;
     border-top:1px solid rgba(255,255,255,0.08) !important;
     box-sizing:border-box !important;
@@ -663,7 +663,9 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_like{
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M12.1%2021.35l-1.1-1.02C5.14%2015.24%202%2012.39%202%208.94%202%206.5%203.99%204.5%206.5%204.5c1.74%200%203.41.81%204.5%202.09C12.09%205.31%2013.76%204.5%2015.5%204.5%2018.01%204.5%2020%206.5%2020%208.94c0%203.45-3.14%206.3-8.9%2011.39l-1%201.02z'/%3E%3C/svg%3E");
+    margin:0 !important;
   }
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_postbtn{ margin:0 !important; }
 
   #tt-body-page #detail_page .container_postbtn .share_menu,
   #tt-body-page #detail_page .container_postbtn .etc_menu,
@@ -684,7 +686,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   }
   .m-comment-btn{
     position:fixed;
-    left:16px;
+    left:68px;
     bottom:calc(12px + env(safe-area-inset-bottom));
     z-index:1150;
     width:40px;
@@ -808,6 +810,14 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     border-radius:0;
     box-shadow:none;
     box-sizing:border-box;
+    display:grid;
+    grid-template-columns:1fr auto;
+    grid-template-areas:
+      "name name"
+      "pwd pwd"
+      "txt txt"
+      "submit secret";
+    gap:10px 12px;
   }
   #tt-body-page .m-comments-overlay .commentWrite::after{ display:none; }
   #tt-body-page .m-comments-overlay .commentWrite .comment_name,
@@ -816,12 +826,15 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     width:100%;
     margin-right:0;
   }
-  #tt-body-page .m-comments-overlay .commentWrite .comment_txt{ margin-bottom:10px; }
+  #tt-body-page .m-comments-overlay .commentWrite .comment_name{ grid-area:name; margin:0; }
+  #tt-body-page .m-comments-overlay .commentWrite .commemt_pwd{ grid-area:pwd; margin:0; }
+  #tt-body-page .m-comments-overlay .commentWrite .comment_txt{ grid-area:txt; margin:0; }
   #tt-body-page .m-comments-overlay .commentWrite .comment_txt textarea{
     height:84px;
     border-radius:12px;
     background:#222;
   }
+  #tt-body-page .m-comments-overlay .commentWrite .comment_submit{ grid-area:submit; margin:0; }
   #tt-body-page .m-comments-overlay .commentWrite .comment_submit input[type="submit"],
   #tt-body-page .m-comments-overlay .commentWrite .comment_submit button[type="submit"]{
     padding:10px 14px;
@@ -831,12 +844,19 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     color:#fff;
   }
   #tt-body-page .m-comments-overlay .commentWrite .secretWrap{
+    grid-area:secret;
     float:none;
-    margin-top:10px;
+    margin:0;
     padding:0;
     background:transparent;
     border:0;
+    justify-self:end;
+    align-self:end;
+    color:#bdbdbd;
+    font-size:12px;
   }
+  #tt-body-page .m-comments-overlay .commentWrite .secretWrap input[type="checkbox"]{ width:16px; height:16px; }
+  #tt-body-page .m-comments-overlay .commentWrite .secretWrap label{ margin-left:6px; color:#bdbdbd; }
 
   /* Comment list: simple rows */
   #tt-body-page #detail_page .m-comments-overlay .commentlist{
@@ -879,7 +899,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     max-width:none !important;
     margin:0 !important;
     padding:0 !important;
-    padding-right:44px !important; /* room for the "..." button */
+    padding-right:32px !important; /* room for the "..." button */
     background:transparent !important;
     box-shadow:none !important;
     border-radius:0 !important;
@@ -916,11 +936,11 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .m-comments-overlay .commentlist .control .modify,
   #tt-body-page #detail_page .m-comments-overlay .commentlist .control .address{
     position:absolute;
-    top:-4px;
+    top:0;
     right:0;
-    width:32px;
-    height:32px;
-    border-radius:10px;
+    width:24px;
+    height:24px;
+    border-radius:8px;
     background:rgba(255,255,255,0.06);
     display:inline-flex;
     align-items:center;
@@ -934,7 +954,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .m-comments-overlay .commentlist .control .modify::before,
   #tt-body-page #detail_page .m-comments-overlay .commentlist .control .address::before{
     content:"⋯";
-    font-size:22px;
+    font-size:18px;
     line-height:1;
     color:#ddd;
   }
@@ -947,7 +967,8 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     font-size:0;
     text-decoration:none;
   }
-  #tt-body-page #detail_page .m-comments-overlay .commentlist .control .write span{ display:inline; font-size:12px; }
+  #tt-body-page #detail_page .m-comments-overlay .commentlist .control .write span{ display:none; }
+  #tt-body-page #detail_page .m-comments-overlay .commentlist .control .write::after{ content:"답글"; display:inline; font-size:12px; }
 
   #tt-body-page #detail_page .m-comments-overlay .commentlist ul ul{
     margin-left:56px;

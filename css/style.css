@@ -498,6 +498,25 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   }
   #tt-body-page #detail_page .article .tableofcontents{ display:none !important; }
 
+  /* Ads: reduce huge inline margins */
+  #tt-body-page #detail_page .article ins.adsbygoogle,
+  #tt-body-page #detail_page .article ins.kakao_ad_area,
+  #tt-body-page #detail_page .article ins[data-ad-client],
+  #tt-body-page #detail_page .article ins[data-ad-adfit-unit]{
+    display:block !important;
+    margin:16px auto !important;
+    max-width:100% !important;
+  }
+  #tt-body-page #detail_page .article div[data-tistory-react-app="NaverAd"]{
+    margin:16px auto !important;
+    max-width:100% !important;
+  }
+  #tt-body-page #detail_page .article ins.adsbygoogle iframe,
+  #tt-body-page #detail_page .article ins.kakao_ad_area iframe{
+    display:block;
+    max-width:100% !important;
+  }
+
   /* Tags: show after article like plain hashtag list */
   #tt-body-page #detail_page .tagTrail{
     margin:18px 0 0;
@@ -515,6 +534,52 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   }
   #tt-body-page #detail_page .tagTrail a::before{ color:#777; }
 
+  /* Related posts: match mobile list rows */
+  #tt-body-page #detail_page .area_related{ margin:24px 0 0; }
+  #tt-body-page #detail_page .area_related .tit_related{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 0 10px;
+    font-size:18px;
+    font-weight:900;
+  }
+  #tt-body-page #detail_page .area_related .list_related{ margin:0; padding:0; }
+  #tt-body-page #detail_page .area_related .list_related::after{ content:none; display:none; }
+  #tt-body-page #detail_page .area_related .list_related li{
+    float:none;
+    width:100%;
+    margin:0;
+    padding:0;
+    background:transparent;
+    border-radius:0;
+    min-height:0;
+    box-shadow:none;
+    transform:none !important;
+  }
+  #tt-body-page #detail_page .area_related .list_related li a{
+    display:block;
+    height:auto;
+    padding:16px 0;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  #tt-body-page #detail_page .area_related .list_related li:last-child a{ border-bottom:0; }
+  #tt-body-page #detail_page .area_related .list_related li .txt_related{
+    text-align:left;
+    margin:0 0 6px;
+    font-size:16px;
+    font-weight:800;
+    color:#fff;
+    -webkit-line-clamp:2;
+  }
+  #tt-body-page #detail_page .area_related .list_related li .date_related{
+    display:block;
+    text-align:left;
+    font-size:12px;
+    color:#8f8f8f;
+  }
+  #tt-body-page #detail_page .area_related .list_related li .frame_related{ display:none; }
+
   /* Bottom action bar (like/comment/share/...) */
   #tt-body-page #contentWrap{
     padding-bottom:calc(72px + env(safe-area-inset-bottom));
@@ -526,7 +591,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     bottom:0 !important;
     z-index:1100 !important;
     padding:12px 16px calc(12px + env(safe-area-inset-bottom)) !important;
-    padding-left:72px !important;
+    padding-left:56px !important;
     background:#111 !important;
     border-top:1px solid rgba(255,255,255,0.08) !important;
     box-sizing:border-box !important;
@@ -573,12 +638,24 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    background:rgba(255,255,255,0.06);
+    background:transparent;
     cursor:pointer;
     user-select:none;
   }
-  .m-comment-btn:hover{ background:rgba(255,255,255,0.10); }
-  .m-comment-btn svg{ width:20px; height:20px; fill:#ddd; }
+  .m-comment-btn:hover{ background:transparent; }
+  .m-comment-btn .ico_postbtn{
+    display:block;
+    width:14px;
+    height:14px;
+    overflow:hidden;
+    text-indent:-9999px;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:14px 14px;
+  }
+  .m-comment-btn .ico_comment{
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M4%204h16c1.1%200%202%20.9%202%202v12c0%201.1-.9%202-2%202H7l-4%204V6c0-1.1.9-2%202-2z'/%3E%3C/svg%3E");
+  }
   .m-comment-toggle:checked ~ .m-comment-btn{ opacity:0; pointer-events:none; }
 
   .m-comments-overlay{

@@ -693,8 +693,8 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     bottom:0 !important;
     z-index:1100 !important;
     padding:12px 16px calc(12px + env(safe-area-inset-bottom)) !important;
-    padding-left:calc(18px + env(safe-area-inset-left)) !important;
-    padding-right:calc(16px + env(safe-area-inset-right)) !important;
+    padding-left:calc(24px + env(safe-area-inset-left)) !important;
+    padding-right:calc(18px + env(safe-area-inset-right)) !important;
     background:var(--m-bg) !important;
     border-top:1px solid var(--m-border) !important;
     box-sizing:border-box !important;
@@ -847,7 +847,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     width:26px !important;
     height:26px !important;
     background-size:22px 22px !important;
-    background-position:calc(50% + 2px) center !important;
+    background-position:center !important;
     margin:0 !important; /* prevent slight left clipping on some devices */
     position:relative;
     overflow:visible !important;

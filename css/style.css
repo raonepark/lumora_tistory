@@ -639,22 +639,56 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     gap:12px !important;
   }
   #tt-body-page #detail_page .container_postbtn .postbtn_like .wrap_btn_share{ margin-left:auto !important; }
-  #tt-body-page #detail_page .container_postbtn .postbtn_like .wrap_btn_share .btn_post,
-  #tt-body-page #detail_page .container_postbtn .postbtn_like .wrap_btn_etc .btn_post,
-  #tt-body-page #detail_page .container_postbtn .postbtn_like .wrap_btn_share button,
-  #tt-body-page #detail_page .container_postbtn .postbtn_like .wrap_btn_etc button{
+  #tt-body-page #detail_page .container_postbtn .postbtn_like .wrap_btn_share > .btn_post,
+  #tt-body-page #detail_page .container_postbtn .postbtn_like .wrap_btn_etc > .btn_post{
     width:40px;
     height:40px;
     padding:0 !important;
     margin:0 !important;
     border-radius:12px;
     background:transparent !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+
+  /* Share / More icons: avoid sprite visibility issues on dark mobile bar */
+  #tt-body-page #detail_page .container_postbtn .wrap_btn_share .ico_postbtn.ico_share,
+  #tt-body-page #detail_page .container_postbtn .wrap_btn_etc .ico_postbtn.ico_etc{
+    display:block;
+    width:16px;
+    height:16px;
+    overflow:hidden;
+    text-indent:-9999px;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:16px 16px;
+  }
+  #tt-body-page #detail_page .container_postbtn .wrap_btn_share .ico_postbtn.ico_share{
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M12%203l5%205h-3v6h-4V8H7l5-5zm-8%207h2v10h12V10h2v12a2%202%200%200%201-2%202H6a2%202%200%200%201-2-2V10z'/%3E%3C/svg%3E");
+  }
+  #tt-body-page #detail_page .container_postbtn .wrap_btn_etc .ico_postbtn.ico_etc{
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Ccircle%20fill='%23ddd'%20cx='5'%20cy='12'%20r='2'/%3E%3Ccircle%20fill='%23ddd'%20cx='12'%20cy='12'%20r='2'/%3E%3Ccircle%20fill='%23ddd'%20cx='19'%20cy='12'%20r='2'/%3E%3C/svg%3E");
+  }
+
+  @keyframes lumora-like-pop{
+    0%{ transform:scale(1); }
+    45%{ transform:scale(1.35) rotate(-10deg); }
+    100%{ transform:scale(1) rotate(0); }
+  }
+  @keyframes lumora-like-burst{
+    0%{ transform:scale(0.2); opacity:0; }
+    20%{ opacity:0.45; }
+    100%{ transform:scale(1.8); opacity:0; }
   }
 
   /* Like (reaction): icon + count to match other buttons */
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a,
-  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button{
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"],
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"],
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"]{
     min-width:40px;
     height:40px;
     padding:0 6px !important;
@@ -669,18 +703,39 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     gap:6px !important;
     white-space:nowrap;
   }
-  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .txt_like{ display:none !important; }
+  /* Reaction renders icon+count inside `.uoc-icon` (often column); force inline row */
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .uoc-icon{
+    display:inline-flex !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:6px !important;
+    white-space:nowrap;
+  }
+  /* Hide label only; keep count when it is also `.uoc-count` */
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .txt_like:not(.uoc-count){ display:none !important; }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post em,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a em,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button em,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"] em,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"] em,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"] em,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post .uoc-count,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a .uoc-count,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button .uoc-count,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"] .uoc-count,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"] .uoc-count,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"] .uoc-count,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post .count,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a .count,
-  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button .count{
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button .count,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"] .count,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"] .count,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"] .count{
     display:inline !important;
     margin:0 !important;
+    width:auto !important;
+    flex:0 0 auto;
     font-size:12px;
     font-weight:800;
     line-height:1;
@@ -701,7 +756,38 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_like{
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M12.1%2021.35l-1.1-1.02C5.14%2015.24%202%2012.39%202%208.94%202%206.5%203.99%204.5%206.5%204.5c1.74%200%203.41.81%204.5%202.09C12.09%205.31%2013.76%204.5%2015.5%204.5%2018.01%204.5%2020%206.5%2020%208.94c0%203.45-3.14%206.3-8.9%2011.39l-1%201.02z'/%3E%3C/svg%3E");
     margin:0 !important;
+    position:relative;
+    overflow:visible;
+    transition:transform .15s ease;
   }
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_like::after{
+    content:"";
+    position:absolute;
+    inset:-10px;
+    border-radius:999px;
+    border:2px solid rgba(255,59,48,0.45);
+    background:rgba(255,59,48,0.12);
+    opacity:0;
+    transform:scale(0.2);
+    pointer-events:none;
+  }
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"].lumora-like-animate .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .lumora-like-animate .ico_like{
+    animation:lumora-like-pop 420ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"].lumora-like-animate .ico_like::after,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .lumora-like-animate .ico_like::after{
+    animation:lumora-like-burst 520ms ease-out;
+  }
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post:active .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a:active .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button:active .ico_like,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"]:active .ico_like,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"]:active .ico_like,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"]:active .ico_like{
+    transform:scale(0.9);
+  }
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"].lumora-liked .ico_like,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.on .ico_like,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.active .ico_like,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post[aria-pressed="true"] .ico_like,
@@ -710,8 +796,19 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a[aria-pressed="true"] .ico_like,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button.on .ico_like,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button.active .ico_like,
-  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button[aria-pressed="true"] .ico_like{
-    background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23f9f871'%20d='M12.1%2021.35l-1.1-1.02C5.14%2015.24%202%2012.39%202%208.94%202%206.5%203.99%204.5%206.5%204.5c1.74%200%203.41.81%204.5%202.09C12.09%205.31%2013.76%204.5%2015.5%204.5%2018.01%204.5%2020%206.5%2020%208.94c0%203.45-3.14%206.3-8.9%2011.39l-1%201.02z'/%3E%3C/svg%3E");
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button[aria-pressed="true"] .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .empathy_up .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .empathy_up_without_ani .ico_like,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"].on .ico_like,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"].active .ico_like,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"][aria-pressed="true"] .ico_like,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"].on .ico_like,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"].active .ico_like,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"][aria-pressed="true"] .ico_like,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"].on .ico_like,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"].active .ico_like,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"][aria-pressed="true"] .ico_like{
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ff3b30'%20d='M12.1%2021.35l-1.1-1.02C5.14%2015.24%202%2012.39%202%208.94%202%206.5%203.99%204.5%206.5%204.5c1.74%200%203.41.81%204.5%202.09C12.09%205.31%2013.76%204.5%2015.5%204.5%2018.01%204.5%2020%206.5%2020%208.94c0%203.45-3.14%206.3-8.9%2011.39l-1%201.02z'/%3E%3C/svg%3E");
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.on em,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.on .uoc-count,
@@ -739,8 +836,44 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button.active .count,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button[aria-pressed="true"] em,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button[aria-pressed="true"] .uoc-count,
-  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button[aria-pressed="true"] .count{
-    color:#f9f871;
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button[aria-pressed="true"] .count,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"].on em,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"].on .uoc-count,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"].on .count,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"].active em,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"].active .uoc-count,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"].active .count,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"][aria-pressed="true"] em,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"][aria-pressed="true"] .uoc-count,
+  #tt-body-page #detail_page .container_postbtn .btn_post[id^="reaction-"][aria-pressed="true"] .count,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"].on em,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"].on .uoc-count,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"].on .count,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"].active em,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"].active .uoc-count,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"].active .count,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"][aria-pressed="true"] em,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"][aria-pressed="true"] .uoc-count,
+  #tt-body-page #detail_page .container_postbtn a[id^="reaction-"][aria-pressed="true"] .count,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"].on em,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"].on .uoc-count,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"].on .count,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"].active em,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"].active .uoc-count,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"].active .count,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"][aria-pressed="true"] em,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"][aria-pressed="true"] .uoc-count,
+  #tt-body-page #detail_page .container_postbtn button[id^="reaction-"][aria-pressed="true"] .count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .empathy_up,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .empathy_up_without_ani,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .empathy_up .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .empathy_up_without_ani .uoc-count{
+    color:#ff3b30;
+  }
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"].lumora-liked em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"].lumora-liked .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"].lumora-liked .count{
+    color:#ff3b30;
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_postbtn{ margin:0 !important; }
 
@@ -825,10 +958,18 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     height:40px;
     padding:0 6px;
     gap:6px;
+    display:inline-flex !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    justify-content:center !important;
+    white-space:nowrap;
   }
   #tt-body-page #detail_page .container_postbtn .m-comment-btn .ico_comment{
     transform:none;
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M4%204h16a2%202%200%200%201%202%202v12a2%202%200%200%201-2%202H7l-4%204V6a2%202%200%200%201%202-2z'/%3E%3C/svg%3E") !important;
+    background-repeat:no-repeat !important;
+    background-position:center !important;
+    background-size:16px 16px !important;
   }
   #tt-body-page #detail_page .container_postbtn .m-comment-btn .m-comment-count{
     position:static;
@@ -843,6 +984,8 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     font-size:12px;
     font-weight:800;
     line-height:1;
+    display:inline-block !important;
+    margin:0 !important;
   }
 
   .m-comments-overlay{

@@ -15,6 +15,90 @@ $(document).ready(function () {
   */
 
   // ==============================
+  // Mobile list: category label on top bar
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id === "tt-body-page") return;
+    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+
+    var labelEl = document.querySelector(".m-topbar__text");
+    if (!labelEl) return;
+
+    var bodyId = document.body.id || "";
+    var currentPath = String(location.pathname || "").replace(/\/+$/, "");
+    var isCategoryPage =
+      bodyId === "tt-body-category" || currentPath === "/category" || currentPath.indexOf("/category/") === 0;
+    if (!isCategoryPage) return;
+
+    function normalizeText(text) {
+      return String(text || "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function safeDecode(value) {
+      try {
+        return decodeURIComponent(String(value || ""));
+      } catch (e) {
+        return String(value || "");
+      }
+    }
+
+    function normalizePath(href) {
+      if (!href) return "";
+      try {
+        var u = new URL(href, location.origin);
+        return String(u.pathname || "").replace(/\/+$/, "");
+      } catch (e) {
+        var s = String(href || "").split(/[?#]/)[0];
+        if (s.indexOf(location.origin) === 0) s = s.slice(location.origin.length);
+        return s.replace(/\/+$/, "");
+      }
+    }
+
+    function getCategoryNameFromLink(a) {
+      if (!a) return "";
+      var clone = a.cloneNode(true);
+      var remove = clone.querySelectorAll(".c_cnt, img, svg");
+      for (var i = 0; i < remove.length; i++) {
+        if (remove[i] && remove[i].parentNode) remove[i].parentNode.removeChild(remove[i]);
+      }
+      var text = normalizeText(clone.textContent);
+      return text;
+    }
+
+    var currentDecoded = safeDecode(currentPath);
+    var links = document.querySelectorAll(".m-cat-body a[href], #sidebar .tt_category a[href], #sidebar .category a[href]");
+    if (!links || !links.length) return;
+
+    var bestText = "";
+    var bestLen = 0;
+
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      var p = normalizePath(a.getAttribute("href") || a.href);
+      if (!p) continue;
+
+      var decoded = safeDecode(p);
+      if (decoded === "/category") continue;
+
+      var matches = currentDecoded === decoded || currentDecoded.indexOf(decoded + "/") === 0;
+      if (!matches) continue;
+
+      if (decoded.length <= bestLen) continue;
+      var name = getCategoryNameFromLink(a);
+      if (!name) continue;
+
+      bestText = name;
+      bestLen = decoded.length;
+    }
+
+    if (bestText) {
+      labelEl.textContent = bestText;
+    }
+  })();
+
+  // ==============================
   // TOC 생성/스크롤 하이라이트 (겹침 방지 클램프 포함)
   // ==============================
   var toc = $("#detail_page .article .tableofcontents");

@@ -399,6 +399,35 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   .m-postbar__icon:hover{ background:rgba(255,255,255,0.10); }
   .m-postbar__icon svg{ width:20px; height:20px; fill:#ddd; }
 
+  /* Subscribe button (moved from bottom bar) */
+  .m-postbar__subscribe{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    height:40px;
+    padding:0 12px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid var(--m-border);
+    color:#fff !important;
+    font-size:13px;
+    font-weight:900;
+    line-height:1;
+    text-decoration:none !important;
+    white-space:nowrap;
+    cursor:pointer;
+    user-select:none;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .m-postbar__subscribe:hover{
+    background:rgba(255,255,255,0.10);
+    border-color:var(--m-border-strong);
+  }
+  .m-postbar__subscribe .txt_state{
+    font-size:13px !important;
+    line-height:1;
+  }
+
   .m-postbar__profile{
     display:inline-flex;
     align-items:center;

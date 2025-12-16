@@ -550,10 +550,10 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     background:transparent;
     border:0;
     border-radius:0;
-    color:#bdbdbd !important;
+    color:rgba(255,255,255,0.62) !important;
     font-size:14px;
   }
-  #tt-body-page #detail_page .tagTrail a::before{ color:#777; }
+  #tt-body-page #detail_page .tagTrail a::before{ color:rgba(255,255,255,0.35); }
 
   /* Related posts: match mobile list rows */
   #tt-body-page #detail_page .area_related{ margin:24px 0 0; }

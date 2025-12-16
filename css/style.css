@@ -404,6 +404,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     display:inline-flex;
     align-items:center;
     justify-content:center;
+    margin-left:auto;
     height:40px;
     padding:0 12px;
     border-radius:12px;
@@ -423,6 +424,8 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     background:rgba(255,255,255,0.10);
     border-color:var(--m-border-strong);
   }
+  /* When subscribe exists, keep search icon next to it (avoid double auto margins) */
+  .m-postbar__subscribe + .m-postbar__icon{ margin-left:0; }
   .m-postbar__subscribe .txt_state{
     font-size:13px !important;
     line-height:1;

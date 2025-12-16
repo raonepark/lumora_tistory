@@ -1,4 +1,4 @@
-// Lumora custom script v34
+// Lumora custom script v35
 $(document).ready(function () {
   var list = $(".list_content");
 
@@ -766,42 +766,106 @@ $(document).ready(function () {
   })();
 
   // ==============================
-  // Mobile: move subscribe button into top post bar (next to search)
+  // Mobile: show subscribe button on top post bar
   // ==============================
   (function () {
     if (!document.body || document.body.id !== "tt-body-page") return;
-    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+    if (!window.matchMedia) return;
 
-    var $bar = $(".m-postbar").first();
-    if (!$bar.length) return;
+    var media = window.matchMedia("(max-width:1024px)");
+    if (!media.matches) return;
 
-    var SUBSCRIBE_SELECTOR = [
-      '#detail_page .container_postbtn .btn_subscribe',
-      '#detail_page .container_postbtn a[href*="subscribe"]',
-      '#detail_page .container_postbtn a[href*="follow"]',
-      '#detail_page .container_postbtn a[class*="subscribe"]',
-      '#detail_page .container_postbtn button[class*="subscribe"]'
-    ].join(', ');
-
-    var $subscribe = $(SUBSCRIBE_SELECTOR).first();
-    if (!$subscribe.length) return;
-
-    if (!$subscribe.is("a, button")) {
-      var $clickable = $subscribe.find("a, button").first();
-      if (!$clickable.length) return;
-      $subscribe = $clickable;
+    function normalizeText(text) {
+      return String(text || "")
+        .replace(/\s+/g, " ")
+        .trim();
     }
 
-    if ($subscribe.closest(".m-postbar").length) return;
+    function findSubscribeInPostButtons() {
+      var selector = [
+        "#detail_page .container_postbtn .btn_subscribe",
+        '#detail_page .container_postbtn [data-tistory-react-app*="Subscribe"]',
+        '#detail_page .container_postbtn [data-tistory-react-app*="subscribe"]',
+        '#detail_page .container_postbtn a[href*="subscribe"]',
+        '#detail_page .container_postbtn a[href*="follow"]',
+        '#detail_page .container_postbtn a[class*="subscribe"]',
+        '#detail_page .container_postbtn button[class*="subscribe"]',
+        '#detail_page .container_page a[href*="subscribe"]',
+        '#detail_page .container_page a[href*="follow"]'
+      ].join(", ");
 
-    $subscribe.addClass("m-postbar__subscribe");
+      var $el = $(selector).first();
+      if ($el.length) return $el;
 
-    var $search = $bar.find(".m-postbar__icon").first();
-    if ($search.length) {
-      $subscribe.insertAfter($search);
-    } else {
-      $bar.append($subscribe);
+      // Fallback: 티스토리 구독 버튼이 .btn_menu_toolbar로 들어오는 경우(클래스에 subscribe가 없음)
+      $el = $("#detail_page .container_postbtn .btn_menu_toolbar, #detail_page .container_postbtn a, #detail_page .container_postbtn button")
+        .filter(function () {
+          var text = normalizeText(this.textContent);
+          if (!text) return false;
+          if (text.indexOf("구독") !== -1) return true;
+          var lower = text.toLowerCase();
+          return lower.indexOf("subscribe") !== -1 || lower.indexOf("follow") !== -1;
+        })
+        .first();
+
+      return $el;
     }
+
+    function resolveClickable($el) {
+      if (!$el || !$el.length) return $();
+      if ($el.is("a, button")) return $el;
+      var $clickable = $el.find("a, button").first();
+      return $clickable.length ? $clickable : $el;
+    }
+
+    function apply() {
+      if (!document.body || document.body.id !== "tt-body-page") return;
+      if (!media.matches) return;
+
+      var $bar = $(".m-postbar").first();
+      if (!$bar.length) return;
+
+      var $subscribeRaw = findSubscribeInPostButtons();
+      if (!$subscribeRaw.length) return;
+
+      var $subscribe = resolveClickable($subscribeRaw);
+      if (!$subscribe.length) return;
+
+      if ($subscribe.closest(".m-postbar").length) return;
+
+      $subscribe.addClass("m-postbar__subscribe");
+
+      var $search = $bar.find(".m-postbar__icon").first();
+      if ($search.length) {
+        $subscribe.insertBefore($search);
+      } else {
+        $bar.append($subscribe);
+      }
+    }
+
+    var scheduled = false;
+    function scheduleApply() {
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(function () {
+        scheduled = false;
+        apply();
+      }, 120);
+    }
+
+    scheduleApply();
+    $(window).on("load", scheduleApply);
+
+    var target =
+      document.querySelector("#detail_page .container_postbtn") ||
+      document.querySelector("#detail_page") ||
+      document.body;
+    if (!target || typeof MutationObserver !== "function") return;
+
+    var observer = new MutationObserver(function () {
+      scheduleApply();
+    });
+    observer.observe(target, { childList: true, subtree: true });
   })();
 
   // ==============================

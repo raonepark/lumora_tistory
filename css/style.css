@@ -652,7 +652,9 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   }
 
   /* Like (reaction): icon + count to match other buttons */
-  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post{
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button{
     min-width:40px;
     height:40px;
     padding:0 6px !important;
@@ -660,19 +662,30 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     border-radius:12px;
     background:transparent !important;
     display:inline-flex !important;
+    flex-direction:row !important;
     align-items:center !important;
     justify-content:center !important;
+    flex-wrap:nowrap;
     gap:6px !important;
+    white-space:nowrap;
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .txt_like{ display:none !important; }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button em,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post .uoc-count,
-  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post .count{
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post .count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a .count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button .count{
     display:inline !important;
+    margin:0 !important;
     font-size:12px;
     font-weight:800;
     line-height:1;
     color:#ddd;
+    order:2;
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_postbtn{
     display:block;
@@ -683,6 +696,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     background-repeat:no-repeat;
     background-position:center;
     background-size:16px 16px;
+    order:1;
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_like{
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M12.1%2021.35l-1.1-1.02C5.14%2015.24%202%2012.39%202%208.94%202%206.5%203.99%204.5%206.5%204.5c1.74%200%203.41.81%204.5%202.09C12.09%205.31%2013.76%204.5%2015.5%204.5%2018.01%204.5%2020%206.5%2020%208.94c0%203.45-3.14%206.3-8.9%2011.39l-1%201.02z'/%3E%3C/svg%3E");
@@ -690,7 +704,13 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.on .ico_like,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.active .ico_like,
-  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post[aria-pressed="true"] .ico_like{
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post[aria-pressed="true"] .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a.on .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a.active .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a[aria-pressed="true"] .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button.on .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button.active .ico_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button[aria-pressed="true"] .ico_like{
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23f9f871'%20d='M12.1%2021.35l-1.1-1.02C5.14%2015.24%202%2012.39%202%208.94%202%206.5%203.99%204.5%206.5%204.5c1.74%200%203.41.81%204.5%202.09C12.09%205.31%2013.76%204.5%2015.5%204.5%2018.01%204.5%2020%206.5%2020%208.94c0%203.45-3.14%206.3-8.9%2011.39l-1%201.02z'/%3E%3C/svg%3E");
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.on em,
@@ -701,7 +721,25 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.active .count,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post[aria-pressed="true"] em,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post[aria-pressed="true"] .uoc-count,
-  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post[aria-pressed="true"] .count{
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post[aria-pressed="true"] .count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a.on em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a.on .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a.on .count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a.active em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a.active .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a.active .count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a[aria-pressed="true"] em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a[aria-pressed="true"] .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a[aria-pressed="true"] .count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button.on em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button.on .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button.on .count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button.active em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button.active .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button.active .count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button[aria-pressed="true"] em,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button[aria-pressed="true"] .uoc-count,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button[aria-pressed="true"] .count{
     color:#f9f871;
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_postbtn{ margin:0 !important; }
@@ -755,7 +793,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     background-size:16px 16px;
   }
   .m-comment-btn .ico_comment{
-    background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M4%204h16a2%202%200%200%201%202%202v12a2%202%200%200%201-2%202H7l-4%204V6a2%202%200%200%201%202-2z'/%3E%3C/svg%3E");
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M4%204h16a2%202%200%200%201%202%202v12a2%202%200%200%201-2%202H7l-4%204V6a2%202%200%200%201%202-2z'/%3E%3C/svg%3E") !important;
     transform:translateY(-1px);
   }
   .m-comment-btn .m-comment-count{
@@ -788,7 +826,10 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     padding:0 6px;
     gap:6px;
   }
-  #tt-body-page #detail_page .container_postbtn .m-comment-btn .ico_comment{ transform:none; }
+  #tt-body-page #detail_page .container_postbtn .m-comment-btn .ico_comment{
+    transform:none;
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M4%204h16a2%202%200%200%201%202%202v12a2%202%200%200%201-2%202H7l-4%204V6a2%202%200%200%201%202-2z'/%3E%3C/svg%3E") !important;
+  }
   #tt-body-page #detail_page .container_postbtn .m-comment-btn .m-comment-count{
     position:static;
     top:auto;

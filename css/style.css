@@ -741,13 +741,13 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .container_postbtn .wrap_btn_share .ico_postbtn.ico_share,
   #tt-body-page #detail_page .container_postbtn .wrap_btn_etc .ico_postbtn.ico_etc{
     display:block;
-    width:16px;
-    height:16px;
+    width:18px;
+    height:18px;
     overflow:hidden;
     text-indent:-9999px;
     background-repeat:no-repeat;
     background-position:center;
-    background-size:16px 16px;
+    background-size:18px 18px;
   }
   #tt-body-page #detail_page .container_postbtn .wrap_btn_share .ico_postbtn.ico_share{
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M12%203l5%205h-3v6h-4V8H7l5-5zm-8%207h2v10h12V10h2v12a2%202%200%200%201-2%202H6a2%202%200%200%201-2-2V10z'/%3E%3C/svg%3E");
@@ -829,13 +829,13 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_postbtn{
     display:block;
-    width:16px;
-    height:16px;
+    width:18px;
+    height:18px;
     overflow:hidden;
     text-indent:-9999px;
     background-repeat:no-repeat;
     background-position:center;
-    background-size:16px 16px;
+    background-size:18px 18px;
     order:1;
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_like{
@@ -1002,13 +1002,13 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   .m-comment-btn:hover{ background:transparent; }
   .m-comment-btn .ico_postbtn{
     display:block;
-    width:16px;
-    height:16px;
+    width:18px;
+    height:18px;
     overflow:hidden;
     text-indent:-9999px;
     background-repeat:no-repeat;
     background-position:center;
-    background-size:16px 16px;
+    background-size:18px 18px;
   }
   .m-comment-btn .ico_comment{
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M4%204h16a2%202%200%200%201%202%202v12a2%202%200%200%201-2%202H7l-4%204V6a2%202%200%200%201%202-2z'/%3E%3C/svg%3E") !important;
@@ -1054,7 +1054,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M4%204h16a2%202%200%200%201%202%202v12a2%202%200%200%201-2%202H7l-4%204V6a2%202%200%200%201%202-2z'/%3E%3C/svg%3E") !important;
     background-repeat:no-repeat !important;
     background-position:center !important;
-    background-size:16px 16px !important;
+    background-size:18px 18px !important;
   }
   #tt-body-page #detail_page .container_postbtn .m-comment-btn .m-comment-count{
     position:static;

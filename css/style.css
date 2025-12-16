@@ -290,17 +290,17 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     width:44px;
     height:44px;
     border-radius:14px;
-    color:#fff;
+    color:rgba(255,255,255,0.9);
     font-size:22px;
     font-weight:900;
     line-height:1;
-    background:rgba(255,255,255,0.08);
-    border:1px solid var(--m-border);
+    background:transparent;
+    border:0;
     cursor:pointer;
     user-select:none;
     -webkit-tap-highlight-color:transparent;
   }
-  .m-cat-close:hover{ background:rgba(255,255,255,0.12); border-color:var(--m-border-strong); }
+  .m-cat-close:hover{ background:transparent; color:#fff; }
 
   .m-cat-body{ padding:8px 0 24px; }
   .m-cat-body{ overflow:auto; max-height:calc(100vh - 74px); }
@@ -463,17 +463,17 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     width:44px;
     height:44px;
     border-radius:14px;
-    color:#fff;
+    color:rgba(255,255,255,0.9);
     font-size:22px;
     font-weight:900;
     line-height:1;
-    background:rgba(255,255,255,0.08);
-    border:1px solid var(--m-border);
+    background:transparent;
+    border:0;
     cursor:pointer;
     user-select:none;
     -webkit-tap-highlight-color:transparent;
   }
-  .m-search-close:hover{ background:rgba(255,255,255,0.12); border-color:var(--m-border-strong); }
+  .m-search-close:hover{ background:transparent; color:#fff; }
   .m-search-body{ padding:18px; }
   .m-search-form{
     display:flex;
@@ -1091,17 +1091,17 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     width:44px;
     height:44px;
     border-radius:14px;
-    color:#fff;
+    color:rgba(255,255,255,0.9);
     font-size:22px;
     font-weight:900;
     line-height:1;
-    background:rgba(255,255,255,0.08);
-    border:1px solid var(--m-border);
+    background:transparent;
+    border:0;
     cursor:pointer;
     user-select:none;
     -webkit-tap-highlight-color:transparent;
   }
-  .m-comments-back:hover{ background:rgba(255,255,255,0.12); border-color:var(--m-border-strong); }
+  .m-comments-back:hover{ background:transparent; color:#fff; }
   .m-comments-body{
     flex:1;
     overflow:auto;

@@ -1,4 +1,4 @@
-// Lumora custom script v35
+// Lumora custom script v36
 $(document).ready(function () {
   var list = $(".list_content");
 
@@ -818,6 +818,64 @@ $(document).ready(function () {
       return $clickable.length ? $clickable : $el;
     }
 
+    function escapeRegExp(value) {
+      return String(value || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function cleanSubscribeLabel($subscribe, $bar) {
+      if (!$subscribe || !$subscribe.length) return;
+      if (!$bar || !$bar.length) return;
+
+      var blogTitle = normalizeText($bar.find(".m-postbar__title").first().text());
+      if (!blogTitle) return;
+
+      var blogTitleLower = blogTitle.toLowerCase();
+      var titleRx = new RegExp(escapeRegExp(blogTitle), "ig");
+
+      function cleanupText(raw) {
+        var t = normalizeText(String(raw || ""));
+        if (!t) return "";
+        t = normalizeText(t.replace(titleRx, ""));
+        t = t.replace(/^[\s|·•\-]+/g, "").replace(/[\s|·•\-]+$/g, "").trim();
+        return t;
+      }
+
+      var $state = $subscribe.find(".txt_state").first();
+      if ($state.length) {
+        var rawState = normalizeText($state.text());
+        var cleanedState = cleanupText(rawState);
+        if (cleanedState && cleanedState !== rawState) {
+          $state.text(cleanedState);
+        }
+      }
+
+      $subscribe.contents().each(function () {
+        if (this.nodeType !== 3) return;
+        var t = normalizeText(this.nodeValue);
+        if (!t) return;
+
+        var lower = t.toLowerCase();
+        if (lower === blogTitleLower) {
+          this.nodeValue = "";
+          return;
+        }
+
+        if (lower.indexOf(blogTitleLower) !== -1) {
+          var cleaned = cleanupText(t);
+          if (cleaned !== t) this.nodeValue = cleaned;
+        }
+      });
+
+      $subscribe.find("*").each(function () {
+        if (!this || (this.children && this.children.length)) return;
+        var t = normalizeText(this.textContent);
+        if (!t) return;
+        if (t.toLowerCase() === blogTitleLower) {
+          this.style.setProperty("display", "none", "important");
+        }
+      });
+    }
+
     function apply() {
       if (!document.body || document.body.id !== "tt-body-page") return;
       if (!media.matches) return;
@@ -834,6 +892,7 @@ $(document).ready(function () {
       if ($subscribe.closest(".m-postbar").length) return;
 
       $subscribe.addClass("m-postbar__subscribe");
+      cleanSubscribeLabel($subscribe, $bar);
 
       var $search = $bar.find(".m-postbar__icon").first();
       if ($search.length) {

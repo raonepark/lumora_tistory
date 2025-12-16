@@ -526,6 +526,18 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     max-width:100% !important;
   }
 
+  /* Ads: hide unfilled/empty placeholders (mobile) */
+  #tt-body-page #detail_page ins.adsbygoogle[data-ad-status="unfilled"],
+  #tt-body-page #detail_page ins.kakao_ad_area[data-ad-status="unfilled"],
+  #tt-body-page #detail_page ins[data-ad-client][data-ad-status="unfilled"],
+  #tt-body-page #detail_page ins[data-ad-adfit-unit][data-ad-status="unfilled"],
+  #tt-body-page #detail_page div[data-tistory-react-app="NaverAd"]:empty{
+    display:none !important;
+    margin:0 !important;
+    padding:0 !important;
+    height:0 !important;
+  }
+
   /* Tags: show after article like plain hashtag list */
   #tt-body-page #detail_page .tagTrail{
     margin:18px 0 0;

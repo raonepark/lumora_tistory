@@ -882,6 +882,109 @@ $(document).ready(function () {
   })();
 
   // ==============================
+  // Mobile: hide empty ad placeholders
+  // - 광고가 로드되지 않아 빈 박스로 남는 영역 제거
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+
+    var AD_SELECTOR = [
+      "#detail_page ins.adsbygoogle",
+      "#detail_page ins.kakao_ad_area",
+      "#detail_page ins[data-ad-client]",
+      "#detail_page ins[data-ad-adfit-unit]",
+      '#detail_page div[data-tistory-react-app="NaverAd"]'
+    ].join(", ");
+
+    function normalizeText(text) {
+      return String(text || "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function hasMeaningfulChild(el) {
+      if (!el) return false;
+      if (el.querySelector && el.querySelector("iframe, img, video")) return true;
+
+      var nodes = el.childNodes || [];
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        if (n.nodeType === 1) {
+          var tag = (n.tagName || "").toLowerCase();
+          if (tag === "script" || tag === "style" || tag === "noscript") continue;
+          if ((n.offsetWidth || 0) > 0 && (n.offsetHeight || 0) > 0) return true;
+          if (normalizeText(n.textContent)) return true;
+        } else if (n.nodeType === 3) {
+          if (normalizeText(n.textContent)) return true;
+        }
+      }
+      return false;
+    }
+
+    function shouldHide(el) {
+      if (!el) return false;
+
+      var status = el.getAttribute ? el.getAttribute("data-ad-status") : null;
+      if (status === "filled") return false;
+      if (status === "unfilled") return true;
+
+      if (el.querySelector && el.querySelector("iframe")) return false;
+      if (hasMeaningfulChild(el)) return false;
+
+      var rect = el.getBoundingClientRect ? el.getBoundingClientRect() : null;
+      var height = rect ? rect.height : el.offsetHeight;
+      var width = rect ? rect.width : el.offsetWidth;
+
+      return height >= 40 && width >= 100;
+    }
+
+    function hide(el) {
+      if (!el || el.__lumoraAdHidden) return;
+      el.__lumoraAdHidden = true;
+      el.style.setProperty("display", "none", "important");
+      el.style.setProperty("margin", "0", "important");
+      el.style.setProperty("padding", "0", "important");
+      el.style.setProperty("height", "0", "important");
+    }
+
+    function scan() {
+      var nodes = document.querySelectorAll(AD_SELECTOR);
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        if (shouldHide(el)) hide(el);
+      }
+    }
+
+    scan();
+    window.addEventListener("load", function () {
+      // give ad scripts a chance to render before deciding it's empty
+      setTimeout(scan, 900);
+      setTimeout(scan, 2500);
+      setTimeout(scan, 5200);
+    });
+
+    var target = document.querySelector("#detail_page") || document.body;
+    if (!target || typeof MutationObserver !== "function") return;
+
+    var scheduled = false;
+    var observer = new MutationObserver(function () {
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(function () {
+        scheduled = false;
+        scan();
+      }, 250);
+    });
+    observer.observe(target, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["data-ad-status", "style", "class"]
+    });
+  })();
+
+  // ==============================
   // Mobile: related posts summary (fetch og:description)
   // - 티스토리 관련글 치환자에는 summary가 없어 JS로 채움
   // ==============================

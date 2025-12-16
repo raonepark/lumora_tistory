@@ -147,8 +147,33 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   .m-list-only{ display:block; }
   #tt-body-page .m-list-only{ display:none; }
 
-  #sidebar .search{ background:var(--m-surface); border:1px solid var(--m-border); }
-  #sidebar .search > input{ background:transparent; }
+  #sidebar .search{
+    position:relative;
+    background:var(--m-surface);
+    border:1px solid var(--m-border);
+    padding:0;
+    text-align:left;
+  }
+  #sidebar .search input{
+    display:block;
+    width:100%;
+    background:transparent;
+    border:0;
+    padding:14px 52px 14px 16px; /* leave room for the search icon */
+    color:#fff;
+    box-sizing:border-box;
+  }
+  #sidebar .search input::placeholder{ color:#a8a8a8; }
+  #sidebar .search svg{
+    position:absolute;
+    right:16px;
+    top:50%;
+    transform:translateY(-50%);
+    width:18px;
+    height:18px;
+    fill:#ddd;
+  }
+  #sidebar .search svg:hover{ fill:#fff; }
 
   /* Guestbook button (mobile) */
   #sidebar .m-guestbook{ width:90%; margin:0 auto 15px; }

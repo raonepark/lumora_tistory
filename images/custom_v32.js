@@ -1,3 +1,4 @@
+// Lumora custom script v32
 $(document).ready(function () {
   var list = $(".list_content");
 
@@ -13,6 +14,90 @@ $(document).ready(function () {
     }
   }
   */
+
+  // ==============================
+  // Mobile list: category label on top bar
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id === "tt-body-page") return;
+    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+
+    var labelEl = document.querySelector(".m-topbar__text");
+    if (!labelEl) return;
+
+    var bodyId = document.body.id || "";
+    var currentPath = String(location.pathname || "").replace(/\/+$/, "");
+    var isCategoryPage =
+      bodyId === "tt-body-category" || currentPath === "/category" || currentPath.indexOf("/category/") === 0;
+    if (!isCategoryPage) return;
+
+    function normalizeText(text) {
+      return String(text || "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function safeDecode(value) {
+      try {
+        return decodeURIComponent(String(value || ""));
+      } catch (e) {
+        return String(value || "");
+      }
+    }
+
+    function normalizePath(href) {
+      if (!href) return "";
+      try {
+        var u = new URL(href, location.origin);
+        return String(u.pathname || "").replace(/\/+$/, "");
+      } catch (e) {
+        var s = String(href || "").split(/[?#]/)[0];
+        if (s.indexOf(location.origin) === 0) s = s.slice(location.origin.length);
+        return s.replace(/\/+$/, "");
+      }
+    }
+
+    function getCategoryNameFromLink(a) {
+      if (!a) return "";
+      var clone = a.cloneNode(true);
+      var remove = clone.querySelectorAll(".c_cnt, img, svg");
+      for (var i = 0; i < remove.length; i++) {
+        if (remove[i] && remove[i].parentNode) remove[i].parentNode.removeChild(remove[i]);
+      }
+      var text = normalizeText(clone.textContent);
+      return text;
+    }
+
+    var currentDecoded = safeDecode(currentPath);
+    var links = document.querySelectorAll(".m-cat-body a[href], #sidebar .tt_category a[href], #sidebar .category a[href]");
+    if (!links || !links.length) return;
+
+    var bestText = "";
+    var bestLen = 0;
+
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      var p = normalizePath(a.getAttribute("href") || a.href);
+      if (!p) continue;
+
+      var decoded = safeDecode(p);
+      if (decoded === "/category") continue;
+
+      var matches = currentDecoded === decoded || currentDecoded.indexOf(decoded + "/") === 0;
+      if (!matches) continue;
+
+      if (decoded.length <= bestLen) continue;
+      var name = getCategoryNameFromLink(a);
+      if (!name) continue;
+
+      bestText = name;
+      bestLen = decoded.length;
+    }
+
+    if (bestText) {
+      labelEl.textContent = bestText;
+    }
+  })();
 
   // ==============================
   // TOC 생성/스크롤 하이라이트 (겹침 방지 클램프 포함)
@@ -648,5 +733,547 @@ $(document).ready(function () {
       }, 150);
     });
     observer.observe(observerTarget, { childList: true, subtree: true });
+  })();
+
+  // ==============================
+  // Mobile: move comment toggle button into bottom post button bar
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+
+    var $btn = $(".m-comment-btn").first();
+    var $toggle = $("#m-comment-toggle").first();
+    if (!$btn.length || !$toggle.length) return;
+
+    var $postbtn = $("#detail_page .container_postbtn .postbtn_like").first();
+    if (!$postbtn.length) return;
+    if ($btn.closest(".container_postbtn").length) return;
+
+    var $reaction = $postbtn.find('[id^="reaction-"]').first();
+    if ($reaction.length) {
+      $btn.insertAfter($reaction);
+      return;
+    }
+
+    var $share = $postbtn.find(".wrap_btn_share").first();
+    if ($share.length) {
+      $btn.insertBefore($share);
+      return;
+    }
+
+    $postbtn.prepend($btn);
+  })();
+
+  // ==============================
+  // Mobile: like (reaction) pop animation
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+
+    var WRAP_SELECTOR = '#detail_page .container_postbtn [id^="reaction-"]';
+    var CLICK_SELECTOR =
+      WRAP_SELECTOR + " .btn_post, " + WRAP_SELECTOR + " a, " + WRAP_SELECTOR + " button";
+
+    function hasActiveHint($el) {
+      if (!$el || !$el.length) return false;
+      if ($el.hasClass("on") || $el.hasClass("active")) return true;
+      if ($el.hasClass("empathy_up") || $el.hasClass("empathy_up_without_ani")) return true;
+      return $el.attr("aria-pressed") === "true";
+    }
+
+    function isLikedByDom($wrap) {
+      if (!$wrap || !$wrap.length) return false;
+      if (hasActiveHint($wrap)) return true;
+      return (
+        $wrap.find('[aria-pressed="true"], .on, .active, .empathy_up, .empathy_up_without_ani').length > 0
+      );
+    }
+
+    function getCount($wrap) {
+      if (!$wrap || !$wrap.length) return null;
+      var $el = $wrap.find(".uoc-count, .count, .txt_like").first();
+      if (!$el.length) return null;
+      var raw = String($el.text() || "").replace(/[^\d]/g, "");
+      if (!raw) return null;
+      var n = parseInt(raw, 10);
+      if (isNaN(n)) return null;
+      return n;
+    }
+
+    function animate($wrap) {
+      if (!$wrap || !$wrap.length) return;
+      var el = $wrap[0];
+      $wrap.removeClass("lumora-like-animate");
+      void el.offsetWidth;
+      $wrap.addClass("lumora-like-animate");
+
+      if (el.__lumoraLikeTimer) {
+        clearTimeout(el.__lumoraLikeTimer);
+      }
+      el.__lumoraLikeTimer = setTimeout(function () {
+        $wrap.removeClass("lumora-like-animate");
+        el.__lumoraLikeTimer = null;
+      }, 700);
+    }
+
+    function setLikedClass($wrap, liked) {
+      if (!$wrap || !$wrap.length) return;
+      $wrap.toggleClass("lumora-liked", !!liked);
+    }
+
+    function syncInitial() {
+      $(WRAP_SELECTOR).each(function () {
+        var $wrap = $(this);
+        if (isLikedByDom($wrap)) {
+          setLikedClass($wrap, true);
+        }
+      });
+    }
+
+    syncInitial();
+    $(window).on("load", syncInitial);
+
+    (function observeReactionRender() {
+      var target =
+        document.querySelector("#detail_page .container_postbtn") ||
+        document.querySelector("#detail_page") ||
+        document.body;
+      if (!target || typeof MutationObserver !== "function") return;
+
+      var scheduled = false;
+      var observer = new MutationObserver(function () {
+        if (scheduled) return;
+        scheduled = true;
+        setTimeout(function () {
+          scheduled = false;
+          syncInitial();
+        }, 120);
+      });
+      observer.observe(target, { childList: true, subtree: true });
+    })();
+
+    $(document)
+      .off("click.lumoraLikeAnim", CLICK_SELECTOR)
+      .on("click.lumoraLikeAnim", CLICK_SELECTOR, function () {
+        var $clicked = $(this);
+        var $wrap = $clicked.closest('[id^="reaction-"]');
+        if (!$wrap.length) return;
+
+        var wasLiked = $wrap.hasClass("lumora-liked") || isLikedByDom($wrap);
+        var beforeCount = getCount($wrap);
+
+        var el = $wrap[0];
+        if (el.__lumoraLikeSyncTimer) {
+          clearTimeout(el.__lumoraLikeSyncTimer);
+        }
+
+        var attempts = 0;
+
+        function trySync() {
+          attempts += 1;
+
+          var afterCount = getCount($wrap);
+          var domLiked = isLikedByDom($wrap);
+
+          var nextLiked = null;
+          if (domLiked) {
+            nextLiked = true;
+          } else if (beforeCount != null && afterCount != null) {
+            if (afterCount > beforeCount) nextLiked = true;
+            if (afterCount < beforeCount) nextLiked = false;
+          }
+
+          if (nextLiked === null) {
+            if (attempts < 3) {
+              el.__lumoraLikeSyncTimer = setTimeout(trySync, 220);
+              return;
+            }
+            el.__lumoraLikeSyncTimer = null;
+            return;
+          }
+
+          el.__lumoraLikeSyncTimer = null;
+          setLikedClass($wrap, nextLiked);
+          if (!wasLiked && nextLiked) {
+            animate($wrap);
+          }
+        }
+
+        el.__lumoraLikeSyncTimer = setTimeout(trySync, 220);
+      });
+  })();
+
+  // ==============================
+  // Mobile: lock background scroll when comment overlay is open
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+
+    var $toggle = $("#m-comment-toggle").first();
+    if (!$toggle.length) return;
+
+    function sync() {
+      var isOpen = !!$toggle.prop("checked");
+      $("html").toggleClass("m-lock-scroll", isOpen);
+      $("body").toggleClass("m-lock-scroll", isOpen);
+    }
+
+    $toggle.off(".lockScroll").on("change.lockScroll", sync);
+    sync();
+  })();
+
+  // ==============================
+  // Mobile: comment count badge/header
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!$(".m-comment-count--btn, .m-comment-count--header").length) return;
+
+    function getCommentCount() {
+      var $list = $("#detail_page .commentlist");
+      if (!$list.length) return 0;
+      return $list.find('li[id^="comment"]').length;
+    }
+
+    function render() {
+      var count = getCommentCount();
+      var text = count > 0 ? String(count) : "";
+      $(".m-comment-count--btn").text(text);
+      $(".m-comment-count--header").text(text);
+    }
+
+    render();
+    $(window).on("load", render);
+
+    var target =
+      document.querySelector("#detail_page .commentlist") ||
+      document.querySelector("#detail_page") ||
+      document.body;
+    if (!target || typeof MutationObserver !== "function") return;
+
+    var scheduled = false;
+    var observer = new MutationObserver(function () {
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(function () {
+        scheduled = false;
+        render();
+      }, 100);
+    });
+    observer.observe(target, { childList: true, subtree: true });
+  })();
+
+  // ==============================
+  // Mobile: hide comment "more" menu for non-owner
+  // - 티스토리 댓글 HTML에는 비로그인(ROLE=guest)이어도 deleteComment 링크가 내려올 수 있어
+  //   모바일 UI에서 혼란을 줄이기 위해 (블로그 소유자 계정이 아닐 때) 더보기 버튼을 숨김
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+
+    var role = (window.T && window.T.config && window.T.config.ROLE) ? String(window.T.config.ROLE) : "";
+    var isOwner = role === "owner" || role === "admin" || role === "manager";
+    if (isOwner) return;
+
+    var SELECTOR = [
+      "#detail_page .m-comments-overlay .commentlist .control .modify",
+      "#detail_page .m-comments-overlay .commentlist .control .address"
+    ].join(", ");
+
+    function hide(root) {
+      if (!root || !root.querySelectorAll) return;
+      var nodes = root.querySelectorAll(SELECTOR);
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        if (!el || el.__lumoraHiddenMore) continue;
+        el.__lumoraHiddenMore = true;
+        el.style.setProperty("display", "none", "important");
+      }
+    }
+
+    hide(document);
+    window.addEventListener("load", function () {
+      setTimeout(function () { hide(document); }, 200);
+    });
+
+    var target =
+      document.querySelector("#detail_page .commentlist") ||
+      document.querySelector("#detail_page") ||
+      document.body;
+    if (!target || typeof MutationObserver !== "function") return;
+
+    var scheduled = false;
+    var observer = new MutationObserver(function () {
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(function () {
+        scheduled = false;
+        hide(document);
+      }, 120);
+    });
+    observer.observe(target, { childList: true, subtree: true });
+  })();
+
+  // Mobile: hide empty ad placeholders
+  // - 광고가 로드되지 않아 빈 박스로 남는 영역 제거
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+
+    var AD_SELECTOR = [
+      "#detail_page ins.adsbygoogle",
+      "#detail_page ins.kakao_ad_area",
+      "#detail_page ins[data-ad-client]",
+      "#detail_page ins[data-ad-adfit-unit]",
+      '#detail_page div[data-tistory-react-app="NaverAd"]'
+    ].join(", ");
+
+    function normalizeText(text) {
+      return String(text || "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function hasMeaningfulChild(el) {
+      if (!el) return false;
+      if (el.querySelector && el.querySelector("iframe, img, video")) return true;
+
+      var nodes = el.childNodes || [];
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        if (n.nodeType === 1) {
+          var tag = (n.tagName || "").toLowerCase();
+          if (tag === "script" || tag === "style" || tag === "noscript") continue;
+          if ((n.offsetWidth || 0) > 0 && (n.offsetHeight || 0) > 0) return true;
+          if (normalizeText(n.textContent)) return true;
+        } else if (n.nodeType === 3) {
+          if (normalizeText(n.textContent)) return true;
+        }
+      }
+      return false;
+    }
+
+    function shouldHide(el) {
+      if (!el) return false;
+
+      var status = el.getAttribute ? el.getAttribute("data-ad-status") : null;
+      if (status === "filled") return false;
+      if (status === "unfilled") return true;
+
+      if (el.querySelector && el.querySelector("iframe")) return false;
+      if (hasMeaningfulChild(el)) return false;
+
+      var rect = el.getBoundingClientRect ? el.getBoundingClientRect() : null;
+      var height = rect ? rect.height : el.offsetHeight;
+      var width = rect ? rect.width : el.offsetWidth;
+
+      return height >= 40 && width >= 100;
+    }
+
+    function hide(el) {
+      if (!el || el.__lumoraAdHidden) return;
+      el.__lumoraAdHidden = true;
+      el.style.setProperty("display", "none", "important");
+      el.style.setProperty("margin", "0", "important");
+      el.style.setProperty("padding", "0", "important");
+      el.style.setProperty("height", "0", "important");
+    }
+
+    function scan() {
+      var nodes = document.querySelectorAll(AD_SELECTOR);
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        if (shouldHide(el)) hide(el);
+      }
+    }
+
+    scan();
+    window.addEventListener("load", function () {
+      // give ad scripts a chance to render before deciding it's empty
+      setTimeout(scan, 900);
+      setTimeout(scan, 2500);
+      setTimeout(scan, 5200);
+    });
+
+    var target = document.querySelector("#detail_page") || document.body;
+    if (!target || typeof MutationObserver !== "function") return;
+
+    var scheduled = false;
+    var observer = new MutationObserver(function () {
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(function () {
+        scheduled = false;
+        scan();
+      }, 250);
+    });
+    observer.observe(target, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["data-ad-status", "style", "class"]
+    });
+  })();
+
+  // ==============================
+  // Mobile: related posts summary (fetch og:description)
+  // - 티스토리 관련글 치환자에는 summary가 없어 JS로 채움
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+
+    var $links = $('#detail_page .area_related .list_related a.link_related');
+    if (!$links.length) return;
+
+    var memoryCache = Object.create(null);
+    var MAX_ITEMS = 6;
+
+    function normalizeText(text) {
+      return String(text || "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function removeNodes(root, selector) {
+      if (!root || !root.querySelectorAll) return;
+      var nodes = root.querySelectorAll(selector);
+      for (var i = 0; i < nodes.length; i++) {
+        var node = nodes[i];
+        if (node && node.parentNode) node.parentNode.removeChild(node);
+      }
+    }
+
+    function looksLikeCode(text) {
+      var t = String(text || "");
+      if (!t) return false;
+      if (t.indexOf("/*") !== -1 || t.indexOf("*/") !== -1) return true;
+
+      var compact = t.replace(/\s+/g, "");
+      if (!compact) return false;
+
+      // Lots of typical code tokens (braces/semicolons/etc.)
+      var suspicious = (compact.match(/[{};<>]/g) || []).length;
+      if (suspicious >= 3 && suspicious / compact.length > 0.06) return true;
+
+      // CSS-ish patterns
+      if (/#[-_a-zA-Z0-9]+\s*\{/.test(t)) return true;
+      if (/\.[-_a-zA-Z0-9]+\s*\{/.test(t)) return true;
+      if (/--[-_a-zA-Z0-9]+\s*:/.test(t)) return true;
+
+      return false;
+    }
+
+    function extractDescriptionFromHtml(html) {
+      if (!html) return "";
+      try {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(html, "text/html");
+
+        // NOTE: This blog's meta description is blog-wide (not entry-specific),
+        // so we prefer extracting from the actual post content.
+        var contentRoot =
+          doc.querySelector("#detail_page .article .contents_style") ||
+          doc.querySelector(".article .contents_style") ||
+          doc.querySelector(".contents_style");
+
+        var desc = "";
+
+        if (contentRoot) {
+          // Remove code blocks and non-text embeds so we can mimic Tistory list summaries.
+          var root = contentRoot.cloneNode(true);
+          removeNodes(root, "pre, code, script, style, iframe, noscript");
+
+          var blocks = root.querySelectorAll("p, li, blockquote, h1, h2, h3, h4");
+
+          function pickFromBlocks(minLen) {
+            for (var i = 0; i < blocks.length; i++) {
+              var t = normalizeText(blocks[i].textContent);
+              if (!t) continue;
+              if (t.length < minLen) continue;
+              if (looksLikeCode(t)) continue;
+              return t;
+            }
+            return "";
+          }
+
+          desc = pickFromBlocks(30) || pickFromBlocks(10);
+
+          if (!desc) {
+            desc = normalizeText(root.textContent);
+          }
+
+          if (looksLikeCode(desc)) desc = "";
+        }
+
+        if (!desc) {
+          var meta =
+            doc.querySelector('meta[property="og:description"]') ||
+            doc.querySelector('meta[name="description"]') ||
+            doc.querySelector('meta[property="description"]');
+          desc = normalizeText(meta ? meta.getAttribute("content") : "");
+        }
+
+        if (desc.length > 140) desc = desc.slice(0, 140) + "...";
+        return desc;
+      } catch (e) {
+        return "";
+      }
+    }
+
+    function fetchDescription(url, done) {
+      if (!url) return done("");
+      if (memoryCache[url]) return done(memoryCache[url]);
+
+      function onSuccess(html) {
+        var desc = extractDescriptionFromHtml(html);
+        if (desc) memoryCache[url] = desc;
+        done(desc);
+      }
+
+      function onFail() {
+        done("");
+      }
+
+      if (typeof fetch === "function") {
+        fetch(url, { method: "GET", credentials: "omit" })
+          .then(function (res) {
+            if (!res || !res.ok) throw new Error("fetch failed");
+            return res.text();
+          })
+          .then(onSuccess)
+          .catch(onFail);
+        return;
+      }
+
+      $.get(url).done(onSuccess).fail(onFail);
+    }
+
+    $links.each(function (index) {
+      if (index >= MAX_ITEMS) return false;
+
+      var $a = $(this);
+      var href = $a.attr("href");
+      if (!href) return;
+
+      var $desc = $a.find(".desc_related");
+      if (!$desc.length) {
+        var $title = $a.find(".txt_related");
+        $desc = $('<span class="desc_related"></span>');
+        if ($title.length) $desc.insertAfter($title);
+        else $a.append($desc);
+      }
+
+      if (normalizeText($desc.text())) return;
+
+      fetchDescription(href, function (desc) {
+        if (!desc) return;
+        if (!normalizeText($desc.text())) $desc.text(desc);
+      });
+    });
   })();
 });

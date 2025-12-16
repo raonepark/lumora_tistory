@@ -1,3 +1,4 @@
+// Lumora custom script v32
 $(document).ready(function () {
   var list = $(".list_content");
 
@@ -966,6 +967,56 @@ $(document).ready(function () {
   })();
 
   // ==============================
+  // Mobile: hide comment "more" menu for non-owner
+  // - 티스토리 댓글 HTML에는 비로그인(ROLE=guest)이어도 deleteComment 링크가 내려올 수 있어
+  //   모바일 UI에서 혼란을 줄이기 위해 (블로그 소유자 계정이 아닐 때) 더보기 버튼을 숨김
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+
+    var role = (window.T && window.T.config && window.T.config.ROLE) ? String(window.T.config.ROLE) : "";
+    var isOwner = role === "owner" || role === "admin" || role === "manager";
+    if (isOwner) return;
+
+    var SELECTOR = [
+      "#detail_page .m-comments-overlay .commentlist .control .modify",
+      "#detail_page .m-comments-overlay .commentlist .control .address"
+    ].join(", ");
+
+    function hide(root) {
+      if (!root || !root.querySelectorAll) return;
+      var nodes = root.querySelectorAll(SELECTOR);
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        if (!el || el.__lumoraHiddenMore) continue;
+        el.__lumoraHiddenMore = true;
+        el.style.setProperty("display", "none", "important");
+      }
+    }
+
+    hide(document);
+    window.addEventListener("load", function () {
+      setTimeout(function () { hide(document); }, 200);
+    });
+
+    var target =
+      document.querySelector("#detail_page .commentlist") ||
+      document.querySelector("#detail_page") ||
+      document.body;
+    if (!target || typeof MutationObserver !== "function") return;
+
+    var scheduled = false;
+    var observer = new MutationObserver(function () {
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(function () {
+        scheduled = false;
+        hide(document);
+      }, 120);
+    });
+    observer.observe(target, { childList: true, subtree: true });
+  })();
+
   // Mobile: hide empty ad placeholders
   // - 광고가 로드되지 않아 빈 박스로 남는 영역 제거
   // ==============================

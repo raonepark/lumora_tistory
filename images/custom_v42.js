@@ -230,6 +230,23 @@ $(document).ready(function () {
   (function () {
     if (!document.body || document.body.id !== "tt-body-search") return;
 
+    function isMobileWidth() {
+      return (
+        typeof window.matchMedia === "function" &&
+        window.matchMedia("(max-width: 1024px)").matches
+      );
+    }
+
+    function getBlogHomeUrl() {
+      var el =
+        document.querySelector('a[rel="home"]') ||
+        document.querySelector('link[rel="home"]');
+      var href = el && (el.getAttribute("href") || el.href);
+      if (href) return href;
+
+      return window.location.origin + "/";
+    }
+
     function ensureBackButton() {
       var searchBox = document.querySelector("#sidebar .search");
       if (!searchBox || searchBox.querySelector(".search-back")) return;
@@ -237,13 +254,17 @@ $(document).ready(function () {
       var button = document.createElement("button");
       button.type = "button";
       button.className = "search-back";
-      button.setAttribute("aria-label", "닫기");
+      button.setAttribute("aria-label", "검색 닫기");
       button.textContent = "x";
       button.addEventListener("click", function () {
+        if (isMobileWidth()) {
+          window.location.href = getBlogHomeUrl();
+          return;
+        }
         if (window.history && window.history.length > 1) {
           window.history.back();
         } else {
-          window.location.href = "/";
+          window.location.href = getBlogHomeUrl();
         }
       });
 

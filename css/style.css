@@ -1161,7 +1161,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   .m-comments-header{
     display:flex;
     align-items:center;
-    gap:12px;
+    justify-content:space-between;
     padding:calc(12px + env(safe-area-inset-top)) 16px 12px;
     border-bottom:1px solid var(--m-border);
   }
@@ -1187,10 +1187,11 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     background:transparent;
     border:0;
     cursor:pointer;
+    text-decoration:none;
     user-select:none;
     -webkit-tap-highlight-color:transparent;
   }
-  .m-comments-back:hover{ background:transparent; color:#fff; }
+  .m-comments-back:hover{ background:transparent; color:#fff; text-decoration:none; }
   .m-comments-body{
     flex:1;
     overflow:auto;
@@ -2272,7 +2273,8 @@ body#tt-body-search .m-guestbook{ display:none !important; }
   body#tt-body-search #sidebar .search{
     position:relative;
     width:calc(100% - 36px);
-    margin-left:36px;
+    margin-left:0;
+    margin-right:36px;
     padding:8px;
     gap:8px;
     border-radius:14px;
@@ -2286,7 +2288,8 @@ body#tt-body-search .m-guestbook{ display:none !important; }
   }
   body#tt-body-search .search-back{
     position:absolute;
-    left:-36px;
+    left:auto;
+    right:-36px;
     top:50%;
     transform:translateY(-50%);
     width:28px;
@@ -2296,8 +2299,8 @@ body#tt-body-search .m-guestbook{ display:none !important; }
     color:transparent;
   }
   body#tt-body-search .search-back::before{
-    content:"<";
-    font-size:20px;
+    content:"×";
+    font-size:22px;
     line-height:1;
     color:var(--search-text);
   }

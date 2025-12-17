@@ -1,4 +1,4 @@
-// Lumora custom script v40
+// Lumora custom script v41
 $(document).ready(function () {
   var list = $(".list_content");
 
@@ -237,8 +237,8 @@ $(document).ready(function () {
       var button = document.createElement("button");
       button.type = "button";
       button.className = "search-back";
-      button.setAttribute("aria-label", "뒤로가기");
-      button.textContent = "<";
+      button.setAttribute("aria-label", "닫기");
+      button.textContent = "x";
       button.addEventListener("click", function () {
         if (window.history && window.history.length > 1) {
           window.history.back();

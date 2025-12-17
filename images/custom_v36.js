@@ -955,11 +955,18 @@ $(document).ready(function () {
 
     function getCount($wrap) {
       if (!$wrap || !$wrap.length) return null;
-      var $el = $wrap.find(".uoc-count, .count, .txt_like").first();
-      if (!$el.length) return null;
-      var raw = String($el.text() || "").replace(/[^\d]/g, "");
-      if (!raw) return null;
-      var n = parseInt(raw, 10);
+
+      var $countEl = $wrap.find(".uoc-count, .count").first();
+      var $labelEl = $wrap.find(".txt_like").first();
+
+      var raw = "";
+      if ($countEl.length) raw = String($countEl.text() || "");
+      else if ($labelEl.length) raw = String($labelEl.text() || "");
+      else return null;
+
+      var digits = raw.replace(/[^\d]/g, "");
+      if (!digits) return 0;
+      var n = parseInt(digits, 10);
       if (isNaN(n)) return null;
       return n;
     }
@@ -988,9 +995,7 @@ $(document).ready(function () {
     function syncInitial() {
       $(WRAP_SELECTOR).each(function () {
         var $wrap = $(this);
-        if (isLikedByDom($wrap)) {
-          setLikedClass($wrap, true);
-        }
+        setLikedClass($wrap, isLikedByDom($wrap));
       });
     }
 
@@ -1053,6 +1058,10 @@ $(document).ready(function () {
               return;
             }
             el.__lumoraLikeSyncTimer = null;
+            setLikedClass($wrap, domLiked);
+            if (!wasLiked && domLiked) {
+              animate($wrap);
+            }
             return;
           }
 

@@ -1,4 +1,4 @@
-// Lumora custom script v37
+// Lumora custom script v39
 $(document).ready(function () {
   var list = $(".list_content");
 
@@ -333,6 +333,59 @@ $(document).ready(function () {
         };
       }
     }
+  })();
+
+  // ==============================
+  // Comment login prompt: de-dupe duplicate confirm
+  // ==============================
+  (function () {
+    function wrapCommentRequireLogin() {
+      var current = window.commentRequireLogin;
+      if (typeof current !== "function" || current.__lumoraWrapped) {
+        return;
+      }
+
+      var inFlight = false;
+      var unlockTimer = null;
+
+      function scheduleUnlock() {
+        if (unlockTimer) return;
+        unlockTimer = setTimeout(function () {
+          unlockTimer = null;
+          inFlight = false;
+        }, 0);
+      }
+
+      function wrappedCommentRequireLogin() {
+        if (inFlight) {
+          return false;
+        }
+        inFlight = true;
+        try {
+          return current.apply(this, arguments);
+        } finally {
+          scheduleUnlock();
+        }
+      }
+
+      wrappedCommentRequireLogin.__lumoraWrapped = true;
+      window.commentRequireLogin = wrappedCommentRequireLogin;
+    }
+
+    function retryWrap() {
+      var attempts = 0;
+      function tick() {
+        attempts += 1;
+        wrapCommentRequireLogin();
+        if (attempts < 10 && (!window.commentRequireLogin || !window.commentRequireLogin.__lumoraWrapped)) {
+          setTimeout(tick, 300);
+        }
+      }
+      tick();
+    }
+
+    retryWrap();
+    window.addEventListener("load", retryWrap);
   })();
 
   // ==============================

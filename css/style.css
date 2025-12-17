@@ -162,6 +162,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     background:transparent;
     border:0;
     padding:14px 52px 14px 16px; /* leave room for the search icon */
+    font-size:16px;
     color:#fff;
     box-sizing:border-box;
   }
@@ -525,6 +526,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     background:transparent;
     border:0;
     color:#fff;
+    font-size:16px;
     padding:8px 6px;
     box-sizing:border-box;
   }
@@ -540,6 +542,10 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   }
   .m-search-submit:hover{ background:rgba(255,255,255,0.10); }
   .m-search-submit svg{ width:20px; height:20px; fill:#ddd; }
+
+  body#tt-body-search #sidebar .search input{
+    font-size:16px;
+  }
 
   /* Detail layout: neutralize desktop offsets on small screens */
   #tt-body-page #detail_page .titleWrap,
@@ -2182,13 +2188,14 @@ body#tt-body-search #sidebar .search input{
   width:auto;
   padding:10px 12px;
   background:transparent;
+  font-size:17px;
   color:var(--search-text);
 }
 body#tt-body-search #sidebar .search svg{
   position:static;
   top:auto;
   transform:none;
-  width:18px;
+  width:19px;
   height:18px;
   margin-left:auto;
   fill:var(--search-muted);
@@ -2262,6 +2269,39 @@ body#tt-body-search .m-guestbook{ display:none !important; }
     border-radius:0;
     padding:16px;
   }
+  body#tt-body-search #sidebar .search{
+    position:relative;
+    width:calc(100% - 36px);
+    margin-left:36px;
+    padding:8px;
+    gap:8px;
+    border-radius:14px;
+  }
+  body#tt-body-search #sidebar .search input{
+    padding:8px 10px;
+  }
+  body#tt-body-search #sidebar .search svg{
+    width:18px;
+    height:18px;
+  }
+  body#tt-body-search .search-back{
+    position:absolute;
+    left:-36px;
+    top:50%;
+    transform:translateY(-50%);
+    width:28px;
+    height:28px;
+    border-radius:8px;
+    font-size:0;
+    color:transparent;
+  }
+  body#tt-body-search .search-back::before{
+    content:"<";
+    font-size:20px;
+    line-height:1;
+    color:var(--search-text);
+  }
+  body#tt-body-search .search-back:hover::before{ color:#ffffff; }
   body#tt-body-search #contentWrap{ padding:0; }
 }
 

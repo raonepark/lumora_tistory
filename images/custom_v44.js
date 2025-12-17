@@ -1248,7 +1248,7 @@ $(document).ready(function () {
       button.type = "button";
       button.className = "m-to-top";
       button.setAttribute("aria-label", "상단으로 이동");
-      button.textContent = "↑";
+      button.textContent = "TOP";
       button.addEventListener("click", function () {
         try {
           window.scrollTo({ top: 0, behavior: "smooth" });

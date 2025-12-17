@@ -336,6 +336,35 @@ $(document).ready(function () {
   })();
 
   // ==============================
+  // Comment login prompt: de-dupe duplicate confirm
+  // ==============================
+  (function () {
+    function wrapCommentRequireLogin() {
+      var current = window.commentRequireLogin;
+      if (typeof current !== "function" || current.__lumoraWrapped) {
+        return;
+      }
+
+      var lastPromptAt = 0;
+
+      function wrappedCommentRequireLogin() {
+        var now = Date.now();
+        if (now - lastPromptAt < 500) {
+          return false;
+        }
+        lastPromptAt = now;
+        return current.apply(this, arguments);
+      }
+
+      wrappedCommentRequireLogin.__lumoraWrapped = true;
+      window.commentRequireLogin = wrappedCommentRequireLogin;
+    }
+
+    wrapCommentRequireLogin();
+    window.addEventListener("load", wrapCommentRequireLogin);
+  })();
+
+  // ==============================
   // GIF 이미지 루프 강제 (emoticon 포함)
   // ==============================
   (function () {

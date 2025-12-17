@@ -692,9 +692,9 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     right:0 !important;
     bottom:0 !important;
     z-index:1100 !important;
-    padding:12px 16px calc(12px + env(safe-area-inset-bottom)) !important;
-    padding-left:calc(28px + env(safe-area-inset-left)) !important;
-    padding-right:calc(20px + env(safe-area-inset-right)) !important;
+    padding:12px 12px calc(12px + env(safe-area-inset-bottom)) !important;
+    padding-left:calc(12px + env(safe-area-inset-left)) !important;
+    padding-right:calc(12px + env(safe-area-inset-right)) !important;
     background:var(--m-bg) !important;
     border-top:1px solid var(--m-border) !important;
     box-sizing:border-box !important;

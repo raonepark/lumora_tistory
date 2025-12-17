@@ -1032,6 +1032,32 @@ $(document).ready(function () {
       $subscribe.addClass("m-postbar__subscribe");
       cleanSubscribeLabel($subscribe, $bar);
 
+      (function applyCtaOnce() {
+        try {
+          var text = normalizeText($subscribe.text());
+          var lower = text.toLowerCase();
+          var isSubscribed =
+            text.indexOf("구독중") !== -1 ||
+            text.indexOf("구독 해제") !== -1 ||
+            text.indexOf("구독해제") !== -1 ||
+            lower.indexOf("subscribed") !== -1 ||
+            lower.indexOf("following") !== -1;
+
+          if (isSubscribed) return;
+
+          var key = "lumora_subscribe_cta_seen_v1";
+          if (window.sessionStorage && !sessionStorage.getItem(key)) {
+            sessionStorage.setItem(key, "1");
+            $subscribe.addClass("lumora-subscribe-cta-pulse");
+            $subscribe.one("animationend.lumoraSubCta", function () {
+              $subscribe.removeClass("lumora-subscribe-cta-pulse");
+            });
+          }
+        } catch (e) {
+          // ignore
+        }
+      })();
+
       var $search = $bar.find(".m-postbar__icon").first();
       if ($search.length) {
         $subscribe.insertBefore($search);

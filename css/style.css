@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 
 /* =============================================================
    Lumora Tistory Skin — Cleaned & Structured CSS (v1.1)
@@ -103,6 +103,8 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     --m-surface-2:#1f2533;
     --m-border:rgba(255,255,255,0.10);
     --m-border-strong:rgba(255,255,255,0.16);
+    --m-postbtn-icon-box:28px;
+    --m-postbtn-icon-size:20px;
   }
 
   html{ color-scheme:dark; }
@@ -757,19 +759,22 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .container_postbtn .wrap_btn_share .ico_postbtn.ico_share,
   #tt-body-page #detail_page .container_postbtn .wrap_btn_etc .ico_postbtn.ico_etc{
     display:block;
-    width:22px;
-    height:22px;
+    width:var(--m-postbtn-icon-box);
+    height:var(--m-postbtn-icon-box);
     overflow:hidden;
     text-indent:-9999px;
     background-repeat:no-repeat;
-    background-position:center;
-    background-size:22px 22px;
+    background-position:center calc(50% - 0.5px);
+    background-size:var(--m-postbtn-icon-size) var(--m-postbtn-icon-size);
+    margin:0;
   }
   #tt-body-page #detail_page .container_postbtn .wrap_btn_share .ico_postbtn.ico_share{
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M12%203l5%205h-3v6h-4V8H7l5-5zm-8%207h2v10h12V10h2v12a2%202%200%200%201-2%202H6a2%202%200%200%201-2-2V10z'/%3E%3C/svg%3E");
   }
   #tt-body-page #detail_page .container_postbtn .wrap_btn_etc .ico_postbtn.ico_etc{
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Ccircle%20fill='%23ddd'%20cx='5'%20cy='12'%20r='2'/%3E%3Ccircle%20fill='%23ddd'%20cx='12'%20cy='12'%20r='2'/%3E%3Ccircle%20fill='%23ddd'%20cx='19'%20cy='12'%20r='2'/%3E%3C/svg%3E");
+    position:relative;
+    top:3px;
   }
 
   @keyframes lumora-like-pop{
@@ -841,6 +846,8 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     font-size:12px;
     font-weight:800;
     line-height:1;
+    position:relative;
+    top:1px;
     color:#ddd;
     order:2;
   }
@@ -861,10 +868,11 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%27-2%20-2%2028%2028%27%3E%3Cpath%20fill%3D%27%23ddd%27%20d%3D%27M12%2021.35l-1.45-1.32C5.4%2015.36%202%2012.28%202%208.5%202%205.42%204.42%203%207.5%203c1.74%200%203.41.81%204.5%202.09C13.09%203.81%2014.76%203%2016.5%203%2019.58%203%2022%205.42%2022%208.5c0%203.78-3.4%206.86-8.55%2011.54L12%2021.35z%27%2F%3E%3C%2Fsvg%3E");
     /* Nudge up by a hair: avoids a 1px "dot" artifact from subpixel raster rounding on some devices. */
     background-position:center calc(50% - 0.5px) !important;
-    background-size:26px 26px !important;
-    margin:0 !important;
+    background-size:20px 21px !important;
+    margin:1px 0 0 !important;
     position:relative;
     transition:transform .15s ease;
+    top: 2px;
   }
   /* Defensive: prevent any injected sprite `::before` from leaving stray pixels on some themes. */
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_like::before{
@@ -1077,16 +1085,16 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   }
   /* Match reaction icon box sizing so the row feels aligned */
   #tt-body-page #detail_page .container_postbtn .m-comment-btn .ico_postbtn{
-    width:28px;
-    height:28px;
+    width:var(--m-postbtn-icon-box);
+    height:var(--m-postbtn-icon-box);
     flex:0 0 auto;
   }
   #tt-body-page #detail_page .container_postbtn .m-comment-btn .ico_comment{
     transform:none;
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M4%204h16a2%202%200%200%201%202%202v12a2%202%200%200%201-2%202H7l-4%204V6a2%202%200%200%201%202-2z'/%3E%3C/svg%3E") !important;
     background-repeat:no-repeat !important;
-    background-position:center !important;
-    background-size:20px 20px !important;
+    background-position:center calc(50% - 0.5px) !important;
+    background-size:var(--m-postbtn-icon-size) var(--m-postbtn-icon-size) !important;
   }
   #tt-body-page #detail_page .container_postbtn .m-comment-btn .m-comment-count{
     position:static;

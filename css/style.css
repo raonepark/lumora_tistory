@@ -1092,7 +1092,8 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     border-radius:0;
     background:transparent;
     color:#ddd;
-    font-size:12px !important;
+    /* Match the desktop `.postbtn_like` count size (12.5px) to avoid looking smaller than the empathy count */
+    font-size:12.5px !important;
     font-weight:800 !important;
     line-height:1 !important;
     display:inline-block !important;

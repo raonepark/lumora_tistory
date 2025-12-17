@@ -1,4 +1,4 @@
-// Lumora custom script v38
+// Lumora custom script v39
 $(document).ready(function () {
   var list = $(".list_content");
 

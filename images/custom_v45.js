@@ -230,6 +230,23 @@ $(document).ready(function () {
   (function () {
     if (!document.body || document.body.id !== "tt-body-search") return;
 
+    function isMobileWidth() {
+      return (
+        typeof window.matchMedia === "function" &&
+        window.matchMedia("(max-width: 1024px)").matches
+      );
+    }
+
+    function getBlogHomeUrl() {
+      var el =
+        document.querySelector('a[rel="home"]') ||
+        document.querySelector('link[rel="home"]');
+      var href = el && (el.getAttribute("href") || el.href);
+      if (href) return href;
+
+      return window.location.origin + "/";
+    }
+
     function ensureBackButton() {
       var searchBox = document.querySelector("#sidebar .search");
       if (!searchBox || searchBox.querySelector(".search-back")) return;
@@ -237,13 +254,17 @@ $(document).ready(function () {
       var button = document.createElement("button");
       button.type = "button";
       button.className = "search-back";
-      button.setAttribute("aria-label", "닫기");
+      button.setAttribute("aria-label", "검색 닫기");
       button.textContent = "x";
       button.addEventListener("click", function () {
+        if (isMobileWidth()) {
+          window.location.href = getBlogHomeUrl();
+          return;
+        }
         if (window.history && window.history.length > 1) {
           window.history.back();
         } else {
-          window.location.href = "/";
+          window.location.href = getBlogHomeUrl();
         }
       });
 
@@ -1011,6 +1032,32 @@ $(document).ready(function () {
       $subscribe.addClass("m-postbar__subscribe");
       cleanSubscribeLabel($subscribe, $bar);
 
+      (function applyCtaOnce() {
+        try {
+          var text = normalizeText($subscribe.text());
+          var lower = text.toLowerCase();
+          var isSubscribed =
+            text.indexOf("구독중") !== -1 ||
+            text.indexOf("구독 해제") !== -1 ||
+            text.indexOf("구독해제") !== -1 ||
+            lower.indexOf("subscribed") !== -1 ||
+            lower.indexOf("following") !== -1;
+
+          if (isSubscribed) return;
+
+          var key = "lumora_subscribe_cta_seen_v1";
+          if (window.sessionStorage && !sessionStorage.getItem(key)) {
+            sessionStorage.setItem(key, "1");
+            $subscribe.addClass("lumora-subscribe-cta-pulse");
+            $subscribe.one("animationend.lumoraSubCta", function () {
+              $subscribe.removeClass("lumora-subscribe-cta-pulse");
+            });
+          }
+        } catch (e) {
+          // ignore
+        }
+      })();
+
       var $search = $bar.find(".m-postbar__icon").first();
       if ($search.length) {
         $subscribe.insertBefore($search);
@@ -1211,6 +1258,68 @@ $(document).ready(function () {
 
     $toggle.off(".lockScroll").on("change.lockScroll", sync);
     sync();
+  })();
+
+  // ==============================
+  // Mobile: floating scroll-to-top button
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+    if (!document.getElementById("detail_page")) return;
+
+    var button = document.querySelector(".m-to-top");
+    if (!button) {
+      button = document.createElement("button");
+      button.type = "button";
+      button.className = "m-to-top";
+      button.setAttribute("aria-label", "상단으로 이동");
+      button.textContent = "TOP";
+      button.addEventListener("click", function () {
+        try {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } catch (e) {
+          window.scrollTo(0, 0);
+        }
+      });
+      document.body.appendChild(button);
+    }
+
+    var scheduled = false;
+
+    function update() {
+      scheduled = false;
+      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      button.classList.toggle("is-visible", y > 420);
+    }
+
+    function schedule() {
+      if (scheduled) return;
+      scheduled = true;
+      if (typeof window.requestAnimationFrame === "function") {
+        window.requestAnimationFrame(update);
+      } else {
+        setTimeout(update, 66);
+      }
+    }
+
+    var supportsPassive = false;
+    try {
+      var opts = Object.defineProperty({}, "passive", {
+        get: function () {
+          supportsPassive = true;
+        },
+      });
+      window.addEventListener("testPassive", null, opts);
+      window.removeEventListener("testPassive", null, opts);
+    } catch (e) {
+      supportsPassive = false;
+    }
+
+    var listenerOptions = supportsPassive ? { passive: true } : false;
+    window.addEventListener("scroll", schedule, listenerOptions);
+    window.addEventListener("resize", schedule, listenerOptions);
+    update();
   })();
 
   // ==============================

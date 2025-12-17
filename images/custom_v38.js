@@ -345,23 +345,47 @@ $(document).ready(function () {
         return;
       }
 
-      var lastPromptAt = 0;
+      var inFlight = false;
+      var unlockTimer = null;
+
+      function scheduleUnlock() {
+        if (unlockTimer) return;
+        unlockTimer = setTimeout(function () {
+          unlockTimer = null;
+          inFlight = false;
+        }, 0);
+      }
 
       function wrappedCommentRequireLogin() {
-        var now = Date.now();
-        if (now - lastPromptAt < 500) {
+        if (inFlight) {
           return false;
         }
-        lastPromptAt = now;
-        return current.apply(this, arguments);
+        inFlight = true;
+        try {
+          return current.apply(this, arguments);
+        } finally {
+          scheduleUnlock();
+        }
       }
 
       wrappedCommentRequireLogin.__lumoraWrapped = true;
       window.commentRequireLogin = wrappedCommentRequireLogin;
     }
 
-    wrapCommentRequireLogin();
-    window.addEventListener("load", wrapCommentRequireLogin);
+    function retryWrap() {
+      var attempts = 0;
+      function tick() {
+        attempts += 1;
+        wrapCommentRequireLogin();
+        if (attempts < 10 && (!window.commentRequireLogin || !window.commentRequireLogin.__lumoraWrapped)) {
+          setTimeout(tick, 300);
+        }
+      }
+      tick();
+    }
+
+    retryWrap();
+    window.addEventListener("load", retryWrap);
   })();
 
   // ==============================

@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 
 /* =============================================================
    Lumora Tistory Skin — Cleaned & Structured CSS (v1.1)
@@ -103,6 +103,8 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     --m-surface-2:#1f2533;
     --m-border:rgba(255,255,255,0.10);
     --m-border-strong:rgba(255,255,255,0.16);
+    --m-postbtn-icon-box:28px;
+    --m-postbtn-icon-size:20px;
   }
 
   html{ color-scheme:dark; }
@@ -290,17 +292,17 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     width:44px;
     height:44px;
     border-radius:14px;
-    color:#fff;
+    color:rgba(255,255,255,0.9);
     font-size:22px;
     font-weight:900;
     line-height:1;
-    background:rgba(255,255,255,0.08);
-    border:1px solid var(--m-border);
+    background:transparent;
+    border:0;
     cursor:pointer;
     user-select:none;
     -webkit-tap-highlight-color:transparent;
   }
-  .m-cat-close:hover{ background:rgba(255,255,255,0.12); border-color:var(--m-border-strong); }
+  .m-cat-close:hover{ background:transparent; color:#fff; }
 
   .m-cat-body{ padding:8px 0 24px; }
   .m-cat-body{ overflow:auto; max-height:calc(100vh - 74px); }
@@ -399,6 +401,38 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   .m-postbar__icon:hover{ background:rgba(255,255,255,0.10); }
   .m-postbar__icon svg{ width:20px; height:20px; fill:#ddd; }
 
+  /* Subscribe button (moved from bottom bar) */
+  .m-postbar__subscribe{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-left:auto;
+    height:40px;
+    padding:0 12px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid var(--m-border);
+    color:#fff !important;
+    font-size:13px;
+    font-weight:900;
+    line-height:1;
+    text-decoration:none !important;
+    white-space:nowrap;
+    cursor:pointer;
+    user-select:none;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .m-postbar__subscribe:hover{
+    background:rgba(255,255,255,0.10);
+    border-color:var(--m-border-strong);
+  }
+  /* When subscribe exists, keep search icon next to it (avoid double auto margins) */
+  .m-postbar__subscribe + .m-postbar__icon{ margin-left:0; }
+  .m-postbar__subscribe .txt_state{
+    font-size:13px !important;
+    line-height:1;
+  }
+
   .m-postbar__profile{
     display:inline-flex;
     align-items:center;
@@ -463,17 +497,17 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     width:44px;
     height:44px;
     border-radius:14px;
-    color:#fff;
+    color:rgba(255,255,255,0.9);
     font-size:22px;
     font-weight:900;
     line-height:1;
-    background:rgba(255,255,255,0.08);
-    border:1px solid var(--m-border);
+    background:transparent;
+    border:0;
     cursor:pointer;
     user-select:none;
     -webkit-tap-highlight-color:transparent;
   }
-  .m-search-close:hover{ background:rgba(255,255,255,0.12); border-color:var(--m-border-strong); }
+  .m-search-close:hover{ background:transparent; color:#fff; }
   .m-search-body{ padding:18px; }
   .m-search-form{
     display:flex;
@@ -660,12 +694,23 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     right:0 !important;
     bottom:0 !important;
     z-index:1100 !important;
-    padding:12px 16px calc(12px + env(safe-area-inset-bottom)) !important;
-    padding-left:16px !important;
+    padding:12px 12px calc(12px + env(safe-area-inset-bottom)) !important;
+    padding-left:calc(12px + env(safe-area-inset-left)) !important;
+    padding-right:calc(12px + env(safe-area-inset-right)) !important;
     background:var(--m-bg) !important;
     border-top:1px solid var(--m-border) !important;
     box-sizing:border-box !important;
+    overflow:visible !important;
     justify-content:flex-start !important;
+  }
+  /* Some Tistory themes apply negative margins on the first button; neutralize to avoid edge clipping */
+  #tt-body-page #detail_page .container_postbtn .postbtn_like,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"],
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] a,
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] button{
+    margin:0 !important;
+    overflow:visible !important;
   }
   #tt-body-page #detail_page .container_postbtn .wrap_btn a,
   #tt-body-page #detail_page .container_postbtn .wrap_btn button{ color:#ddd !important; }
@@ -694,6 +739,8 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     align-items:center !important;
     gap:12px !important;
   }
+  /* Give the first (reaction) button a tiny cushion from the viewport edge */
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"]{ margin-left:2px !important; }
   #tt-body-page #detail_page .container_postbtn .postbtn_like .wrap_btn_share{ margin-left:auto !important; }
   #tt-body-page #detail_page .container_postbtn .postbtn_like .wrap_btn_share > .btn_post,
   #tt-body-page #detail_page .container_postbtn .postbtn_like .wrap_btn_etc > .btn_post{
@@ -712,30 +759,33 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .container_postbtn .wrap_btn_share .ico_postbtn.ico_share,
   #tt-body-page #detail_page .container_postbtn .wrap_btn_etc .ico_postbtn.ico_etc{
     display:block;
-    width:16px;
-    height:16px;
+    width:var(--m-postbtn-icon-box);
+    height:var(--m-postbtn-icon-box);
     overflow:hidden;
     text-indent:-9999px;
     background-repeat:no-repeat;
-    background-position:center;
-    background-size:16px 16px;
+    background-position:center calc(50% - 0.5px);
+    background-size:var(--m-postbtn-icon-size) var(--m-postbtn-icon-size);
+    margin:0;
   }
   #tt-body-page #detail_page .container_postbtn .wrap_btn_share .ico_postbtn.ico_share{
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M12%203l5%205h-3v6h-4V8H7l5-5zm-8%207h2v10h12V10h2v12a2%202%200%200%201-2%202H6a2%202%200%200%201-2-2V10z'/%3E%3C/svg%3E");
   }
   #tt-body-page #detail_page .container_postbtn .wrap_btn_etc .ico_postbtn.ico_etc{
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Ccircle%20fill='%23ddd'%20cx='5'%20cy='12'%20r='2'/%3E%3Ccircle%20fill='%23ddd'%20cx='12'%20cy='12'%20r='2'/%3E%3Ccircle%20fill='%23ddd'%20cx='19'%20cy='12'%20r='2'/%3E%3C/svg%3E");
+    position:relative;
+    top:3px;
   }
 
   @keyframes lumora-like-pop{
     0%{ transform:scale(1); }
-    45%{ transform:scale(1.35) rotate(-10deg); }
+    45%{ transform:scale(1.25) rotate(-10deg); }
     100%{ transform:scale(1) rotate(0); }
   }
   @keyframes lumora-like-burst{
     0%{ transform:scale(0.2); opacity:0; }
     20%{ opacity:0.45; }
-    100%{ transform:scale(1.8); opacity:0; }
+    100%{ transform:scale(1.6); opacity:0; }
   }
 
   /* Like (reaction): icon + count to match other buttons */
@@ -747,7 +797,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .container_postbtn button[id^="reaction-"]{
     min-width:40px;
     height:40px;
-    padding:0 6px !important;
+    padding:0 6px 0 8px !important;
     margin:0 !important;
     border-radius:12px;
     background:transparent !important;
@@ -767,6 +817,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     justify-content:center !important;
     gap:6px !important;
     white-space:nowrap;
+    overflow:visible !important;
   }
   /* Hide label only; keep count when it is also `.uoc-count` */
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .txt_like:not(.uoc-count){ display:none !important; }
@@ -795,26 +846,38 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     font-size:12px;
     font-weight:800;
     line-height:1;
+    position:relative;
+    top:1px;
     color:#ddd;
     order:2;
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_postbtn{
     display:block;
-    width:16px;
-    height:16px;
-    overflow:hidden;
+    /* Make the box slightly larger than the painted SVG to avoid 1px edge clipping from raster rounding */
+    width:28px !important;
+    height:28px !important;
+    overflow:visible !important;
     text-indent:-9999px;
     background-repeat:no-repeat;
-    background-position:center;
-    background-size:16px 16px;
+    background-position:center !important;
+    background-size:26px 26px !important;
     order:1;
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_like{
-    background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M12.1%2021.35l-1.1-1.02C5.14%2015.24%202%2012.39%202%208.94%202%206.5%203.99%204.5%206.5%204.5c1.74%200%203.41.81%204.5%202.09C12.09%205.31%2013.76%204.5%2015.5%204.5%2018.01%204.5%2020%206.5%2020%208.94c0%203.45-3.14%206.3-8.9%2011.39l-1%201.02z'/%3E%3C/svg%3E");
-    margin:0 !important;
+    /* Center the painted SVG inside the larger icon box (see `.ico_postbtn` above) */
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%27-2%20-2%2028%2028%27%3E%3Cpath%20fill%3D%27%23ddd%27%20d%3D%27M12%2021.35l-1.45-1.32C5.4%2015.36%202%2012.28%202%208.5%202%205.42%204.42%203%207.5%203c1.74%200%203.41.81%204.5%202.09C13.09%203.81%2014.76%203%2016.5%203%2019.58%203%2022%205.42%2022%208.5c0%203.78-3.4%206.86-8.55%2011.54L12%2021.35z%27%2F%3E%3C%2Fsvg%3E");
+    /* Nudge up by a hair: avoids a 1px "dot" artifact from subpixel raster rounding on some devices. */
+    background-position:center calc(50% - 0.5px) !important;
+    background-size:20px 21px !important;
+    margin:1px 0 0 !important;
     position:relative;
-    overflow:visible;
     transition:transform .15s ease;
+    top: 2px;
+  }
+  /* Defensive: prevent any injected sprite `::before` from leaving stray pixels on some themes. */
+  #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_like::before{
+    content:none !important;
+    display:none !important;
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .ico_like::after{
     content:"";
@@ -864,7 +927,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .container_postbtn button[id^="reaction-"].on .ico_like,
   #tt-body-page #detail_page .container_postbtn button[id^="reaction-"].active .ico_like,
   #tt-body-page #detail_page .container_postbtn button[id^="reaction-"][aria-pressed="true"] .ico_like{
-    background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ff3b30'%20d='M12.1%2021.35l-1.1-1.02C5.14%2015.24%202%2012.39%202%208.94%202%206.5%203.99%204.5%206.5%204.5c1.74%200%203.41.81%204.5%202.09C12.09%205.31%2013.76%204.5%2015.5%204.5%2018.01%204.5%2020%206.5%2020%208.94c0%203.45-3.14%206.3-8.9%2011.39l-1%201.02z'/%3E%3C/svg%3E");
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%27-2%20-2%2028%2028%27%3E%3Cpath%20fill%3D%27%23ff3b30%27%20d%3D%27M12%2021.35l-1.45-1.32C5.4%2015.36%202%2012.28%202%208.5%202%205.42%204.42%203%207.5%203c1.74%200%203.41.81%204.5%202.09C13.09%203.81%2014.76%203%2016.5%203%2019.58%203%2022%205.42%2022%208.5c0%203.78-3.4%206.86-8.55%2011.54L12%2021.35z%27%2F%3E%3C%2Fsvg%3E");
   }
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.on em,
   #tt-body-page #detail_page .container_postbtn [id^="reaction-"] .btn_post.on .uoc-count,
@@ -973,13 +1036,13 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   .m-comment-btn:hover{ background:transparent; }
   .m-comment-btn .ico_postbtn{
     display:block;
-    width:16px;
-    height:16px;
+    width:22px;
+    height:22px;
     overflow:hidden;
     text-indent:-9999px;
     background-repeat:no-repeat;
     background-position:center;
-    background-size:16px 16px;
+    background-size:22px 22px;
   }
   .m-comment-btn .ico_comment{
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M4%204h16a2%202%200%200%201%202%202v12a2%202%200%200%201-2%202H7l-4%204V6a2%202%200%200%201%202-2z'/%3E%3C/svg%3E") !important;
@@ -1012,7 +1075,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     z-index:auto;
     width:auto;
     height:40px;
-    padding:0 6px;
+    padding:0 6px 0 8px; /* match reaction button padding */
     gap:6px;
     display:inline-flex !important;
     flex-direction:row !important;
@@ -1020,12 +1083,18 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     justify-content:center !important;
     white-space:nowrap;
   }
+  /* Match reaction icon box sizing so the row feels aligned */
+  #tt-body-page #detail_page .container_postbtn .m-comment-btn .ico_postbtn{
+    width:var(--m-postbtn-icon-box);
+    height:var(--m-postbtn-icon-box);
+    flex:0 0 auto;
+  }
   #tt-body-page #detail_page .container_postbtn .m-comment-btn .ico_comment{
     transform:none;
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M4%204h16a2%202%200%200%201%202%202v12a2%202%200%200%201-2%202H7l-4%204V6a2%202%200%200%201%202-2z'/%3E%3C/svg%3E") !important;
     background-repeat:no-repeat !important;
-    background-position:center !important;
-    background-size:16px 16px !important;
+    background-position:center calc(50% - 0.5px) !important;
+    background-size:var(--m-postbtn-icon-size) var(--m-postbtn-icon-size) !important;
   }
   #tt-body-page #detail_page .container_postbtn .m-comment-btn .m-comment-count{
     position:static;
@@ -1037,9 +1106,10 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     border-radius:0;
     background:transparent;
     color:#ddd;
-    font-size:12px;
-    font-weight:800;
-    line-height:1;
+    /* Match the desktop `.postbtn_like` count size (12.5px) to avoid looking smaller than the empathy count */
+    font-size:12.5px !important;
+    font-weight:800 !important;
+    line-height:1 !important;
     display:inline-block !important;
     margin:0 !important;
   }
@@ -1091,17 +1161,17 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     width:44px;
     height:44px;
     border-radius:14px;
-    color:#fff;
+    color:rgba(255,255,255,0.9);
     font-size:22px;
     font-weight:900;
     line-height:1;
-    background:rgba(255,255,255,0.08);
-    border:1px solid var(--m-border);
+    background:transparent;
+    border:0;
     cursor:pointer;
     user-select:none;
     -webkit-tap-highlight-color:transparent;
   }
-  .m-comments-back:hover{ background:rgba(255,255,255,0.12); border-color:var(--m-border-strong); }
+  .m-comments-back:hover{ background:transparent; color:#fff; }
   .m-comments-body{
     flex:1;
     overflow:auto;
@@ -1321,6 +1391,103 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
   #tt-body-page #detail_page .container_postbtn .menu_layer a:hover{
     background:rgba(255,255,255,0.06) !important;
     color:#fff !important;
+  }
+
+  /* Fallback: some Tistory layouts render dropdown as light layer outside `.container_postbtn` */
+  body#tt-body-page .share_menu,
+  body#tt-body-page .etc_menu,
+  body#tt-body-page .menu_layer{
+    background:var(--m-surface-2) !important;
+    border:1px solid var(--m-border) !important;
+    color:#ddd !important;
+  }
+  body#tt-body-page .share_menu a,
+  body#tt-body-page .etc_menu a,
+  body#tt-body-page .menu_layer a,
+  body#tt-body-page .share_menu button,
+  body#tt-body-page .etc_menu button,
+  body#tt-body-page .menu_layer button{
+    color:#ddd !important;
+  }
+  body#tt-body-page .share_menu svg,
+  body#tt-body-page .etc_menu svg,
+  body#tt-body-page .menu_layer svg{
+    fill:#ddd !important;
+    color:#ddd !important;
+  }
+  body#tt-body-page .share_menu i,
+  body#tt-body-page .etc_menu i,
+  body#tt-body-page .menu_layer i{
+    color:#ddd !important;
+  }
+  body#tt-body-page .share_menu a:hover,
+  body#tt-body-page .etc_menu a:hover,
+  body#tt-body-page .menu_layer a:hover{
+    background:rgba(255,255,255,0.06) !important;
+    color:#fff !important;
+  }
+
+  /* Tistory share dropdown (alternate markup: `.layer_post` / `.list_layer`) */
+  #tt-body-page #detail_page .container_postbtn .layer_post,
+  #tt-body-page #detail_page .container_postbtn .layer_post ul,
+  #tt-body-page #detail_page .container_postbtn .layer_post .list_layer,
+  #tt-body-page #detail_page .container_postbtn .list_layer,
+  body#tt-body-page .layer_post,
+  body#tt-body-page .layer_post ul,
+  body#tt-body-page .layer_post .list_layer,
+  body#tt-body-page .list_layer{
+    background:var(--m-surface-2) !important;
+    border:1px solid var(--m-border) !important;
+    color:#ddd !important;
+  }
+  #tt-body-page #detail_page .container_postbtn .layer_post a,
+  #tt-body-page #detail_page .container_postbtn .layer_post button,
+  #tt-body-page #detail_page .container_postbtn .list_layer a,
+  #tt-body-page #detail_page .container_postbtn .list_layer button,
+  body#tt-body-page .layer_post a,
+  body#tt-body-page .layer_post button,
+  body#tt-body-page .list_layer a,
+  body#tt-body-page .list_layer button{
+    color:#ddd !important;
+  }
+  #tt-body-page #detail_page .container_postbtn .layer_post a:hover,
+  #tt-body-page #detail_page .container_postbtn .list_layer a:hover,
+  body#tt-body-page .layer_post a:hover,
+  body#tt-body-page .list_layer a:hover{
+    background:rgba(255,255,255,0.06) !important;
+    color:#fff !important;
+  }
+
+  /* Hard fallback: force readable text even when Tistory injects light theme styles */
+  body#tt-body-page .share_menu *,
+  body#tt-body-page .etc_menu *,
+  body#tt-body-page .menu_layer *,
+  body#tt-body-page .layer_post *,
+  body#tt-body-page .list_layer *{
+    color:#ddd !important;
+  }
+  body#tt-body-page .share_menu a,
+  body#tt-body-page .etc_menu a,
+  body#tt-body-page .menu_layer a,
+  body#tt-body-page .layer_post a,
+  body#tt-body-page .list_layer a,
+  body#tt-body-page .share_menu button,
+  body#tt-body-page .etc_menu button,
+  body#tt-body-page .menu_layer button,
+  body#tt-body-page .layer_post button,
+  body#tt-body-page .list_layer button{
+    background:transparent !important;
+  }
+  body#tt-body-page .layer_post [class*="inner"],
+  body#tt-body-page .layer_post [class*="wrap"],
+  body#tt-body-page .layer_post [class*="layer"],
+  body#tt-body-page .layer_post [class*="list"],
+  body#tt-body-page .list_layer [class*="inner"],
+  body#tt-body-page .list_layer [class*="wrap"],
+  body#tt-body-page .list_layer [class*="layer"],
+  body#tt-body-page .list_layer [class*="list"]{
+    background:var(--m-surface-2) !important;
+    border-color:var(--m-border) !important;
   }
 }
 

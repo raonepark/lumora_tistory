@@ -1,4 +1,4 @@
-// Lumora custom script v32
+// Lumora custom script v37
 $(document).ready(function () {
   var list = $(".list_content");
 
@@ -766,6 +766,168 @@ $(document).ready(function () {
   })();
 
   // ==============================
+  // Mobile: show subscribe button on top post bar
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!window.matchMedia) return;
+
+    var media = window.matchMedia("(max-width:1024px)");
+    if (!media.matches) return;
+
+    function normalizeText(text) {
+      return String(text || "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function findSubscribeInPostButtons() {
+      var selector = [
+        "#detail_page .container_postbtn .btn_subscribe",
+        '#detail_page .container_postbtn [data-tistory-react-app*="Subscribe"]',
+        '#detail_page .container_postbtn [data-tistory-react-app*="subscribe"]',
+        '#detail_page .container_postbtn a[href*="subscribe"]',
+        '#detail_page .container_postbtn a[href*="follow"]',
+        '#detail_page .container_postbtn a[class*="subscribe"]',
+        '#detail_page .container_postbtn button[class*="subscribe"]',
+        '#detail_page .container_page a[href*="subscribe"]',
+        '#detail_page .container_page a[href*="follow"]'
+      ].join(", ");
+
+      var $el = $(selector).first();
+      if ($el.length) return $el;
+
+      // Fallback: 티스토리 구독 버튼이 .btn_menu_toolbar로 들어오는 경우(클래스에 subscribe가 없음)
+      $el = $("#detail_page .container_postbtn .btn_menu_toolbar, #detail_page .container_postbtn a, #detail_page .container_postbtn button")
+        .filter(function () {
+          var text = normalizeText(this.textContent);
+          if (!text) return false;
+          if (text.indexOf("구독") !== -1) return true;
+          var lower = text.toLowerCase();
+          return lower.indexOf("subscribe") !== -1 || lower.indexOf("follow") !== -1;
+        })
+        .first();
+
+      return $el;
+    }
+
+    function resolveClickable($el) {
+      if (!$el || !$el.length) return $();
+      if ($el.is("a, button")) return $el;
+      var $clickable = $el.find("a, button").first();
+      return $clickable.length ? $clickable : $el;
+    }
+
+    function escapeRegExp(value) {
+      return String(value || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function cleanSubscribeLabel($subscribe, $bar) {
+      if (!$subscribe || !$subscribe.length) return;
+      if (!$bar || !$bar.length) return;
+
+      var blogTitle = normalizeText($bar.find(".m-postbar__title").first().text());
+      if (!blogTitle) return;
+
+      var blogTitleLower = blogTitle.toLowerCase();
+      var titleRx = new RegExp(escapeRegExp(blogTitle), "ig");
+
+      function cleanupText(raw) {
+        var t = normalizeText(String(raw || ""));
+        if (!t) return "";
+        t = normalizeText(t.replace(titleRx, ""));
+        t = t.replace(/^[\s|·•\-]+/g, "").replace(/[\s|·•\-]+$/g, "").trim();
+        return t;
+      }
+
+      var $state = $subscribe.find(".txt_state").first();
+      if ($state.length) {
+        var rawState = normalizeText($state.text());
+        var cleanedState = cleanupText(rawState);
+        if (cleanedState && cleanedState !== rawState) {
+          $state.text(cleanedState);
+        }
+      }
+
+      $subscribe.contents().each(function () {
+        if (this.nodeType !== 3) return;
+        var t = normalizeText(this.nodeValue);
+        if (!t) return;
+
+        var lower = t.toLowerCase();
+        if (lower === blogTitleLower) {
+          this.nodeValue = "";
+          return;
+        }
+
+        if (lower.indexOf(blogTitleLower) !== -1) {
+          var cleaned = cleanupText(t);
+          if (cleaned !== t) this.nodeValue = cleaned;
+        }
+      });
+
+      $subscribe.find("*").each(function () {
+        if (!this || (this.children && this.children.length)) return;
+        var t = normalizeText(this.textContent);
+        if (!t) return;
+        if (t.toLowerCase() === blogTitleLower) {
+          this.style.setProperty("display", "none", "important");
+        }
+      });
+    }
+
+    function apply() {
+      if (!document.body || document.body.id !== "tt-body-page") return;
+      if (!media.matches) return;
+
+      var $bar = $(".m-postbar").first();
+      if (!$bar.length) return;
+
+      var $subscribeRaw = findSubscribeInPostButtons();
+      if (!$subscribeRaw.length) return;
+
+      var $subscribe = resolveClickable($subscribeRaw);
+      if (!$subscribe.length) return;
+
+      if ($subscribe.closest(".m-postbar").length) return;
+
+      $subscribe.addClass("m-postbar__subscribe");
+      cleanSubscribeLabel($subscribe, $bar);
+
+      var $search = $bar.find(".m-postbar__icon").first();
+      if ($search.length) {
+        $subscribe.insertBefore($search);
+      } else {
+        $bar.append($subscribe);
+      }
+    }
+
+    var scheduled = false;
+    function scheduleApply() {
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(function () {
+        scheduled = false;
+        apply();
+      }, 120);
+    }
+
+    scheduleApply();
+    $(window).on("load", scheduleApply);
+
+    var target =
+      document.querySelector("#detail_page .container_postbtn") ||
+      document.querySelector("#detail_page") ||
+      document.body;
+    if (!target || typeof MutationObserver !== "function") return;
+
+    var observer = new MutationObserver(function () {
+      scheduleApply();
+    });
+    observer.observe(target, { childList: true, subtree: true });
+  })();
+
+  // ==============================
   // Mobile: like (reaction) pop animation
   // ==============================
   (function () {
@@ -793,11 +955,18 @@ $(document).ready(function () {
 
     function getCount($wrap) {
       if (!$wrap || !$wrap.length) return null;
-      var $el = $wrap.find(".uoc-count, .count, .txt_like").first();
-      if (!$el.length) return null;
-      var raw = String($el.text() || "").replace(/[^\d]/g, "");
-      if (!raw) return null;
-      var n = parseInt(raw, 10);
+
+      var $countEl = $wrap.find(".uoc-count, .count").first();
+      var $labelEl = $wrap.find(".txt_like").first();
+
+      var raw = "";
+      if ($countEl.length) raw = String($countEl.text() || "");
+      else if ($labelEl.length) raw = String($labelEl.text() || "");
+      else return null;
+
+      var digits = raw.replace(/[^\d]/g, "");
+      if (!digits) return 0;
+      var n = parseInt(digits, 10);
       if (isNaN(n)) return null;
       return n;
     }
@@ -826,9 +995,7 @@ $(document).ready(function () {
     function syncInitial() {
       $(WRAP_SELECTOR).each(function () {
         var $wrap = $(this);
-        if (isLikedByDom($wrap)) {
-          setLikedClass($wrap, true);
-        }
+        setLikedClass($wrap, isLikedByDom($wrap));
       });
     }
 
@@ -891,6 +1058,10 @@ $(document).ready(function () {
               return;
             }
             el.__lumoraLikeSyncTimer = null;
+            setLikedClass($wrap, domLiked);
+            if (!wasLiked && domLiked) {
+              animate($wrap);
+            }
             return;
           }
 

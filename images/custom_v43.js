@@ -1235,6 +1235,68 @@ $(document).ready(function () {
   })();
 
   // ==============================
+  // Mobile: floating scroll-to-top button
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-page") return;
+    if (!window.matchMedia || !window.matchMedia("(max-width:1024px)").matches) return;
+    if (!document.getElementById("detail_page")) return;
+
+    var button = document.querySelector(".m-to-top");
+    if (!button) {
+      button = document.createElement("button");
+      button.type = "button";
+      button.className = "m-to-top";
+      button.setAttribute("aria-label", "상단으로 이동");
+      button.textContent = "↑";
+      button.addEventListener("click", function () {
+        try {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } catch (e) {
+          window.scrollTo(0, 0);
+        }
+      });
+      document.body.appendChild(button);
+    }
+
+    var scheduled = false;
+
+    function update() {
+      scheduled = false;
+      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      button.classList.toggle("is-visible", y > 420);
+    }
+
+    function schedule() {
+      if (scheduled) return;
+      scheduled = true;
+      if (typeof window.requestAnimationFrame === "function") {
+        window.requestAnimationFrame(update);
+      } else {
+        setTimeout(update, 66);
+      }
+    }
+
+    var supportsPassive = false;
+    try {
+      var opts = Object.defineProperty({}, "passive", {
+        get: function () {
+          supportsPassive = true;
+        },
+      });
+      window.addEventListener("testPassive", null, opts);
+      window.removeEventListener("testPassive", null, opts);
+    } catch (e) {
+      supportsPassive = false;
+    }
+
+    var listenerOptions = supportsPassive ? { passive: true } : false;
+    window.addEventListener("scroll", schedule, listenerOptions);
+    window.addEventListener("resize", schedule, listenerOptions);
+    update();
+  })();
+
+  // ==============================
   // Mobile: comment count badge/header
   // ==============================
   (function () {

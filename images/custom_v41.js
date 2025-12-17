@@ -1,4 +1,4 @@
-// Lumora custom script v39
+// Lumora custom script v41
 $(document).ready(function () {
   var list = $(".list_content");
 
@@ -223,6 +223,70 @@ $(document).ready(function () {
     var dateOnly = toDateOnly($(this).text());
     if (dateOnly) $(this).text(dateOnly);
   });
+
+  // ==============================
+  // Search page: back button + empty state
+  // ==============================
+  (function () {
+    if (!document.body || document.body.id !== "tt-body-search") return;
+
+    function ensureBackButton() {
+      var searchBox = document.querySelector("#sidebar .search");
+      if (!searchBox || searchBox.querySelector(".search-back")) return;
+
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "search-back";
+      button.setAttribute("aria-label", "닫기");
+      button.textContent = "x";
+      button.addEventListener("click", function () {
+        if (window.history && window.history.length > 1) {
+          window.history.back();
+        } else {
+          window.location.href = "/";
+        }
+      });
+
+      searchBox.insertBefore(button, searchBox.firstChild);
+    }
+
+    function ensureEmptyState() {
+      var contentEl = document.getElementById("content");
+      if (!contentEl) return;
+
+      var hasResult = !!contentEl.querySelector(".list_content");
+      var emptyEl = contentEl.querySelector(".search-empty");
+
+      if (!hasResult) {
+        if (!emptyEl) {
+          emptyEl = document.createElement("div");
+          emptyEl.className = "search-empty";
+          emptyEl.innerHTML = "<strong>검색 결과가 없습니다.</strong><span>다른 키워드로 다시 검색해 주세요.</span>";
+          contentEl.appendChild(emptyEl);
+        }
+        return;
+      }
+
+      if (emptyEl) emptyEl.parentNode.removeChild(emptyEl);
+    }
+
+    ensureBackButton();
+    ensureEmptyState();
+
+    var target = document.getElementById("content");
+    if (!target || typeof MutationObserver !== "function") return;
+
+    var scheduled = false;
+    var observer = new MutationObserver(function () {
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(function () {
+        scheduled = false;
+        ensureEmptyState();
+      }, 80);
+    });
+    observer.observe(target, { childList: true, subtree: true });
+  })();
 
   // ==============================
   // 댓글 폼 유효성 검사 — 중복 confirm 방지(단일 submit 가드)

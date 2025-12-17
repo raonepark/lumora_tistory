@@ -1061,7 +1061,7 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     z-index:auto;
     width:auto;
     height:40px;
-    padding:0 6px;
+    padding:0 6px 0 8px; /* match reaction button padding */
     gap:6px;
     display:inline-flex !important;
     flex-direction:row !important;
@@ -1069,12 +1069,18 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     justify-content:center !important;
     white-space:nowrap;
   }
+  /* Match reaction icon box sizing so the row feels aligned */
+  #tt-body-page #detail_page .container_postbtn .m-comment-btn .ico_postbtn{
+    width:28px;
+    height:28px;
+    flex:0 0 auto;
+  }
   #tt-body-page #detail_page .container_postbtn .m-comment-btn .ico_comment{
     transform:none;
     background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23ddd'%20d='M4%204h16a2%202%200%200%201%202%202v12a2%202%200%200%201-2%202H7l-4%204V6a2%202%200%200%201%202-2z'/%3E%3C/svg%3E") !important;
     background-repeat:no-repeat !important;
     background-position:center !important;
-    background-size:22px 22px !important;
+    background-size:20px 20px !important;
   }
   #tt-body-page #detail_page .container_postbtn .m-comment-btn .m-comment-count{
     position:static;
@@ -1086,9 +1092,9 @@ figure.fileblock .name, #tt-body-page figure.fileblock .name { color:#fff; }
     border-radius:0;
     background:transparent;
     color:#ddd;
-    font-size:12px;
-    font-weight:800;
-    line-height:1;
+    font-size:12px !important;
+    font-weight:800 !important;
+    line-height:1 !important;
     display:inline-block !important;
     margin:0 !important;
   }

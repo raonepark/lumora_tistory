@@ -14,7 +14,7 @@
 	<!--[if gte IE 9]><!-->
 	<script src="//t1.daumcdn.net/tistory_admin/lib/jquery/jquery-3.2.1.min.js"></script>
 	<script src="./images/custom_v45.js"></script>
-	<script src="./images/category_accordion.js"></script>
+	<script src="./images/category_accordion_v1.js"></script>
 	<meta name="naver-site-verification" content="93f3a67981fe26e8b064b9447a9b6556b11e5a08" />
 	<!--<![endif]-->
 
@@ -83,292 +83,288 @@
 
 					<!-- 카테고리 -->
 					<!-- Mock Category for Testing -->
-					<!-- Mock Category for Testing Dynamic Mapping -->
-					<ul class="tt_category">
-						<!-- Target Parent 1 -->
-						<li><a class="link_item" href="#">개발 & 컴퓨터 활용 <span class="c_cnt">(5)</span></a></li>
-						<!-- Target Parent 2 -->
-						<li><a class="link_item" href="#">QA & 자동화 <span class="c_cnt">(2)</span></a></li>
-
-						<!-- Sources to be moved -->
-						<li><a class="link_item" href="#">내가 만든 툴 <span class="c_cnt">(2)</span></a></li>
-						<li><a class="link_sub_item" href="#">Appium <span class="c_cnt">(3)</span></a></li>
-						<li><a class="link_item" href="#">ISTQB 시험 공부 <span class="c_cnt">(6)</span></a></li>
-					</ul>
-			</div>
-			<script src="./images/category_accordion_v1.js"></script>
-			</s_sidebar_element>
-
-			<!-- <p class="copyright">Designed By<a href="https://kiki97-dev.tistory.com/62">kiki</a></p> -->
-
-		</div> <!-- sidebar close -->
-
-		<div id="contentWrap">
-			<!-- Mobile: category overlay -->
-			<input id="m-cat-toggle" class="m-cat-toggle m-list-only" type="checkbox" />
-			<div class="m-topbar m-list-only">
-				<label class="m-topbar__btn" for="m-cat-toggle">
-					<span class="m-topbar__icon" aria-hidden="true"></span>
-					<span class="m-topbar__text">분류 전체보기</span>
-				</label>
-			</div>
-			<div class="m-cat-overlay m-list-only">
-				<label class="m-cat-backdrop" for="m-cat-toggle" aria-hidden="true"></label>
-				<div class="m-cat-sheet" role="dialog" aria-modal="true" aria-label="카테고리">
-					<div class="m-cat-header">
-						<strong>카테고리</strong>
-						<label class="m-cat-close" for="m-cat-toggle" aria-label="닫기">×</label>
-					</div>
-					<div class="m-cat-body">
+					<div class="category">
 						[##_category_list_##]
 					</div>
+					<script src="./images/category_accordion_v1.js"></script>
+				</s_sidebar_element>
+
+				<!-- <p class="copyright">Designed By<a href="https://kiki97-dev.tistory.com/62">kiki</a></p> -->
+
+			</div> <!-- sidebar close -->
+
+			<div id="contentWrap">
+				<!-- Mobile: category overlay -->
+				<input id="m-cat-toggle" class="m-cat-toggle m-list-only" type="checkbox" />
+				<div class="m-topbar m-list-only">
+					<label class="m-topbar__btn" for="m-cat-toggle">
+						<span class="m-topbar__icon" aria-hidden="true"></span>
+						<span class="m-topbar__text">분류 전체보기</span>
+					</label>
 				</div>
-			</div>
-
-			<div id="content">
-				<s_article_rep>
-					<s_index_article_rep>
-						<div class="list_content">
-							<a href="[##_article_rep_link_##]" class="link_post">
-								<span class="category">[##_article_rep_category_##]</span>
-								<p class="tit_post">[##_article_rep_title_##]</p>
-								<p class="txt_post">[##_article_rep_summary_##]</p>
-							</a>
-							<div class="detail_info">
-								<span class="txt_bar js-date no-link">[##_article_rep_date_##]</span>
-							</div>
+				<div class="m-cat-overlay m-list-only">
+					<label class="m-cat-backdrop" for="m-cat-toggle" aria-hidden="true"></label>
+					<div class="m-cat-sheet" role="dialog" aria-modal="true" aria-label="카테고리">
+						<div class="m-cat-header">
+							<strong>카테고리</strong>
+							<label class="m-cat-close" for="m-cat-toggle" aria-label="닫기">×</label>
 						</div>
+						<div class="m-cat-body">
+							[##_category_list_##]
+						</div>
+					</div>
+				</div>
 
-
-					</s_index_article_rep>
-
-					<s_permalink_article_rep>
-						<section id="detail_page">
-
-							<!-- Mobile: permalink top bar + search -->
-							<input id="m-search-toggle" class="m-search-toggle m-only" type="checkbox" />
-							<div class="m-postbar m-only">
-								<a class="m-postbar__title" href="[##_blog_link_##]">[##_title_##]</a>
-								<label class="m-postbar__icon" for="m-search-toggle" aria-label="검색">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
-										<path
-											d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z" />
-									</svg>
-								</label>
-								<a class="m-postbar__profile" href="[##_blog_link_##]" aria-label="블로그 홈">
-									<img src="[##_image_##]" alt="프로필" />
+				<div id="content">
+					<s_article_rep>
+						<s_index_article_rep>
+							<div class="list_content">
+								<a href="[##_article_rep_link_##]" class="link_post">
+									<span class="category">[##_article_rep_category_##]</span>
+									<p class="tit_post">[##_article_rep_title_##]</p>
+									<p class="txt_post">[##_article_rep_summary_##]</p>
 								</a>
-							</div>
-							<div class="m-search-overlay m-only">
-								<label class="m-search-backdrop" for="m-search-toggle" aria-hidden="true"></label>
-								<div class="m-search-sheet" role="dialog" aria-modal="true" aria-label="검색">
-									<div class="m-search-header">
-										<strong>검색</strong>
-										<label class="m-search-close" for="m-search-toggle" aria-label="닫기">×</label>
-									</div>
-									<div class="m-search-body">
-										<s_search>
-											<div class="m-search-form">
-												<input placeholder="검색어를 입력하세요." type="text" name="[##_search_name_##]"
-													value="[##_search_text_##]"
-													onkeypress="if (event.keyCode == 13) { [##_search_onclick_submit_##] }" />
-												<button class="m-search-submit" type="button"
-													onclick="[##_search_onclick_submit_##]" aria-label="검색">
-													<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-														aria-hidden="true">
-														<path
-															d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z" />
-													</svg>
-												</button>
-											</div>
-										</s_search>
-									</div>
+								<div class="detail_info">
+									<span class="txt_bar js-date no-link">[##_article_rep_date_##]</span>
 								</div>
 							</div>
 
-							<div class="titleWrap">
-								<div class="category">
-									<a href="[##_article_rep_category_link_##]">[##_article_rep_category_##]</a>
+
+						</s_index_article_rep>
+
+						<s_permalink_article_rep>
+							<section id="detail_page">
+
+								<!-- Mobile: permalink top bar + search -->
+								<input id="m-search-toggle" class="m-search-toggle m-only" type="checkbox" />
+								<div class="m-postbar m-only">
+									<a class="m-postbar__title" href="[##_blog_link_##]">[##_title_##]</a>
+									<label class="m-postbar__icon" for="m-search-toggle" aria-label="검색">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+											aria-hidden="true">
+											<path
+												d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z" />
+										</svg>
+									</label>
+									<a class="m-postbar__profile" href="[##_blog_link_##]" aria-label="블로그 홈">
+										<img src="[##_image_##]" alt="프로필" />
+									</a>
 								</div>
-								<h2><a href="[##_article_rep_link_##]">[##_article_rep_title_##]</a></h2>
-								<p class="author">[##_article_rep_author_##] ㅣ [##_article_rep_date_##]</p>
-
-							</div>
-
-							<div class="article">
-								[##_article_rep_desc_##]
-								<s_tag_label>
-									<div class="tagTrail">
-										<span class="tagText"><i class="fa-solid fa-hashtag"></i></span>
-										[##_tag_label_rep_##]
-									</div>
-								</s_tag_label>
-								<div class="tableofcontents"></div>
-							</div>
-
-							<s_rp>
-								<!-- Mobile: comment overlay toggle -->
-								<input id="m-comment-toggle" class="m-comment-toggle m-only" type="checkbox" />
-								<label class="m-comment-btn m-only" for="m-comment-toggle" aria-label="댓글">
-									<span class="ico_postbtn ico_comment" aria-hidden="true">댓글</span>
-									<span class="m-comment-count m-comment-count--btn" aria-hidden="true"></span>
-								</label>
-
-								<div class="m-comments-overlay">
-									<label class="m-comments-backdrop m-only" for="m-comment-toggle"
-										aria-hidden="true"></label>
-									<div class="m-comments-sheet" role="dialog" aria-modal="true" aria-label="댓글">
-										<div class="m-comments-header m-only">
-											<strong>댓글<span class="m-comment-count m-comment-count--header"
-													aria-hidden="true"></span></strong>
-											<a class="m-comments-back" href="[##_blog_link_##]" aria-label="블로그 홈">×</a>
+								<div class="m-search-overlay m-only">
+									<label class="m-search-backdrop" for="m-search-toggle" aria-hidden="true"></label>
+									<div class="m-search-sheet" role="dialog" aria-modal="true" aria-label="검색">
+										<div class="m-search-header">
+											<strong>검색</strong>
+											<label class="m-search-close" for="m-search-toggle"
+												aria-label="닫기">×</label>
 										</div>
-
-										<div class="m-comments-body">
-											<div class="comment">
-												<h3>댓글달기&nbsp;<i class="fa-solid fa-comment"></i></h3>
-											</div>
-
-											<s_rp_input_form>
-												<div class="commentWrite">
-													<p class="comment_txt">
-														<textarea placeholder="댓글을 달아주세요 :)"
-															name="[##_rp_input_comment_##]" rows="10"
-															cols="50"></textarea>
-													</p>
-													<p class="comment_submit">
-														<input type="submit" value="댓글 달기"
-															onclick="[##_rp_onclick_submit_##]" />
-													</p>
-													<p class="secretWrap">
-														<input id="secret" type="checkbox"
-															name="[##_rp_input_is_secret_##]" class="checkbox" />
-														<label for="secret"> 비밀글 </label>
-													</p>
+										<div class="m-search-body">
+											<s_search>
+												<div class="m-search-form">
+													<input placeholder="검색어를 입력하세요." type="text"
+														name="[##_search_name_##]" value="[##_search_text_##]"
+														onkeypress="if (event.keyCode == 13) { [##_search_onclick_submit_##] }" />
+													<button class="m-search-submit" type="button"
+														onclick="[##_search_onclick_submit_##]" aria-label="검색">
+														<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+															aria-hidden="true">
+															<path
+																d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z" />
+														</svg>
+													</button>
 												</div>
-											</s_rp_input_form>
-
-											<div class="commentlist">
-												<s_rp>
-													<s_rp_container>
-														<ul>
-															<s_rp_rep>
-																<li id='[##_rp_rep_id_##]'>
-																	<div class="[##_rp_rep_class_##]">
-																		<div class="image"><img
-																				src="[##_rp_rep_logo_##]" alt="">
-																		</div>
-																		<div class="com_box">
-																			<p class="name">[##_rp_rep_name_##]</p>
-																			<p class="com_txt">[##_rp_rep_desc_##]
-																			</p>
-																			<span class="date">
-																				[##_rp_rep_date_##]</span>
-																			<span class="control">
-																				<a href="#"
-																					onclick="[##_rp_rep_onclick_delete_##]"
-																					class="modify">&nbsp;
-																					<span>수정/삭제</span>
-																				</a>
-																				<a href="#"
-																					onclick="[##_rp_rep_onclick_reply_##]"
-																					class="write">&nbsp;
-																					<span>댓글쓰기</span>
-																				</a>
-																			</span>
-																		</div>
-																	</div>
-																	<s_rp2_container>
-																		<ul>
-																			<s_rp2_rep>
-																				<li id='[##_rp_rep_id_##]'>
-																					<div class="[##_rp_rep_class_##]">
-																						<div class="image"><img
-																								src="[##_rp_rep_logo_##]"
-																								alt=""></div>
-																						<div class="com_box">
-																							<p class="name">
-																								[##_rp_rep_name_##]
-																							</p>
-																							<p class="com_txt">
-																								[##_rp_rep_desc_##]
-																							</p>
-																							<span class="date">
-																								[##_rp_rep_date_##]</span>
-																							<span class="control">
-																								<a href="[##_rp_rep_link_##]"
-																									class="address">&nbsp;
-																									<span>댓글주소</span>
-																								</a>
-																								<a href="#"
-																									onclick="[##_rp_rep_onclick_delete_##]"
-																									class="modify">&nbsp;
-																									<span>수정/삭제</span>
-																								</a>
-																							</span>
-																						</div>
-																					</div>
-																				</li>
-																			</s_rp2_rep>
-																		</ul>
-																	</s_rp2_container>
-																</li>
-															</s_rp_rep>
-														</ul>
-													</s_rp_container>
-												</s_rp>
-											</div>
+											</s_search>
 										</div>
 									</div>
 								</div>
-							</s_rp>
 
-							<s_article_related>
-								<div class="area_related">
-									<strong class="tit_related">[##_article_rep_category_##] 다른글</strong>
-									<ul class="list_related">
-										<s_article_related_rep>
-											<li class="[##_article_related_rep_type_##]">
-												<a href="[##_article_related_rep_link_##]" class="link_related">
-													<span class="txt_related">[##_article_related_rep_title_##]</span>
-													<span class="desc_related"></span>
-													<span class="date_related">[##_article_related_rep_date_##]</span>
-													<span class="frame_related"></span>
-												</a>
-											</li>
-										</s_article_related_rep>
-									</ul>
+								<div class="titleWrap">
+									<div class="category">
+										<a href="[##_article_rep_category_link_##]">[##_article_rep_category_##]</a>
+									</div>
+									<h2><a href="[##_article_rep_link_##]">[##_article_rep_title_##]</a></h2>
+									<p class="author">[##_article_rep_author_##] ㅣ [##_article_rep_date_##]</p>
+
 								</div>
-							</s_article_related>
 
-						</section>
+								<div class="article">
+									[##_article_rep_desc_##]
+									<s_tag_label>
+										<div class="tagTrail">
+											<span class="tagText"><i class="fa-solid fa-hashtag"></i></span>
+											[##_tag_label_rep_##]
+										</div>
+									</s_tag_label>
+									<div class="tableofcontents"></div>
+								</div>
+
+								<s_rp>
+									<!-- Mobile: comment overlay toggle -->
+									<input id="m-comment-toggle" class="m-comment-toggle m-only" type="checkbox" />
+									<label class="m-comment-btn m-only" for="m-comment-toggle" aria-label="댓글">
+										<span class="ico_postbtn ico_comment" aria-hidden="true">댓글</span>
+										<span class="m-comment-count m-comment-count--btn" aria-hidden="true"></span>
+									</label>
+
+									<div class="m-comments-overlay">
+										<label class="m-comments-backdrop m-only" for="m-comment-toggle"
+											aria-hidden="true"></label>
+										<div class="m-comments-sheet" role="dialog" aria-modal="true" aria-label="댓글">
+											<div class="m-comments-header m-only">
+												<strong>댓글<span class="m-comment-count m-comment-count--header"
+														aria-hidden="true"></span></strong>
+												<a class="m-comments-back" href="[##_blog_link_##]"
+													aria-label="블로그 홈">×</a>
+											</div>
+
+											<div class="m-comments-body">
+												<div class="comment">
+													<h3>댓글달기&nbsp;<i class="fa-solid fa-comment"></i></h3>
+												</div>
+
+												<s_rp_input_form>
+													<div class="commentWrite">
+														<p class="comment_txt">
+															<textarea placeholder="댓글을 달아주세요 :)"
+																name="[##_rp_input_comment_##]" rows="10"
+																cols="50"></textarea>
+														</p>
+														<p class="comment_submit">
+															<input type="submit" value="댓글 달기"
+																onclick="[##_rp_onclick_submit_##]" />
+														</p>
+														<p class="secretWrap">
+															<input id="secret" type="checkbox"
+																name="[##_rp_input_is_secret_##]" class="checkbox" />
+															<label for="secret"> 비밀글 </label>
+														</p>
+													</div>
+												</s_rp_input_form>
+
+												<div class="commentlist">
+													<s_rp>
+														<s_rp_container>
+															<ul>
+																<s_rp_rep>
+																	<li id='[##_rp_rep_id_##]'>
+																		<div class="[##_rp_rep_class_##]">
+																			<div class="image"><img
+																					src="[##_rp_rep_logo_##]" alt="">
+																			</div>
+																			<div class="com_box">
+																				<p class="name">[##_rp_rep_name_##]</p>
+																				<p class="com_txt">[##_rp_rep_desc_##]
+																				</p>
+																				<span class="date">
+																					[##_rp_rep_date_##]</span>
+																				<span class="control">
+																					<a href="#"
+																						onclick="[##_rp_rep_onclick_delete_##]"
+																						class="modify">&nbsp;
+																						<span>수정/삭제</span>
+																					</a>
+																					<a href="#"
+																						onclick="[##_rp_rep_onclick_reply_##]"
+																						class="write">&nbsp;
+																						<span>댓글쓰기</span>
+																					</a>
+																				</span>
+																			</div>
+																		</div>
+																		<s_rp2_container>
+																			<ul>
+																				<s_rp2_rep>
+																					<li id='[##_rp_rep_id_##]'>
+																						<div
+																							class="[##_rp_rep_class_##]">
+																							<div class="image"><img
+																									src="[##_rp_rep_logo_##]"
+																									alt=""></div>
+																							<div class="com_box">
+																								<p class="name">
+																									[##_rp_rep_name_##]
+																								</p>
+																								<p class="com_txt">
+																									[##_rp_rep_desc_##]
+																								</p>
+																								<span class="date">
+																									[##_rp_rep_date_##]</span>
+																								<span class="control">
+																									<a href="[##_rp_rep_link_##]"
+																										class="address">&nbsp;
+																										<span>댓글주소</span>
+																									</a>
+																									<a href="#"
+																										onclick="[##_rp_rep_onclick_delete_##]"
+																										class="modify">&nbsp;
+																										<span>수정/삭제</span>
+																									</a>
+																								</span>
+																							</div>
+																						</div>
+																					</li>
+																				</s_rp2_rep>
+																			</ul>
+																		</s_rp2_container>
+																	</li>
+																</s_rp_rep>
+															</ul>
+														</s_rp_container>
+													</s_rp>
+												</div>
+											</div>
+										</div>
+									</div>
+								</s_rp>
+
+								<s_article_related>
+									<div class="area_related">
+										<strong class="tit_related">[##_article_rep_category_##] 다른글</strong>
+										<ul class="list_related">
+											<s_article_related_rep>
+												<li class="[##_article_related_rep_type_##]">
+													<a href="[##_article_related_rep_link_##]" class="link_related">
+														<span
+															class="txt_related">[##_article_related_rep_title_##]</span>
+														<span class="desc_related"></span>
+														<span
+															class="date_related">[##_article_related_rep_date_##]</span>
+														<span class="frame_related"></span>
+													</a>
+												</li>
+											</s_article_related_rep>
+										</ul>
+									</div>
+								</s_article_related>
+
+							</section>
 
 
-					</s_permalink_article_rep>
+						</s_permalink_article_rep>
 
 
-				</s_article_rep>
+					</s_article_rep>
 
 
 
-			</div> <!-- content close -->
+				</div> <!-- content close -->
 
 
-		</div><!-- //contentWrap -->
+			</div><!-- //contentWrap -->
 
-		<s_paging>
-			<div class="paging">
-				<a [##_prev_page_##] class="[##_no_more_prev_##]">◀ PREV </a>
-				<span class="numbox">
-					<s_paging_rep>
-						<a [##_paging_rep_link_##] class="num">[[##_paging_rep_link_num_##]]</a>
-					</s_paging_rep>
-				</span>
-				<a href="[##_next_page_##]" class="[##_no_more_next_##]">NEXT ►</a>
-			</div>
-		</s_paging>
+			<s_paging>
+				<div class="paging">
+					<a [##_prev_page_##] class="[##_no_more_prev_##]">◀ PREV </a>
+					<span class="numbox">
+						<s_paging_rep>
+							<a [##_paging_rep_link_##] class="num">[[##_paging_rep_link_num_##]]</a>
+						</s_paging_rep>
+					</span>
+					<a href="[##_next_page_##]" class="[##_no_more_next_##]">NEXT ►</a>
+				</div>
+			</s_paging>
 
-		<div class="non-paging"></div>
+			<div class="non-paging"></div>
 
 		</div> <!-- container close -->
 	</s_t3>

@@ -4063,14 +4063,16 @@ html body #container #sidebar .sub-category-item li a.c_item {
   cursor: pointer !important;
 
   /* Typography */
-  font-size: 0.9em !important;
+  font-size: 0.88em !important;
   color: #bbb !important;
   font-weight: normal !important;
   text-decoration: none !important;
 
-  /* Spacing: Adjusted for Left Spine */
+  /* Spacing: Adjusted for Left Spine (Compact Mode) */
   /* Container moved right 22px, so reduce left padding */
-  padding: 10px 15px 10px 15px !important;
+  padding: 4px 15px 4px 15px !important;
+  min-height: 28px !important;
+  /* Ensure minimal clickable area but very compact */
   margin: 0 !important;
 
   background: transparent !important;
@@ -4216,7 +4218,9 @@ html body #container #sidebar .sub-category-item .view-all-item a:hover {
     /* Minimum touch height */
 
     /* Typography */
-    font-size: 16px !important;
+    font-family: inherit !important;
+    /* Unified Font */
+    font-size: 15px !important;
     /* Readable font size */
     color: #bbb !important;
     text-decoration: none !important;
@@ -4238,15 +4242,19 @@ html body #container #sidebar .sub-category-item .view-all-item a:hover {
     background: rgba(255, 255, 255, 0.06) !important;
   }
 
-  /* 4. Parent Toggle Area (Mobile Top Level) */
-  .m-cat-body .accordion-parent {
+  /* 4. Parent Toggle Area (Mobile Top Level & Leaf) */
+  /* Ensure ALL top-level items have same font size */
+  .m-cat-body .category_list>li>a {
+    font-size: 16px !important;
     padding-top: 15px !important;
     padding-bottom: 15px !important;
-    padding-right: 50px !important;
-    /* Big space for chevron */
-    font-size: 17px !important;
-    /* Slightly larger parent text */
     border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  }
+
+  /* Specific Parent Override for Chevron Padding */
+  .m-cat-body .accordion-parent {
+    padding-right: 50px !important;
+    /* Space for chevron */
   }
 
   /* 5. Chevron: Large Click Zone */

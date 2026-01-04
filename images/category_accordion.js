@@ -1,102 +1,109 @@
 // Accordion Category Logic for Lumora Skin
 (function () {
-  // 1. Mock Data Injection (Only if specific category has no children)
-  function injectMockData() {
-    // Find "개발 & 컴퓨터 활용" link
+  // 1. Dynamic Category Mapping
+  // Moves "source" category to be a child of "target" category
+  function applyCategoryMapping() {
+    var mapRules = [
+      {
+        target: "개발 & 컴퓨터 활용",
+        sources: ["내가 만든 툴", "Appium", "Selenium", "Python"]
+      },
+      {
+        target: "QA & 자동화",
+        sources: ["ISTQB 시험 공부"]
+      }
+    ];
+
     var links = document.querySelectorAll(".tt_category li > a");
-    var targetLink = null;
-    
-    // Normalize text and find target
-    for(var i=0; i<links.length; i++) {
-        var text = links[i].firstChild.textContent.trim();
-        if(text === '개발 & 컴퓨터 활용') {
-            targetLink = links[i];
-            break;
-        }
+    var linkMap = {};
+
+    // First pass: Index all category links by trimmed text
+    for (var i = 0; i < links.length; i++) {
+      var text = links[i].firstChild.textContent.trim();
+      linkMap[text] = links[i].parentNode; // Store the LI element
     }
 
-    if (targetLink) {
-      var parentLi = targetLink.parentElement;
-      // Check if it already has a sub_category_list
-      if (!parentLi.querySelector(".sub_category_list")) {
-        // Create mock sub-list
-        var ul = document.createElement("ul");
-        ul.className = "sub_category_list";
-        
-        var items = ["Appium", "Selenium", "Python"];
-        items.forEach(function(item) {
-            var li = document.createElement("li");
-            var a = document.createElement("a");
-            a.href = "#"; // Mock link
-            a.className = "link_sub_item";
-            a.textContent = item;
-            li.appendChild(a);
-            ul.appendChild(li);
-        });
-        
-        parentLi.appendChild(ul);
-        // Add Tistory's specific icon class if needed, or just rely on CSS
+    // Apply rules
+    mapRules.forEach(function (rule) {
+      var parentLi = linkMap[rule.target];
+      if (!parentLi) return; // Parent not found, skip
+
+      // Check or create sub-list UL
+      var subList = parentLi.querySelector("ul.sub_category_list, ul.sub-category-list");
+      if (!subList) {
+        subList = document.createElement("ul");
+        subList.className = "sub_category_list";
+        parentLi.appendChild(subList);
       }
-    }
+
+      rule.sources.forEach(function (sourceName) {
+        var childLi = linkMap[sourceName];
+        if (childLi && childLi.parentNode !== subList) {
+          // Determine if childLi is currently in the main DOM tree. 
+          // Move it.
+          subList.appendChild(childLi);
+
+          // If the source LI had a child UL (nested tistory cat), it moves with it naturally.
+        }
+      });
+    });
   }
 
-  // 2. Setup Accordion Structure
+  // 2. Setup Accordion Structure (Original Logic Updated)
   function setupAccordion() {
     var categoryItems = document.querySelectorAll(".tt_category li");
-    
+
     categoryItems.forEach(function (li) {
-      var subList = li.querySelector("ul.sub_category_list, ul.sub-category-list"); // Custom or default class
-      
+      // Check for sub-list (either originally there or moved by mapping)
+      var subList = li.querySelector("ul.sub_category_list, ul.sub-category-list, ul");
+      // Note: Tistory might use plain 'ul' for nested categories if not customized. 
+      // Our mapped ones use 'sub_category_list'.
+
+      // Filter out if it's not a direct child UL of this LI (though querySelector finds first descendant)
+      // Usually harmless if structure is simple.
+
       if (subList) {
         li.classList.add("has-sub");
-        
+
         // 2.1 "View All" Link Injection
-        // Check if "View All" already exists to avoid duplication
+        // Check if "View All" already exists
         if (!subList.querySelector(".view-all-item")) {
-            var parentLink = li.querySelector("a");
-            if(parentLink) {
-                var viewAllLi = document.createElement("li");
-                viewAllLi.className = "view-all-item";
-                
-                var viewAllLink = document.createElement("a");
-                viewAllLink.href = parentLink.href; // Point to parent's original link
-                viewAllLink.textContent = "📂 전체 보기";
-                viewAllLink.className = "link_sub_item view-all-link";
-                
-                viewAllLi.appendChild(viewAllLink);
-                // Insert as first child
-                subList.insertBefore(viewAllLi, subList.firstChild);
-            }
+          var parentLink = li.querySelector("a");
+          if (parentLink) {
+            var viewAllLi = document.createElement("li");
+            viewAllLi.className = "view-all-item";
+
+            var viewAllLink = document.createElement("a");
+            viewAllLink.href = parentLink.href;
+            viewAllLink.textContent = "📂 전체 보기";
+            viewAllLink.className = "link_sub_item view-all-link";
+
+            viewAllLi.appendChild(viewAllLink);
+            // Insert as first child
+            subList.insertBefore(viewAllLi, subList.firstChild);
+          }
         }
 
         // 2.2 Click Interaction
         var parentLink = li.querySelector("a");
-        // Clone and replace to remove listeners or add refreshing listener
-        // But better to just add event listener that stops prop if it's the main link
-        
-        // We need to capture the click on the PARENT LINK only
-        // Tistory structure: <li> <a class="link_item">Text <span class="c_cnt">(N)</span></a> <ul class="sub">...</ul> </li>
-        
-        // Remove old listener if any (simplest way is to clone if we want to be destructive, but let's just add)
-        // Since we want to PREVENT page navigation, we absolutely must preventDefault.
-        
-        parentLink.addEventListener("click", function(e) {
-            // Only toggle if it has sub-menu
-            e.preventDefault();
-            
-            // Toggle expanded class
-            var isExpanded = li.classList.contains("expanded");
-            
-            // Optional: Close others? The user didn't explicitly ask for "accordion (one open at a time)", just "accordion dropdown".
-            // Usually accordion implies one at a time, but typical file trees allow multiple. 
-            // Let's stick to allowing multiple open unless "accordion" strictly means toggling.
-            // Let's toggle THIS one.
-            
-            if (isExpanded) {
-                li.classList.remove("expanded");
-            } else {
-                li.classList.add("expanded");
-            }
+
+        // Remove existing listener to avoid dupe? 
+        // We assume clean slate or efficient event handling.
+        // Cloning node to strip listeners is nuclear but safe for multiple runs.
+        var newParentLink = parentLink.cloneNode(true);
+        parentLink.parentNode.replaceChild(newParentLink, parentLink);
+        parentLink = newParentLink;
+
+        parentLink.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          // Toggle expanded class
+          var isExpanded = li.classList.contains("expanded");
+          if (isExpanded) {
+            li.classList.remove("expanded");
+          } else {
+            li.classList.add("expanded");
+          }
         });
       }
     });
@@ -104,13 +111,7 @@
 
   // Initialize
   document.addEventListener("DOMContentLoaded", function () {
-    // Run after a slight delay to ensure Tistory might have rendered if it was dynamic (though usually static HTML)
-    // But for playground, we run immediately or after body.
-    
-    // For specific task requirement 1: Inject data if missing
-    injectMockData();
-    
-    // Setup
+    applyCategoryMapping();
     setupAccordion();
   });
 

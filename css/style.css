@@ -2414,3 +2414,21 @@ html body #detail_page .container_postbtn .btn_post .ico_share::before { transfo
 #detail_page .container_postbtn .btn_post .ico_like {
   margin: 4.5px 4px 0 0 !important; /* 위쪽 여백 → 아이콘 내려감 */
 }
+/ *   A c c o r d i o n   D y n a m i c   C h i l d   I t e m   S t y l e s   * /  
+ # s i d e b a r   . c a t e g o r y   . t t _ c a t e g o r y   . s u b _ c a t e g o r y _ l i s t   l i   a   {  
+         p a d d i n g - l e f t :   2 0 p x   ! i m p o r t a n t ;  
+         / *   V i s u a l   I n d e n t   * /  
+         b a c k g r o u n d - c o l o r :   # 1 e 1 e 1 e   ! i m p o r t a n t ;  
+         / *   D a r k e r   b a c k g r o u n d   * /  
+         f o n t - s i z e :   0 . 9 r e m   ! i m p o r t a n t ;  
+         / *   S m a l l e r   f o n t   * /  
+         c o l o r :   # c c c ;  
+         b o r d e r - b o t t o m :   1 p x   s o l i d   r g b a ( 2 5 5 ,   2 5 5 ,   2 5 5 ,   0 . 0 5 ) ;  
+ }  
+  
+ # s i d e b a r   . c a t e g o r y   . t t _ c a t e g o r y   . s u b _ c a t e g o r y _ l i s t   l i   a : h o v e r   {  
+         b a c k g r o u n d - c o l o r :   # 2 a 2 a 2 a   ! i m p o r t a n t ;  
+         c o l o r :   # f f f ;  
+         t e x t - d e c o r a t i o n :   n o n e ;  
+ }  
+ 

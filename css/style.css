@@ -4234,6 +4234,13 @@ html body #container #sidebar .sub-category-item .view-all-item a:hover {
     /* Remove individual spine */
   }
 
+  /* Hover/Active Effect for Mobile Sub-Items */
+  html body .m-cat-body .sub-category-item li a:hover,
+  html body .m-cat-body .sub-category-item li a:active {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #fff !important;
+  }
+
   /* 3. Active State (Monochromatic Rule) */
   html body .m-cat-body .sub-category-item li.selected>a,
   html body .m-cat-body .sub-category-item li a.selected {

@@ -1,7 +1,6 @@
 // Accordion Category Logic for Lumora Skin
 (function () {
   // 1. Dynamic Category Mapping
-  // Moves "source" category to be a child of "target" category
   function applyCategoryMapping() {
     var mapRules = [
       {
@@ -95,11 +94,12 @@
         parentLink = newParentLink;
 
         parentLink.addEventListener("click", function (e) {
-          e.preventDefault();
+          e.preventDefault(); // Stop navigation
+          e.stopPropagation(); // Stop bubbling
 
-          // Toggle expanded class
-          var isExpanded = li.classList.contains("expanded");
-          if (isExpanded) {
+          // Toggle expanded class on the LI
+          // CSS handles display:block based on .expanded class
+          if (li.classList.contains("expanded")) {
             li.classList.remove("expanded");
           } else {
             li.classList.add("expanded");

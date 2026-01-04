@@ -14,7 +14,7 @@
 	<!--[if gte IE 9]><!-->
 	<script src="//t1.daumcdn.net/tistory_admin/lib/jquery/jquery-3.2.1.min.js"></script>
 	<script src="./images/custom_v45.js"></script>
-	<script src="./images/category_accordion_v2.js"></script>
+
 	<meta name="naver-site-verification" content="93f3a67981fe26e8b064b9447a9b6556b11e5a08" />
 	<!--<![endif]-->
 
@@ -86,7 +86,7 @@
 					<div class="category">
 						[##_category_list_##]
 					</div>
-					<script src="./images/category_accordion_v2.js"></script>
+
 				</s_sidebar_element>
 
 				<!-- <p class="copyright">Designed By<a href="https://kiki97-dev.tistory.com/62">kiki</a></p> -->
@@ -371,6 +371,105 @@
 
 
 	<script src="./images/custom_dropdown_fix_v3.js"></script>
+
+
+	<script>
+		(function () {
+			function initAccordion() {
+				console.log("Gemini Patch: Organizing Categories...");
+
+				const containers = ['#sidebar', '.m-cat-body'];
+
+				containers.forEach(containerSelector => {
+					const container = document.querySelector(containerSelector);
+					if (!container) return;
+
+					// 분류 규칙 설정
+					const mapping = {
+						'개발 & 컴퓨터 활용': ['내가 만든 툴', 'Appium', 'Selenium', 'Python'],
+						'QA & 자동화': ['ISTQB 시험 공부']
+					};
+
+					// Scope selection to the current container
+					// Use broader selector for mobile to ensure we catch links even without specific classes
+					const selector = containerSelector === '.m-cat-body' ? 'ul li a' : '.category a, .tt_category li a';
+					const links = container.querySelectorAll(selector);
+
+					// Helper to safely get clean name from potentially hidden elements
+					const getName = (el) => {
+						// textContent works on hidden elements.
+						// Collapse whitespace/newlines and remove count (N)
+						return el.textContent.replace(/\s+/g, ' ').replace(/\(\d+\)\s*$/, '').trim();
+					};
+
+					links.forEach(parentLink => {
+						const parentName = getName(parentLink);
+
+						if (mapping[parentName]) {
+							const targetChildren = mapping[parentName];
+
+							// For mobile, we might be in a different structure, but usually UL > LI > A
+							// Find nearest LI to anchor the sub-menu
+							const parentLi = parentLink.closest('li');
+							if (!parentLi) return;
+
+							let subContainer = parentLi.querySelector('.sub-category-item');
+							if (!subContainer) {
+								subContainer = document.createElement('ul');
+								subContainer.className = 'sub-category-item';
+								parentLi.appendChild(subContainer);
+							}
+
+							// 전체 보기 버튼 추가 (중복 방지)
+							if (!subContainer.querySelector('.view-all-item')) {
+								const viewAllLi = document.createElement('li');
+								viewAllLi.className = 'view-all-item';
+								const viewAllLink = document.createElement('a');
+								viewAllLink.href = parentLink.href;
+								viewAllLink.innerText = `전체 보기`;
+								viewAllLi.appendChild(viewAllLink);
+								subContainer.appendChild(viewAllLi);
+							}
+
+							// 자식 이동 로직 (Scope to current container's links)
+							links.forEach(childLink => {
+								if (childLink === parentLink) return; // Skip self
+
+								const childName = getName(childLink);
+
+								// Skip if it's the view-all link we just added
+								if (childLink.parentNode.classList.contains('view-all-item')) return;
+
+								if (targetChildren.includes(childName)) {
+									const childLi = childLink.closest('li');
+									// Ensure we only move children that are within the SAME container
+									if (childLi && childLi !== parentLi && container.contains(childLi)) {
+										subContainer.appendChild(childLi);
+									}
+								}
+							});
+
+							// 토글 이벤트
+							parentLink.onclick = function (e) {
+								e.preventDefault();
+								if (subContainer.classList.contains('active')) {
+									subContainer.classList.remove('active');
+								} else {
+									subContainer.classList.add('active');
+								}
+							};
+						}
+					});
+				});
+			}
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', initAccordion);
+			} else {
+				initAccordion();
+			}
+		})();
+	</script>
 </body>
 
 

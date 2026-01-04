@@ -4012,26 +4012,33 @@ html body #detail_page .container_postbtn .btn_post .ico_share::before {
   /* 위쪽 여백 → 아이콘 내려감 */
 }
 
-/* ============ 15) Accordion Tree Design (Desktop & Mobile Shared) ============ */
+/* ============ 15) Accordion Tree Design (Refined: Vertical Spine & Clean) ============ */
 /* Applies to #sidebar (Desktop) and .m-cat-body (Mobile) */
 
-/* 1. Reset & Tree Container */
-html body #container #sidebar .sub-category-item,
-html body .m-cat-body .sub-category-item {
+/* 1. Reset & Sub-menu Container (Visual Grouping) */
+html body #container #sidebar .sub-category-item {
   display: none;
+
+  /* Visual Grouping: Open List Style (No Box-in-Box) */
   background: transparent !important;
   border: none !important;
-  box-shadow: none !important;
-  margin: 5px 0 5px 15px !important;
-  padding: 0 !important;
-  border-left: 2px solid rgba(255, 255, 255, 0.15) !important;
-  /* Main Tree Line */
   border-radius: 0 !important;
+  box-shadow: none !important;
+
+  /* Spacing: Clear Separation Rule */
+  /* Bottom Margin: Pushes next parent down */
+  /* Left Margin: Indents the whole list for Tree Effect */
+  margin: 0 0 12px 22px !important;
+
+  /* Padding: Internal breathing room */
+  padding: 8px 0 8px 0 !important;
+
+  /* Divider Rule: Vertical Spine Line on Left */
+  border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 /* 2. Sub-Item List Wrapper */
-html body #container #sidebar .sub-category-item li,
-html body .m-cat-body .sub-category-item li {
+html body #container #sidebar .sub-category-item li {
   background: transparent !important;
   border: none !important;
   padding: 0 !important;
@@ -4044,93 +4051,304 @@ html body .m-cat-body .sub-category-item li {
 html body #container #sidebar .sub-category-item li a,
 html body #container #sidebar .sub-category-item li a.link_item,
 html body #container #sidebar .sub-category-item li a.link_tit,
-html body #container #sidebar .sub-category-item li a.c_item,
-html body .m-cat-body .sub-category-item li a,
-html body .m-cat-body .sub-category-item li a.link_item,
-html body .m-cat-body .sub-category-item li a.link_tit,
-html body .m-cat-body .sub-category-item li a.c_item {
+html body #container #sidebar .sub-category-item li a.c_item {
   all: unset !important;
 
-  /* Layout */
-  display: block !important;
+  /* Layout: Flexbox for Text + Count Alignment */
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
   box-sizing: border-box !important;
   width: 100% !important;
   cursor: pointer !important;
 
-  /* Typography: Smaller & Calmer */
+  /* Typography */
   font-size: 0.9em !important;
-  /* Approx 13-14px */
   color: #bbb !important;
-  /* Lighter, calmer gray */
   font-weight: normal !important;
   text-decoration: none !important;
 
-  /* Spacing */
-  padding: 4px 0 4px 10px !important;
-  /* Slightly more compact */
+  /* Spacing: Adjusted for Left Spine */
+  /* Container moved right 22px, so reduce left padding */
+  padding: 10px 15px 10px 15px !important;
   margin: 0 !important;
 
-  /* Force Transparent Background */
   background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+  transition: all 0.2s !important;
+  border-left: 2px solid transparent !important;
 
-  transition: color 0.2s, padding-left 0.2s !important;
+  /* Optional: Hover Effect (Subtle: Background Tone Only) */
 }
 
-/* 4. Branch Connector (The '└' Shape via ::before on LINK) */
+/* Hover Effect (Subtle: Background Tone Only) */
+html body #container #sidebar .sub-category-item li a:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  /* Very weak bg only */
+  padding-left: 15px !important;
+  /* No movement (Fixed) */
+}
+
+/* Remove old branch content */
 html body #container #sidebar .sub-category-item li a::before,
 html body .m-cat-body .sub-category-item li a::before {
-  content: '└ ' !important;
-  display: inline-block !important;
-  margin-right: 5px !important;
-  color: rgba(255, 255, 255, 0.3) !important;
-  /* Faint gray connector */
-  font-weight: normal !important;
-  font-family: sans-serif !important;
-  /* Ensure character renders cleanly */
-}
-
-/* Hide the old CSS horizontal line on LI to avoid conflict */
-html body #container #sidebar .sub-category-item li::before,
-html body .m-cat-body .sub-category-item li::before {
   display: none !important;
+  content: none !important;
 }
 
-/* Hover Effect: Text Highlight */
-html body #container #sidebar .sub-category-item li a:hover,
-html body .m-cat-body .sub-category-item li a:hover {
-  color: #fff !important;
-  padding-left: 13px !important;
-  /* Subtle movement */
-  background: transparent !important;
-}
 
-/* 5. Active State */
-html body #container #sidebar .sub-category-item.active,
-html body .m-cat-body .sub-category-item.active {
+/* 4. Active State: Parent & Child */
+html body #container #sidebar .sub-category-item.active {
   display: block !important;
 }
 
-/* 6. View All Button - Special Override (No '└', Keep Folder) */
-html body #container #sidebar .sub-category-item .view-all-item a,
-html body .m-cat-body .sub-category-item .view-all-item a {
-  color: #E6B422 !important;
-  /* Premium Golden Amber */
-  font-weight: bold !important;
-  opacity: 0.9 !important;
-  font-size: 0.9em !important;
+/* Active Sub-Link (Targeting Tistory's common active classes) */
+html body #container #sidebar .sub-category-item li.selected>a,
+html body #container #sidebar .sub-category-item li a.selected,
+html body #container #sidebar .sub-category-item li a:active {
+  color: #fff !important;
+  /* White Text */
+  font-weight: 600 !important;
+  /* SemiBold */
+
+  /* Subtle Background Tone Up */
+  background: rgba(255, 255, 255, 0.06) !important;
+
+  /* No Colored Left Line */
+  border-left: 2px solid transparent !important;
+
+  padding-left: 15px !important;
+  /* Maintain alignment */
 }
 
-html body #container #sidebar .sub-category-item .view-all-item a:hover,
-html body .m-cat-body .sub-category-item .view-all-item a:hover {
-  opacity: 1 !important;
+/* 5. Parent Chevron & Count Alignment */
+.accordion-parent {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding-right: 40px !important;
+  /* Space for chevron */
+}
+
+/* Fixed positioning for Count to prevent shaking */
+.cat-count {
+  font-size: 0.9em !important;
+  color: #888 !important;
+  font-weight: normal !important;
+  margin-left: auto !important;
+  /* Push to right */
+  margin-right: 25px !important;
+  /* Space from chevron */
+  display: inline-block !important;
+  min-width: 30px !important;
+  /* Fixed width to prevent shake */
+  text-align: right !important;
+}
+
+/* Chevron Icon */
+.accordion-parent::after {
+  content: '▸' !important;
+  position: absolute !important;
+  right: 15px !important;
+  /* Fixed position */
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 14px !important;
+  color: #666 !important;
+  transition: transform 0.2s !important;
+}
+
+/* Expanded State for Chevron (Monochromatic) */
+.active-parent::after {
+  content: '▾' !important;
+  color: #bbb !important;
+  /* Lighter Gray (No Gold) */
+}
+
+/* 6. Refined 'View All' Style (Regular Font) */
+html body #container #sidebar .sub-category-item .view-all-item a {
+  color: #aaa !important;
+  font-style: normal !important;
+  /* Requested Regular Font */
+  /* Removed Divider to minimize lines */
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
+}
+
+html body #container #sidebar .sub-category-item .view-all-item a:hover {
   color: #fff !important;
 }
 
-/* Override the '└' with Nothing for View All (Minimal Design) */
-html body #container #sidebar .sub-category-item .view-all-item a::before,
-html body .m-cat-body .sub-category-item .view-all-item a::before {
-  display: none !important;
-  content: none !important;
+/* ============ 16) Accordion Tree Design (Mobile Only Improvements) ============ */
+@media screen and (max-width: 768px) {
+
+  /* 1. Touch Target & Layout Improvements */
+  /* Container: Simpler Indent, No elaborate spine if desired, but user asked for simple list */
+  html body .m-cat-body .sub-category-item {
+    display: none;
+    background: transparent !important;
+    border: none !important;
+    margin: 0 0 10px 0 !important;
+    /* Less indentation margin */
+    padding: 5px 0 !important;
+    /* Simple structure for mobile */
+    border-left: none !important;
+    /* Remove spine for simple list */
+  }
+
+  /* 2. List Items: 1-step Indent & Large Touch Area */
+  html body .m-cat-body .sub-category-item li a,
+  html body .m-cat-body .sub-category-item li a.link_item,
+  html body .m-cat-body .sub-category-item li a.link_tit,
+  html body .m-cat-body .sub-category-item li a.c_item {
+    all: unset !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+
+    /* Larger Touch Target */
+    padding: 14px 20px 14px 25px !important;
+    /* Generous padding */
+    min-height: 48px !important;
+    /* Minimum touch height */
+
+    /* Typography */
+    font-size: 16px !important;
+    /* Readable font size */
+    color: #bbb !important;
+    text-decoration: none !important;
+
+    /* Indent: Simple 1-step */
+    padding-left: 20px !important;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+    /* Very faint divider for readability */
+    border-left: none !important;
+    /* Remove individual spine */
+  }
+
+  /* 3. Active State (Monochromatic Rule) */
+  html body .m-cat-body .sub-category-item li.selected>a,
+  html body .m-cat-body .sub-category-item li a.selected {
+    font-weight: 600 !important;
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+  }
+
+  /* 4. Parent Toggle Area (Mobile Top Level) */
+  .m-cat-body .accordion-parent {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    padding-right: 50px !important;
+    /* Big space for chevron */
+    font-size: 17px !important;
+    /* Slightly larger parent text */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  }
+
+  /* 5. Chevron: Large Click Zone */
+  .m-cat-body .accordion-parent::after {
+    /* content is set in JS logic usually, but here we style it */
+    font-size: 20px !important;
+    /* Bigger icon */
+    padding: 10px !important;
+    /* Touch padding around icon */
+    right: 10px !important;
+    color: #888 !important;
+  }
+
+  .m-cat-body .active-parent::after {
+    color: #bbb !important;
+  }
+
+  /* 6. Count: Text Only (Unified & Clean, No Badge) */
+  .m-cat-body .cat-count {
+    font-size: 0.9em !important;
+    color: #666 !important;
+    /* Dimmed Text */
+    font-weight: normal !important;
+    background: transparent !important;
+    /* No Badge */
+    padding: 0 !important;
+    border-radius: 0 !important;
+
+    /* Alignment */
+    margin-right: 35px !important;
+    /* Reserve space for Chevron (Unified Alignment) */
+    /* This ensures that leaf nodes (without chevron) calculate the same width for the text, 
+       creating a 'column' of numbers aligned with parent numbers. */
+  }
+
+  /* Active State Logic */
+  html body .m-cat-body .sub-category-item.active {
+    display: block !important;
+  }
+}
+
+/* ============ 17) Empty State UI (Zero Posts) ============ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 65vh;
+  /* Vertical Center Logic */
+  padding: 0 20px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.empty-icon {
+  display: none;
+  /* Icon Removed */
+}
+
+.empty-text {
+  font-size: 1.1em;
+  color: #888;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-weight: normal;
+}
+
+.empty-text .highlight {
+  color: #fff;
+  font-weight: 600;
+  display: inline-block;
+  /* No underline to avoid link confusion */
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.empty-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  border-radius: 50px;
+  /* Pillow shape */
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff !important;
+  text-decoration: none;
+  font-size: 0.95em;
+  transition: all 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.empty-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

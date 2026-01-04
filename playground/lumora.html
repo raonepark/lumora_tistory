@@ -163,9 +163,9 @@
 												<div class="m-search-form">
 													<input placeholder="검색어를 입력하세요." type="text"
 														name="[##_search_name_##]" value="[##_search_text_##]"
-														onkeypress="if (event.keyCode == 13) { [##_search_onclick_submit_##] }" />
+														onkeypress="if (event.keyCode == 13) { submitMobileSearch(); }" />
 													<button class="m-search-submit" type="button"
-														onclick="[##_search_onclick_submit_##]" aria-label="검색">
+														onclick="submitMobileSearch()" aria-label="검색">
 														<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
 															aria-hidden="true">
 															<path
@@ -402,16 +402,34 @@
 						return el.textContent.replace(/\s+/g, ' ').replace(/\(\d+\)\s*$/, '').trim();
 					};
 
+					// Helper to extract count
+					const getCount = (el) => {
+						const match = el.textContent.match(/\((\d+)\)/);
+						return match ? match[1] : '0';
+					};
+
 					links.forEach(parentLink => {
 						const parentName = getName(parentLink);
 
+						// 1. Universal Count Polish: Always wrap count for consistent style
+						// Only do this if not already wrapped (check for cat-count to avoid duplicates on re-run)
+						if (!parentLink.querySelector('.cat-count')) {
+							const count = getCount(parentLink);
+							// Reconstruct HTML with Name + Span. 
+							// Note: This replaces content, so children should be safe (we haven't moved them yet)
+							parentLink.innerHTML = `${parentName} <span class="cat-count">(${count})</span>`;
+						}
+
+						// 2. Accordion Logic (Only for mapped parents)
 						if (mapping[parentName]) {
 							const targetChildren = mapping[parentName];
 
-							// For mobile, we might be in a different structure, but usually UL > LI > A
 							// Find nearest LI to anchor the sub-menu
 							const parentLi = parentLink.closest('li');
 							if (!parentLi) return;
+
+							// Mark parent for Chevron styling AND Flex layout
+							parentLink.classList.add('accordion-parent');
 
 							let subContainer = parentLi.querySelector('.sub-category-item');
 							if (!subContainer) {
@@ -420,13 +438,17 @@
 								parentLi.appendChild(subContainer);
 							}
 
+							// Get count again or reuse from above (clean text was used for parentName)
+							const count = getCount(parentLink); // Safe to re-get or extract
+
 							// 전체 보기 버튼 추가 (중복 방지)
+							// Feature: Standardized View All with Count
 							if (!subContainer.querySelector('.view-all-item')) {
 								const viewAllLi = document.createElement('li');
 								viewAllLi.className = 'view-all-item';
 								const viewAllLink = document.createElement('a');
 								viewAllLink.href = parentLink.href;
-								viewAllLink.innerText = `전체 보기`;
+								viewAllLink.innerHTML = `전체 글 <span class="cat-count">(${count})</span>`; // Format: 전체 글 (N) with right align
 								viewAllLi.appendChild(viewAllLink);
 								subContainer.appendChild(viewAllLi);
 							}
@@ -450,12 +472,16 @@
 							});
 
 							// 토글 이벤트
-							parentLink.onclick = function (e) {
+							const clickTarget = parentLink; // Using the link as trigger
+							clickTarget.onclick = function (e) {
 								e.preventDefault();
+								// Toggle active class on both subContainer and Icon/Parent
 								if (subContainer.classList.contains('active')) {
 									subContainer.classList.remove('active');
+									parentLink.classList.remove('active-parent');
 								} else {
 									subContainer.classList.add('active');
+									parentLink.classList.add('active-parent');
 								}
 							};
 						}
@@ -463,10 +489,81 @@
 				});
 			}
 
+			function polishCategoryText() {
+				// Select category elements in List and Detail views
+				var catNodes = document.querySelectorAll('.list_content .category, .titleWrap .category a');
+
+				catNodes.forEach(function (node) {
+					// Check for slash and replace with Middle Dot (·)
+					// Using opacity for subtleness
+					if (node.innerHTML.indexOf('/') !== -1) {
+						node.innerHTML = node.innerHTML.replace(/\//g, '&nbsp;<span style="opacity:0.5; font-size:0.9em;">·</span>&nbsp;');
+					}
+				});
+			}
+
+			function checkEmptyCategory() {
+				// Run only on category pages
+				if (window.location.pathname.indexOf('/category/') === -1) return;
+
+				// Check for articles
+				const hasList = document.querySelector('.list_content');
+				const hasDetail = document.getElementById('detail_page');
+
+				// If no content found
+				if (!hasList && !hasDetail) {
+					const contentArea = document.getElementById('content');
+					if (!contentArea) return;
+
+					// Extract Category Name from URL
+					let catName = '이 카테고리';
+					try {
+						const parts = window.location.pathname.split('/category/');
+						if (parts[1]) {
+							let decoded = decodeURIComponent(parts[1]);
+							if (decoded.endsWith('/')) decoded = decoded.slice(0, -1);
+
+							// Polish: Replace slash with Dot for consistency with new design
+							decoded = decoded.replace(/\//g, ' · ');
+
+							catName = decoded;
+						}
+					} catch (e) { console.error(e); }
+
+					// Inject Empty State HTML
+					contentArea.innerHTML = `
+                        <div class="empty-state">
+                            <p class="empty-text">
+                                ‘<span class="highlight" style="max-width: 60vw; display: inline-block; vertical-align: bottom; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${catName}</span>’<br/>
+                                아직 글이 없어요.
+                            </p>
+                            <a href="/" class="empty-btn">전체 글 보기</a>
+                        </div>
+                    `;
+				}
+			}
+
+			// Mobile Search Redirect (Fix for race condition)
+			function submitMobileSearch() {
+				var input = document.querySelector('.m-search-form input');
+				if (input && input.value.trim().length > 0) {
+					// Force global search redirect
+					window.location.href = '/search/' + encodeURIComponent(input.value);
+				}
+			}
+			// Expose to window for inline calls
+			window.submitMobileSearch = submitMobileSearch;
+
 			if (document.readyState === 'loading') {
-				document.addEventListener('DOMContentLoaded', initAccordion);
+				document.addEventListener('DOMContentLoaded', function () {
+					initAccordion();
+					polishCategoryText();
+					checkEmptyCategory();
+				});
 			} else {
 				initAccordion();
+				polishCategoryText();
+				checkEmptyCategory();
 			}
 		})();
 	</script>

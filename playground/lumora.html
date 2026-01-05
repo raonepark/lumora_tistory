@@ -376,7 +376,7 @@
 	<script>
 		(function () {
 			function initAccordion() {
-				console.log("Gemini Patch: Organizing Categories...");
+				console.log("Gemini Patch: Organizing Categories (Dynamic)...");
 
 				const containers = ['#sidebar', '.m-cat-body'];
 
@@ -384,106 +384,90 @@
 					const container = document.querySelector(containerSelector);
 					if (!container) return;
 
-					// 분류 규칙 설정
-					const mapping = {
-						'개발 & 컴퓨터 활용': ['내가 만든 툴', 'Appium', 'Selenium', 'Python'],
-						'QA & 자동화': ['ISTQB 시험 공부']
-					};
-
 					// Scope selection to the current container
-					// Use broader selector for mobile to ensure we catch links even without specific classes
-					const selector = containerSelector === '.m-cat-body' ? 'ul li a' : '.category a, .tt_category li a';
-					const links = container.querySelectorAll(selector);
+					// Select all LIs that are direct children of the main category ULs
+					// For Tistory, .tt_category li is the standard, but sidebar might have .category ul li
+					const listItems = container.querySelectorAll('li');
 
-					// Helper to safely get clean name from potentially hidden elements
-					const getName = (el) => {
-						// textContent works on hidden elements.
-						// Collapse whitespace/newlines and remove count (N)
-						return el.textContent.replace(/\s+/g, ' ').replace(/\(\d+\)\s*$/, '').trim();
-					};
+					listItems.forEach(li => {
+						const link = li.querySelector('a');
+						if (!link) return;
 
-					// Helper to extract count
-					const getCount = (el) => {
-						const match = el.textContent.match(/\((\d+)\)/);
-						return match ? match[1] : '0';
-					};
+						// 1. Universal Count Polish
+						// Ensure count is wrapped in span for styling
+						// Helper to extract count
+						const getCount = (el) => {
+							const match = el.textContent.match(/\((\d+)\)/);
+							return match ? match[1] : '0';
+						};
 
-					links.forEach(parentLink => {
-						const parentName = getName(parentLink);
+						if (!link.querySelector('.cat-count')) {
+							// Helper to safely get clean name
+							const getName = (el) => {
+								return el.textContent.replace(/\s+/g, ' ').replace(/\(\d+\)\s*$/, '').trim();
+							};
 
-						// 1. Universal Count Polish: Always wrap count for consistent style
-						// Only do this if not already wrapped (check for cat-count to avoid duplicates on re-run)
-						if (!parentLink.querySelector('.cat-count')) {
-							const count = getCount(parentLink);
-							// Reconstruct HTML with Name + Span. 
-							// Note: This replaces content, so children should be safe (we haven't moved them yet)
-							parentLink.innerHTML = `${parentName} <span class="cat-count">(${count})</span>`;
+							const name = getName(link);
+							const count = getCount(link);
+							// Reconstruct HTML. Note: This clears potential children in the link, but Tistory category links usually just contain text.
+							link.innerHTML = `${name} <span class="cat-count">(${count})</span>`;
 						}
 
-						// 2. Accordion Logic (Only for mapped parents)
-						if (mapping[parentName]) {
-							const targetChildren = mapping[parentName];
+						// Skip if "분류 전체보기" (Root Item) to keep categories visible
+						// getName logic is reused or we can just check safeName if we stored it, but doing it simpler here:
+						if (link.textContent.indexOf('분류 전체보기') !== -1) return;
 
-							// Find nearest LI to anchor the sub-menu
-							const parentLi = parentLink.closest('li');
-							if (!parentLi) return;
+						// 2. Dynamic Accordion Logic
+						// Check if this LI has a child UL (sub-category list)
+						const subContainer = li.querySelector('ul');
 
-							// Mark parent for Chevron styling AND Flex layout
-							parentLink.classList.add('accordion-parent');
+						if (subContainer) {
+							// It is a parent category
+							// Ensure subContainer has the class for styling
+							subContainer.classList.add('sub-category-item');
 
-							let subContainer = parentLi.querySelector('.sub-category-item');
-							if (!subContainer) {
-								subContainer = document.createElement('ul');
-								subContainer.className = 'sub-category-item';
-								parentLi.appendChild(subContainer);
-							}
+							// Mark parent link for styling (Chevron)
+							link.classList.add('accordion-parent');
 
-							// Get count again or reuse from above (clean text was used for parentName)
-							const count = getCount(parentLink); // Safe to re-get or extract
-
-							// 전체 보기 버튼 추가 (중복 방지)
 							// Feature: Standardized View All with Count
+							// Check if we already added it (to avoid duplicates on reruns)
 							if (!subContainer.querySelector('.view-all-item')) {
+								const count = getCount(link);
+
 								const viewAllLi = document.createElement('li');
 								viewAllLi.className = 'view-all-item';
+
 								const viewAllLink = document.createElement('a');
-								viewAllLink.href = parentLink.href;
-								viewAllLink.innerHTML = `전체 글 <span class="cat-count">(${count})</span>`; // Format: 전체 글 (N) with right align
+								// Use the parent's HREF
+								viewAllLink.href = link.href;
+								viewAllLink.innerHTML = `전체 글 <span class="cat-count">(${count})</span>`;
+
 								viewAllLi.appendChild(viewAllLink);
-								subContainer.appendChild(viewAllLi);
+
+								// Insert as FIRST item in sub-list
+								if (subContainer.firstChild) {
+									subContainer.insertBefore(viewAllLi, subContainer.firstChild);
+								} else {
+									subContainer.appendChild(viewAllLi);
+								}
 							}
 
-							// 자식 이동 로직 (Scope to current container's links)
-							links.forEach(childLink => {
-								if (childLink === parentLink) return; // Skip self
-
-								const childName = getName(childLink);
-
-								// Skip if it's the view-all link we just added
-								if (childLink.parentNode.classList.contains('view-all-item')) return;
-
-								if (targetChildren.includes(childName)) {
-									const childLi = childLink.closest('li');
-									// Ensure we only move children that are within the SAME container
-									if (childLi && childLi !== parentLi && container.contains(childLi)) {
-										subContainer.appendChild(childLi);
+							// 3. Toggle Event
+							// Avoid adding multiple listeners if re-run
+							if (!link.dataset.accordionInit) {
+								link.onclick = function (e) {
+									e.preventDefault();
+									// Toggle active class
+									if (subContainer.classList.contains('active')) {
+										subContainer.classList.remove('active');
+										link.classList.remove('active-parent');
+									} else {
+										subContainer.classList.add('active');
+										link.classList.add('active-parent');
 									}
-								}
-							});
-
-							// 토글 이벤트
-							const clickTarget = parentLink; // Using the link as trigger
-							clickTarget.onclick = function (e) {
-								e.preventDefault();
-								// Toggle active class on both subContainer and Icon/Parent
-								if (subContainer.classList.contains('active')) {
-									subContainer.classList.remove('active');
-									parentLink.classList.remove('active-parent');
-								} else {
-									subContainer.classList.add('active');
-									parentLink.classList.add('active-parent');
-								}
-							};
+								};
+								link.dataset.accordionInit = "true";
+							}
 						}
 					});
 				});

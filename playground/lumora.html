@@ -14,6 +14,7 @@
 	<!--[if gte IE 9]><!-->
 	<script src="//t1.daumcdn.net/tistory_admin/lib/jquery/jquery-3.2.1.min.js"></script>
 	<script src="./images/custom_v45.js"></script>
+
 	<meta name="naver-site-verification" content="93f3a67981fe26e8b064b9447a9b6556b11e5a08" />
 	<!--<![endif]-->
 
@@ -81,9 +82,11 @@
 					</div>
 
 					<!-- 카테고리 -->
+					<!-- Mock Category for Testing -->
 					<div class="category">
 						[##_category_list_##]
 					</div>
+
 				</s_sidebar_element>
 
 				<!-- <p class="copyright">Designed By<a href="https://kiki97-dev.tistory.com/62">kiki</a></p> -->
@@ -137,7 +140,8 @@
 								<div class="m-postbar m-only">
 									<a class="m-postbar__title" href="[##_blog_link_##]">[##_title_##]</a>
 									<label class="m-postbar__icon" for="m-search-toggle" aria-label="검색">
-										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+											aria-hidden="true">
 											<path
 												d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z" />
 										</svg>
@@ -151,16 +155,17 @@
 									<div class="m-search-sheet" role="dialog" aria-modal="true" aria-label="검색">
 										<div class="m-search-header">
 											<strong>검색</strong>
-											<label class="m-search-close" for="m-search-toggle" aria-label="닫기">×</label>
+											<label class="m-search-close" for="m-search-toggle"
+												aria-label="닫기">×</label>
 										</div>
 										<div class="m-search-body">
 											<s_search>
 												<div class="m-search-form">
-													<input placeholder="검색어를 입력하세요." type="text" name="[##_search_name_##]"
-														value="[##_search_text_##]"
-														onkeypress="if (event.keyCode == 13) { [##_search_onclick_submit_##] }" />
+													<input placeholder="검색어를 입력하세요." type="text"
+														name="[##_search_name_##]" value="[##_search_text_##]"
+														onkeypress="if (event.keyCode == 13) { submitMobileSearch(); }" />
 													<button class="m-search-submit" type="button"
-														onclick="[##_search_onclick_submit_##]" aria-label="검색">
+														onclick="submitMobileSearch()" aria-label="검색">
 														<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
 															aria-hidden="true">
 															<path
@@ -206,8 +211,10 @@
 											aria-hidden="true"></label>
 										<div class="m-comments-sheet" role="dialog" aria-modal="true" aria-label="댓글">
 											<div class="m-comments-header m-only">
-												<strong>댓글<span class="m-comment-count m-comment-count--header" aria-hidden="true"></span></strong>
-												<a class="m-comments-back" href="[##_blog_link_##]" aria-label="블로그 홈">×</a>
+												<strong>댓글<span class="m-comment-count m-comment-count--header"
+														aria-hidden="true"></span></strong>
+												<a class="m-comments-back" href="[##_blog_link_##]"
+													aria-label="블로그 홈">×</a>
 											</div>
 
 											<div class="m-comments-body">
@@ -218,15 +225,17 @@
 												<s_rp_input_form>
 													<div class="commentWrite">
 														<p class="comment_txt">
-															<textarea placeholder="댓글을 달아주세요 :)" name="[##_rp_input_comment_##]"
-																rows="10" cols="50"></textarea>
+															<textarea placeholder="댓글을 달아주세요 :)"
+																name="[##_rp_input_comment_##]" rows="10"
+																cols="50"></textarea>
 														</p>
 														<p class="comment_submit">
-															<input type="submit" value="댓글 달기" onclick="[##_rp_onclick_submit_##]" />
+															<input type="submit" value="댓글 달기"
+																onclick="[##_rp_onclick_submit_##]" />
 														</p>
 														<p class="secretWrap">
-															<input id="secret" type="checkbox" name="[##_rp_input_is_secret_##]"
-																class="checkbox" />
+															<input id="secret" type="checkbox"
+																name="[##_rp_input_is_secret_##]" class="checkbox" />
 															<label for="secret"> 비밀글 </label>
 														</p>
 													</div>
@@ -239,16 +248,24 @@
 																<s_rp_rep>
 																	<li id='[##_rp_rep_id_##]'>
 																		<div class="[##_rp_rep_class_##]">
-																			<div class="image"><img src="[##_rp_rep_logo_##]" alt=""></div>
+																			<div class="image"><img
+																					src="[##_rp_rep_logo_##]" alt="">
+																			</div>
 																			<div class="com_box">
 																				<p class="name">[##_rp_rep_name_##]</p>
-																				<p class="com_txt">[##_rp_rep_desc_##]</p>
-																				<span class="date"> [##_rp_rep_date_##]</span>
+																				<p class="com_txt">[##_rp_rep_desc_##]
+																				</p>
+																				<span class="date">
+																					[##_rp_rep_date_##]</span>
 																				<span class="control">
-																					<a href="#" onclick="[##_rp_rep_onclick_delete_##]" class="modify">&nbsp;
+																					<a href="#"
+																						onclick="[##_rp_rep_onclick_delete_##]"
+																						class="modify">&nbsp;
 																						<span>수정/삭제</span>
 																					</a>
-																					<a href="#" onclick="[##_rp_rep_onclick_reply_##]" class="write">&nbsp;
+																					<a href="#"
+																						onclick="[##_rp_rep_onclick_reply_##]"
+																						class="write">&nbsp;
 																						<span>댓글쓰기</span>
 																					</a>
 																				</span>
@@ -258,17 +275,28 @@
 																			<ul>
 																				<s_rp2_rep>
 																					<li id='[##_rp_rep_id_##]'>
-																						<div class="[##_rp_rep_class_##]">
-																							<div class="image"><img src="[##_rp_rep_logo_##]" alt=""></div>
+																						<div
+																							class="[##_rp_rep_class_##]">
+																							<div class="image"><img
+																									src="[##_rp_rep_logo_##]"
+																									alt=""></div>
 																							<div class="com_box">
-																								<p class="name">[##_rp_rep_name_##]</p>
-																								<p class="com_txt">[##_rp_rep_desc_##]</p>
-																								<span class="date"> [##_rp_rep_date_##]</span>
+																								<p class="name">
+																									[##_rp_rep_name_##]
+																								</p>
+																								<p class="com_txt">
+																									[##_rp_rep_desc_##]
+																								</p>
+																								<span class="date">
+																									[##_rp_rep_date_##]</span>
 																								<span class="control">
-																									<a href="[##_rp_rep_link_##]" class="address">&nbsp;
+																									<a href="[##_rp_rep_link_##]"
+																										class="address">&nbsp;
 																										<span>댓글주소</span>
 																									</a>
-																									<a href="#" onclick="[##_rp_rep_onclick_delete_##]" class="modify">&nbsp;
+																									<a href="#"
+																										onclick="[##_rp_rep_onclick_delete_##]"
+																										class="modify">&nbsp;
 																										<span>수정/삭제</span>
 																									</a>
 																								</span>
@@ -298,8 +326,7 @@
 													<a href="[##_article_related_rep_link_##]" class="link_related">
 														<span
 															class="txt_related">[##_article_related_rep_title_##]</span>
-														<span
-															class="desc_related"></span>
+														<span class="desc_related"></span>
 														<span
 															class="date_related">[##_article_related_rep_date_##]</span>
 														<span class="frame_related"></span>
@@ -343,7 +370,187 @@
 	</s_t3>
 
 
-		<script src="./images/custom_dropdown_fix_v3.js"></script>
+	<script src="./images/custom_dropdown_fix_v3.js"></script>
+
+
+	<script>
+		(function () {
+			function initAccordion() {
+				console.log("Gemini Patch: Organizing Categories (Dynamic)...");
+
+				const containers = ['#sidebar', '.m-cat-body'];
+
+				containers.forEach(containerSelector => {
+					const container = document.querySelector(containerSelector);
+					if (!container) return;
+
+					// Scope selection to the current container
+					// Select all LIs that are direct children of the main category ULs
+					// For Tistory, .tt_category li is the standard, but sidebar might have .category ul li
+					const listItems = container.querySelectorAll('li');
+
+					listItems.forEach(li => {
+						const link = li.querySelector('a');
+						if (!link) return;
+
+						// 1. Universal Count Polish
+						// Ensure count is wrapped in span for styling
+						// Helper to extract count
+						const getCount = (el) => {
+							const match = el.textContent.match(/\((\d+)\)/);
+							return match ? match[1] : '0';
+						};
+
+						if (!link.querySelector('.cat-count')) {
+							// Helper to safely get clean name
+							const getName = (el) => {
+								return el.textContent.replace(/\s+/g, ' ').replace(/\(\d+\)\s*$/, '').trim();
+							};
+
+							const name = getName(link);
+							const count = getCount(link);
+							// Reconstruct HTML. Note: This clears potential children in the link, but Tistory category links usually just contain text.
+							link.innerHTML = `${name} <span class="cat-count">(${count})</span>`;
+						}
+
+						// Skip if "분류 전체보기" (Root Item) to keep categories visible
+						// getName logic is reused or we can just check safeName if we stored it, but doing it simpler here:
+						if (link.textContent.indexOf('분류 전체보기') !== -1) return;
+
+						// 2. Dynamic Accordion Logic
+						// Check if this LI has a child UL (sub-category list)
+						const subContainer = li.querySelector('ul');
+
+						if (subContainer) {
+							// It is a parent category
+							// Ensure subContainer has the class for styling
+							subContainer.classList.add('sub-category-item');
+
+							// Mark parent link for styling (Chevron)
+							link.classList.add('accordion-parent');
+
+							// Feature: Standardized View All with Count
+							// Check if we already added it (to avoid duplicates on reruns)
+							if (!subContainer.querySelector('.view-all-item')) {
+								const count = getCount(link);
+
+								const viewAllLi = document.createElement('li');
+								viewAllLi.className = 'view-all-item';
+
+								const viewAllLink = document.createElement('a');
+								// Use the parent's HREF
+								viewAllLink.href = link.href;
+								viewAllLink.innerHTML = `전체 글 <span class="cat-count">(${count})</span>`;
+
+								viewAllLi.appendChild(viewAllLink);
+
+								// Insert as FIRST item in sub-list
+								if (subContainer.firstChild) {
+									subContainer.insertBefore(viewAllLi, subContainer.firstChild);
+								} else {
+									subContainer.appendChild(viewAllLi);
+								}
+							}
+
+							// 3. Toggle Event
+							// Avoid adding multiple listeners if re-run
+							if (!link.dataset.accordionInit) {
+								link.onclick = function (e) {
+									e.preventDefault();
+									// Toggle active class
+									if (subContainer.classList.contains('active')) {
+										subContainer.classList.remove('active');
+										link.classList.remove('active-parent');
+									} else {
+										subContainer.classList.add('active');
+										link.classList.add('active-parent');
+									}
+								};
+								link.dataset.accordionInit = "true";
+							}
+						}
+					});
+				});
+			}
+
+			function polishCategoryText() {
+				// Select category elements in List and Detail views
+				var catNodes = document.querySelectorAll('.list_content .category, .titleWrap .category a');
+
+				catNodes.forEach(function (node) {
+					// Check for slash and replace with Middle Dot (·)
+					// Using opacity for subtleness
+					if (node.innerHTML.indexOf('/') !== -1) {
+						node.innerHTML = node.innerHTML.replace(/\//g, '&nbsp;<span style="opacity:0.5; font-size:0.9em;">·</span>&nbsp;');
+					}
+				});
+			}
+
+			function checkEmptyCategory() {
+				// Run only on category pages
+				if (window.location.pathname.indexOf('/category/') === -1) return;
+
+				// Check for articles
+				const hasList = document.querySelector('.list_content');
+				const hasDetail = document.getElementById('detail_page');
+
+				// If no content found
+				if (!hasList && !hasDetail) {
+					const contentArea = document.getElementById('content');
+					if (!contentArea) return;
+
+					// Extract Category Name from URL
+					let catName = '이 카테고리';
+					try {
+						const parts = window.location.pathname.split('/category/');
+						if (parts[1]) {
+							let decoded = decodeURIComponent(parts[1]);
+							if (decoded.endsWith('/')) decoded = decoded.slice(0, -1);
+
+							// Polish: Replace slash with Dot for consistency with new design
+							decoded = decoded.replace(/\//g, ' · ');
+
+							catName = decoded;
+						}
+					} catch (e) { console.error(e); }
+
+					// Inject Empty State HTML
+					contentArea.innerHTML = `
+                        <div class="empty-state">
+                            <p class="empty-text">
+                                ‘<span class="highlight" style="max-width: 60vw; display: inline-block; vertical-align: bottom; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${catName}</span>’<br/>
+                                아직 글이 없어요.
+                            </p>
+                            <a href="/" class="empty-btn">전체 글 보기</a>
+                        </div>
+                    `;
+				}
+			}
+
+			// Mobile Search Redirect (Fix for race condition)
+			function submitMobileSearch() {
+				var input = document.querySelector('.m-search-form input');
+				if (input && input.value.trim().length > 0) {
+					// Force global search redirect
+					window.location.href = '/search/' + encodeURIComponent(input.value);
+				}
+			}
+			// Expose to window for inline calls
+			window.submitMobileSearch = submitMobileSearch;
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', function () {
+					initAccordion();
+					polishCategoryText();
+					checkEmptyCategory();
+				});
+			} else {
+				initAccordion();
+				polishCategoryText();
+				checkEmptyCategory();
+			}
+		})();
+	</script>
 </body>
 
 

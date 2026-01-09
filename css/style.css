@@ -4367,3 +4367,32 @@ html body #container #sidebar .sub-category-item .view-all-item a:hover {
     transform: translateY(0);
   }
 }
+
+/* ============ 18) New Adds: Copyright & Fixes ============ */
+.lumora-copyright {
+  display: block;
+  text-align: center;
+  font-size: 11px;
+  color: #444;
+  /* Subtle gray */
+  margin-top: 30px;
+  /* Space from menu */
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.4;
+  padding-bottom: 20px;
+}
+
+/* Mobile Comment Back Button as Label */
+.m-comments-back {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+  .lumora-copyright {
+    margin-top: 15px;
+    color: #555;
+    padding-bottom: 10px;
+  }
+}

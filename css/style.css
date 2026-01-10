@@ -111,7 +111,8 @@ button {
 }
 
 body {
-  background: #333;
+  background: #222;
+  /* Toned down from #333 */
 }
 
 body,
@@ -198,7 +199,8 @@ figure.fileblock .name,
   width: calc(100% - 250px);
   height: 7vh;
   color: #fff;
-  background: #333;
+  background: #222;
+  /* Toned down from #333 */
   text-align: center;
   box-sizing: border-box;
 }
@@ -243,7 +245,8 @@ figure.fileblock .name,
   margin-left: 250px;
   width: calc(100% - 250px);
   min-height: 93vh;
-  background: #333;
+  background: #222;
+  /* Toned down from #333 */
   box-sizing: border-box;
   padding: 60px 60px 0;
 }
@@ -2399,20 +2402,61 @@ figure.fileblock .name,
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 19px 17px 60px;
+  padding: 50px 24px 30px;
+  /* Increased top padding for window bar */
   font-size: 16px;
-  background: #333333;
-  border-radius: 15px;
-  box-shadow: 15px 15px 30px #2b2b2b, -15px -15px 30px #3b3b3b;
+  background: #383838;
+  border-radius: 12px;
+  border: 1px solid #4a4a4a;
+  box-shadow: none;
   box-sizing: border-box;
   overflow: hidden;
   text-decoration: none;
-  color: #fff;
+  color: #ccc;
   cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  /* Ensure wrapping context for pseudo-elements */
+}
+
+/* Window Title Bar */
+#content .list_content .link_post::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: #2b2b2b;
+  /* Darker header */
+  border-bottom: 1px solid #444;
+  z-index: 1;
+}
+
+/* Window Controls (Mac Style Dots) */
+#content .list_content .link_post::after {
+  content: "";
+  position: absolute;
+  top: 11px;
+  left: 14px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff5f56;
+  /* Red Close */
+  box-shadow: 18px 0 0 #ffbd2e, 36px 0 0 #27c93f;
+  /* Yellow Min, Green Max */
+  z-index: 2;
 }
 
 #content .list_content .link_post:hover {
-  box-shadow: 5px 5px 15px #141414, -5px -5px 15px #525252;
+  transform: translateY(-4px);
+  border-color: #777;
+  /* Highlight border slightly */
+  background: #404040;
+  /* Slightly lighter on hover */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  /* Deep shadow */
 }
 
 #content .list_content:nth-of-type(4n) {
@@ -2421,15 +2465,43 @@ figure.fileblock .name,
 
 /* 목록 카드 - 등록 날짜를 카드 안쪽 왼쪽 하단으로 위치시키기 */
 #content .list_content .detail_info {
-  position: absolute;
-  left: 24px;
-  /* 카드 안쪽 왼쪽 여백에 맞게 값 조절 가능 */
-  bottom: 20px;
-  /* 카드 안쪽 아래 여백에 맞게 값 조절 가능 */
-  font-size: 14px;
-  color: #aaaaaa;
+  margin-top: auto;
+  /* Flexbox push to bottom */
+  padding-top: 20px;
+  /* Space from text */
+  font-size: 13px;
+  color: #888;
   pointer-events: none;
-  /* 날짜 위를 클릭해도 카드 클릭이 되도록 */
+}
+
+/* Mobile View Restoration (Reset Retro Browser) */
+@media screen and (max-width: 1024px) {
+  #content .list_content .link_post {
+    padding: 0 !important;
+    /* Reset padding */
+    background: transparent !important;
+    /* Remove card bg */
+    border: 0 !important;
+    /* Remove border */
+    border-radius: 0 !important;
+  }
+
+  /* Hide Retro Header & Controls */
+  #content .list_content .link_post::before,
+  #content .list_content .link_post::after {
+    display: none !important;
+  }
+
+  /* Reset hover effects */
+  #content .list_content .link_post:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Reset Date Position for Mobile List (Title/Date inline or standard) */
+  #content .list_content .detail_info {
+    padding-top: 0;
+  }
 }
 
 /* FIX: .category도 동일 스타일 적용 (HTML 오타 교정 대비) */
@@ -2439,13 +2511,19 @@ figure.fileblock .name,
   align-items: center;
   justify-content: flex-start;
   align-self: flex-start;
+  font-family: "Noto Sans", sans-serif;
+  /* Revert to standard font */
   font-size: 12px;
-  color: #fff;
-  padding: 5px 16px 5px 12px;
-  border-radius: 20px;
-  border: 1px solid #fff;
+  font-weight: 400;
+  color: #ccc;
+  /* LNB Text color */
+  background: #444;
+  /* LNB Item background */
+  border: 1px solid #555;
+  padding: 4px 10px;
+  border-radius: 4px;
   text-align: left;
-  margin: 0 0 12px;
+  margin: 0 0 14px;
 }
 
 #content .list_content .link_post .thumb {
@@ -2464,29 +2542,33 @@ figure.fileblock .name,
 }
 
 #content .list_content .link_post .tit_post {
-  font-size: 16px;
+  font-family: "Noto Sans", sans-serif;
+  /* Revert to standard font */
+  font-size: 18px;
   color: #fff;
-  margin: 0 0 8px;
-  font-weight: 100;
-  letter-spacing: 0;
-  line-height: 1.5;
+  margin: 0 0 10px;
+  font-weight: 700;
+  /* Bold for hierarchy */
+  letter-spacing: -0.5px;
+  /* Tight spacing for modern feel */
+  line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  max-height: 4.5em;
+  max-height: 4.2em;
   white-space: normal;
   overflow-wrap: break-word;
   word-break: keep-all;
 }
 
 #content .list_content .link_post .txt_post {
-  font-size: 12px;
-  color: #aaa;
-  line-height: 1.5;
+  font-size: 14px;
+  color: #999;
+  line-height: 1.6;
   margin: 0;
-  letter-spacing: 0;
-  font-weight: 100;
+  letter-spacing: -0.2px;
+  font-weight: 400;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -2590,9 +2672,13 @@ figure.fileblock .name,
   transform: translateX(-30px);
   /* 딱 30px 왼쪽으로 이동 */
   margin-bottom: 30px;
+  margin-bottom: 30px;
   padding: 40px 28px 20px;
-  background: #222;
+  background: #2e2e2e;
+  /* Darker Surface Color */
   border-radius: 30px;
+  border: 1px solid #4a4a4a;
+  /* Subtle definition */
   box-shadow: 2px 2px 10px rgba(0, 0, 0, .3);
   font-family: "Noto Sans", sans-serif;
 }
@@ -2787,8 +2873,11 @@ figure.fileblock .name,
   /* 위·아래 여백을 조금 더 확보 */
   padding: 30px;
   box-sizing: border-box;
-  background: #222;
+  background: #383838;
+  /* Card Surface Color */
   border-radius: 15px;
+  border: 1px solid #4a4a4a;
+  /* Subtle definition */
   box-shadow: 2px 2px 10px rgba(0, 0, 0, .3);
   overflow-y: auto;
   /* 목차 안에서만 세로 스크롤 */
@@ -2919,11 +3008,44 @@ figure.fileblock .name,
   margin-right: 2.5%;
   margin-bottom: 15px;
   min-height: 30px;
-  padding: 24px;
-  background: #222;
+  padding: 50px 24px 24px;
+  /* Increased top padding for header */
+  background: #2e2e2e;
+  /* Darker Surface Color */
+  border: 1px solid #4a4a4a;
   border-radius: 20px;
   transition: .5s;
   box-sizing: border-box;
+  position: relative;
+  /* For pseudo-elements */
+  overflow: hidden;
+}
+
+/* Retro Window Header */
+#detail_page .area_related .list_related li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: #2b2b2b;
+  border-bottom: 1px solid #444;
+  z-index: 1;
+}
+
+/* Retro Window Dots */
+#detail_page .area_related .list_related li::after {
+  content: "";
+  position: absolute;
+  top: 11px;
+  left: 14px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff5f56;
+  box-shadow: 18px 0 0 #ffbd2e, 36px 0 0 #27c93f;
+  z-index: 2;
 }
 
 #detail_page .area_related .list_related li:nth-of-type(5n) {
@@ -2982,8 +3104,11 @@ figure.fileblock .name,
   margin: 0 auto;
   margin-bottom: 20px;
   padding: 30px 30px 15px;
-  background: #222;
+  background: #2e2e2e;
+  /* Darker Surface Color */
   border-radius: 20px;
+  border: 1px solid #4a4a4a;
+  /* Subtle definition */
   box-shadow: 2px 2px 10px rgba(0, 0, 0, .3);
   box-sizing: border-box;
   transform: translateX(-30px);
@@ -3002,7 +3127,8 @@ figure.fileblock .name,
   width: 49%;
   padding: 10px;
   margin-bottom: 20px;
-  background: #444;
+  background: #262626;
+  /* Softer Dark Inset */
   border-radius: 10px;
   box-sizing: border-box;
 }
@@ -3015,8 +3141,10 @@ figure.fileblock .name,
 #detail_page .commentWrite input[type="text"],
 #detail_page .commentWrite input[type="password"],
 #detail_page .commentWrite textarea {
-  background: #444;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #262626;
+  /* Softer Dark Inset */
+  border: 1px solid #444;
+  /* Subtle Border */
   color: #fff;
   width: 100%;
   box-sizing: border-box;
@@ -3041,9 +3169,11 @@ figure.fileblock .name,
   height: 150px;
   padding: 15px;
   resize: vertical;
-  background: #444;
+  background: #262626;
+  /* Softer Dark Inset */
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid #444;
+  /* Subtle Border */
   border-radius: 15px;
   box-sizing: border-box;
 }
@@ -3051,10 +3181,12 @@ figure.fileblock .name,
 /* 제출 버튼: input + button 모두 지원 */
 #detail_page .commentWrite .comment_submit input[type="submit"],
 #detail_page .commentWrite .comment_submit button[type="submit"] {
-  border: 1px solid #ddd;
+  border: 1px solid #4a4a4a;
+  /* Soft Border */
   padding: 5px 10px;
-  color: #ddd;
-  background: #222;
+  color: #ccc;
+  background: #333;
+  /* Soft Button BG */
   border-radius: 20px;
 }
 
@@ -3067,10 +3199,12 @@ figure.fileblock .name,
 #detail_page .commentWrite .secretWrap {
   float: right;
   padding: 5px 15px;
-  color: #ddd;
-  background: #222;
+  color: #ccc;
+  background: #333;
+  /* Soft Button BG */
   border-radius: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid #4a4a4a;
+  /* Soft Border */
 }
 
 /* 접근성용 숨김 라벨 (HTML에 포함됨) */
@@ -3202,7 +3336,10 @@ figure.fileblock .name,
 #detail_page .commentlist .rp_secret .com_box {
   float: left;
   margin-left: 20px;
-  background: #222;
+  background: #2e2e2e;
+  /* Darker Surface Color */
+  border: 1px solid #4a4a4a;
+  /* Subtle definition */
   text-align: left;
 }
 
@@ -3228,7 +3365,8 @@ figure.fileblock .name,
   left: -35.5px;
   width: 17.5px;
   height: 25px;
-  border: 0 solid #222;
+  border: 0 solid #2e2e2e;
+  /* Match new background */
   border-width: 0 20px;
   border-radius: 50%;
   clip: rect(0, 25px, 12px, 0);
@@ -3329,7 +3467,10 @@ figure.fileblock .name,
 #detail_page s_rp>ul>li .rp_secret .com_box {
   float: left;
   margin-left: 20px;
-  background: #222;
+  background: #2e2e2e;
+  /* Darker Surface Color */
+  border: 1px solid #4a4a4a;
+  /* Subtle definition */
 }
 
 #detail_page s_rp>ul>li .rp_admin .com_box::after {
@@ -3354,7 +3495,8 @@ figure.fileblock .name,
   left: -35.5px;
   width: 17.5px;
   height: 25px;
-  border: 0 solid #222;
+  border: 0 solid #383838;
+  /* Match new background */
   border-width: 0 20px;
   border-radius: 50%;
   clip: rect(0, 25px, 12px, 0);
@@ -4498,13 +4640,13 @@ table[data-ke-style] {
   border-collapse: separate !important;
   /* Required for border-radius */
   border-spacing: 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid #4a4a4a !important;
   /* Outer Border */
   border-radius: 12px !important;
   /* Rounded Corners */
   overflow: hidden !important;
   /* Clip content */
-  background: #252525 !important;
+  background: #2e2e2e !important;
   /* Unified Dark Background */
   margin: 20px 0 !important;
   box-shadow: none !important;
@@ -4516,13 +4658,13 @@ table[data-ke-style] {
 table[data-ke-style] th,
 .article table thead th,
 table[data-ke-style] thead th {
-  background-color: transparent !important;
-  /* Inherit Main Table BG */
-  color: #d1d1d1 !important;
+  background-color: #202020 !important;
+  /* Darker Header for Contrast */
+  color: #fff !important;
   /* Unified Text Color */
   font-weight: 600 !important;
   padding: 12px 15px !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid #4a4a4a !important;
   /* Subtle inner border */
   border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-top: none !important;
@@ -4535,9 +4677,9 @@ table[data-ke-style] thead th {
 table[data-ke-style] td {
   background-color: transparent !important;
   /* Inherit Main Table BG */
-  color: #d1d1d1 !important;
+  color: #ccc !important;
   padding: 12px 15px !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid #444 !important;
   border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-top: none !important;
   border-left: none !important;
@@ -4555,6 +4697,18 @@ table[data-ke-style] td {
 .article table tbody tr:last-child td,
 .tt_article_useless_p_margin table tbody tr:last-child td {
   border-bottom: none !important;
+}
+
+/* Mobile Table Font Fix */
+@media screen and (max-width: 768px) {
+
+  .article table th,
+  .article table td,
+  .tt_article_useless_p_margin table th,
+  .tt_article_useless_p_margin table td {
+    font-size: 13px !important;
+    padding: 8px 10px !important;
+  }
 }
 
 /* Fix for Mobile Overflow */
@@ -4577,9 +4731,10 @@ table[data-ke-style] td {
 .article blockquote,
 .tt_article_useless_p_margin blockquote,
 div[data-ke-type="blockquote"] {
-  background-color: #333333 !important;
-  /* Dark Box BG */
-  border: none !important;
+  background-color: #262626 !important;
+  /* Unified Inset Dark */
+  border: 1px solid #4a4a4a !important;
+  /* Subtle Outer Border */
   border-left: 4px solid #777 !important;
   /* Gray Accent */
   border-radius: 8px !important;
@@ -4590,7 +4745,6 @@ div[data-ke-type="blockquote"] {
   /* Bright Text */
   text-align: left !important;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  /* Subtle Shadow */
 }
 
 /* Force Text Color Inside Blockquote */
@@ -4627,21 +4781,19 @@ div[data-ke-type="blockquote"] p {
 }
 
 /* 2. OpenGraph Link Card (The "Box" Link) */
+/* 2. Link Embed / OpenGraph Card */
 figure[data-ke-type="opengraph"] a,
-figure[data-ke-type="opengraph"] {
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 12px !important;
-  background-color: #2A2A2A !important;
-  /* Unified Card BG */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2) !important;
-  overflow: hidden !important;
+.og-text {
+  background-color: #262626 !important;
+  /* Unified Inset Dark */
+  border-color: #4a4a4a !important;
+  /* Unified Border */
+  color: #ccc !important;
 }
 
-/* Text Container inside OG Card */
-figure[data-ke-type="opengraph"] .og-text {
-  background-color: transparent !important;
-  /* Remove any white bg */
-  color: #d1d1d1 !important;
+figure[data-ke-type="opengraph"] .og-image {
+  border-right: 1px solid #4a4a4a !important;
+  /* Border between img and text */
 }
 
 /* Title */
@@ -4666,7 +4818,7 @@ figure[data-ke-type="opengraph"] .og-host {
 
 /* ============ 23) Table of Contents (Navigation Card Design) ============ */
 .tableofcontents {
-  background-color: #252525 !important;
+  background-color: #2e2e2e !important;
 
   /* Card Design: Subtle Border & Floating Shadow */
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -4674,32 +4826,79 @@ figure[data-ke-type="opengraph"] .og-host {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4) !important;
 
   /* Layout & Spacing */
-  padding: 24px 22px !important;
+  /* Layout & Spacing */
+  padding: 0 !important;
+  /* Remove padding, Header is now block taking space */
   margin: 40px 0 !important;
   box-sizing: border-box;
   min-width: 200px;
+  position: relative;
+  /* Scroll Behavior */
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  /* Prevent horizontal scroll on hover */
+  max-height: calc(100vh - 200px);
+  /* Adjust based on viewport */
+  /* Scrollbar styling for TOC */
+  scrollbar-width: thin;
+  scrollbar-color: #555 #2e2e2e;
 }
 
-/* 1. Header Title "CONTENTS" */
+/* Custom Scrollbar for TOC */
+.tableofcontents::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tableofcontents::-webkit-scrollbar-track {
+  background: #2e2e2e;
+}
+
+.tableofcontents::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 3px;
+}
+
+/* 1. Window Header Bar (Title) - Sticky */
 .tableofcontents::before {
   content: "CONTENTS";
-  display: block;
+  position: sticky;
+  /* Make it stick! */
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  flex-shrink: 0;
+  /* Prevent shrinking */
+
+  background-color: #2b2b2b;
+  /* Dark Header */
+  border-bottom: 1px solid #444;
+
+  /* Simplify Header: Remove Dots for clean look */
+  background-image: none;
+
   font-family: 'Pretendard', sans-serif;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 2px;
   color: #aaa;
-  /* Soft gray title */
-
-  /* Divider Line */
-  border-bottom: 2px solid #555;
-  /* User's Point Color: Gray */
-  padding-bottom: 12px;
-  margin-bottom: 18px;
-  /* Whitespace between title and list */
+  z-index: 10;
+  /* Ensure on top of scrolling content */
 }
 
-/* 2. List Items Common Styles */
+/* 2. Window Controls (Dots) - REMOVED (Merged into ::before) */
+.tableofcontents::after {
+  content: none;
+}
+
+/* 2. List Items Common Styles (Add padding to first item to separate from header if needed) */
+#detail_page .article .tableofcontents p:first-of-type {
+  margin-top: 15px !important;
+}
+
 #detail_page .article .tableofcontents p {
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif !important;
   letter-spacing: -0.01em !important;
@@ -4770,7 +4969,10 @@ figure[data-ke-type="opengraph"] .og-host {
 
 #detail_page .article .tableofcontents p.toc-h3:hover,
 #detail_page .article .tableofcontents p.toc-h4:hover {
+  /* Re-enable hover effects */
   color: #fff !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  transform: translateX(4px) !important;
 }
 
 /* Maintain reset */
@@ -4779,4 +4981,92 @@ figure[data-ke-type="opengraph"] .og-host {
   list-style: none !important;
   margin: 0 !important;
   padding: 0 !important;
+}
+
+/* ============ Mobile Detail Page Restoration (Review 99%) ============ */
+@media screen and (max-width: 1024px) {
+
+  /* Reset transforms and fixed widths for main containers */
+  #detail_page .titleWrap,
+  #detail_page .article,
+  #detail_page .commentWrite,
+  #detail_page .commentlist,
+  #detail_page #rp,
+  #detail_page .rp_write_box {
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto 30px !important;
+    box-sizing: border-box !important;
+
+    /* Remove Card Styling */
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  /* Adjust padding for readability on small screens */
+  #detail_page .titleWrap {
+    padding: 0 20px !important;
+  }
+
+  #detail_page .article {
+    padding: 20px 20px 40px !important;
+  }
+
+  #detail_page .commentWrite {
+    padding: 20px !important;
+    background: #222 !important;
+    /* Keep transparent or subtle #222 per user request */
+  }
+
+  /* Reset Comment Bubbles to be less card-like if needed */
+
+  /* Ensure TOC is hidden or styled appropriately if it pops up */
+  #detail_page .article .tableofcontents {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    right: auto !important;
+    margin: 20px 0 !important;
+    background: #222 !important;
+    /* Reset background */
+    border: none !important;
+    padding: 20px !important;
+    /* Reset Padding */
+    box-shadow: none !important;
+  }
+
+  /* Reset TOC Header on Mobile (Simple Text) */
+  #detail_page .article .tableofcontents::before {
+    position: static !important;
+    display: block !important;
+    height: auto !important;
+    background: transparent !important;
+    border-bottom: 1px solid #444 !important;
+    margin-bottom: 15px !important;
+    padding-bottom: 10px !important;
+    justify-content: flex-start !important;
+    /* Left align */
+    background-image: none !important;
+    /* Remove dots */
+  }
+
+  /* Hide Dots on Mobile (Already removed in desktop override, but ensuring safety) */
+  #detail_page .article .tableofcontents::after {
+    display: none !important;
+  }
+
+  /* Reset Related Posts (Revert Retro Style) */
+  #detail_page .area_related .list_related li {
+    padding: 24px !important;
+    background: #222 !important;
+    border: none !important;
+  }
+
+  #detail_page .area_related .list_related li::before,
+  #detail_page .area_related .list_related li::after {
+    display: none !important;
+  }
 }

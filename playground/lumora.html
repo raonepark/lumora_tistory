@@ -373,107 +373,12 @@
 
 
 	<script src="./images/custom_dropdown_fix_v3.js"></script>
+	<script src="./images/category_accordion_v3.js"></script>
 
 
 	<script>
 		(function () {
-			function initAccordion() {
-				console.log("Gemini Patch: Organizing Categories (Dynamic)...");
 
-				const containers = ['#sidebar', '.m-cat-body'];
-
-				containers.forEach(containerSelector => {
-					const container = document.querySelector(containerSelector);
-					if (!container) return;
-
-					// Scope selection to the current container
-					// Select all LIs that are direct children of the main category ULs
-					// For Tistory, .tt_category li is the standard, but sidebar might have .category ul li
-					const listItems = container.querySelectorAll('li');
-
-					listItems.forEach(li => {
-						const link = li.querySelector('a');
-						if (!link) return;
-
-						// 1. Universal Count Polish
-						// Ensure count is wrapped in span for styling
-						// Helper to extract count
-						const getCount = (el) => {
-							const match = el.textContent.match(/\((\d+)\)/);
-							return match ? match[1] : '0';
-						};
-
-						if (!link.querySelector('.cat-count')) {
-							// Helper to safely get clean name
-							const getName = (el) => {
-								return el.textContent.replace(/\s+/g, ' ').replace(/\(\d+\)\s*$/, '').trim();
-							};
-
-							const name = getName(link);
-							const count = getCount(link);
-							// Reconstruct HTML. Note: This clears potential children in the link, but Tistory category links usually just contain text.
-							link.innerHTML = `${name} <span class="cat-count">(${count})</span>`;
-						}
-
-						// Skip if "분류 전체보기" (Root Item) to keep categories visible
-						// getName logic is reused or we can just check safeName if we stored it, but doing it simpler here:
-						if (link.textContent.indexOf('분류 전체보기') !== -1) return;
-
-						// 2. Dynamic Accordion Logic
-						// Check if this LI has a child UL (sub-category list)
-						const subContainer = li.querySelector('ul');
-
-						if (subContainer) {
-							// It is a parent category
-							// Ensure subContainer has the class for styling
-							subContainer.classList.add('sub-category-item');
-
-							// Mark parent link for styling (Chevron)
-							link.classList.add('accordion-parent');
-
-							// Feature: Standardized View All with Count
-							// Check if we already added it (to avoid duplicates on reruns)
-							if (!subContainer.querySelector('.view-all-item')) {
-								const count = getCount(link);
-
-								const viewAllLi = document.createElement('li');
-								viewAllLi.className = 'view-all-item';
-
-								const viewAllLink = document.createElement('a');
-								// Use the parent's HREF
-								viewAllLink.href = link.href;
-								viewAllLink.innerHTML = `전체 글 <span class="cat-count">(${count})</span>`;
-
-								viewAllLi.appendChild(viewAllLink);
-
-								// Insert as FIRST item in sub-list
-								if (subContainer.firstChild) {
-									subContainer.insertBefore(viewAllLi, subContainer.firstChild);
-								} else {
-									subContainer.appendChild(viewAllLi);
-								}
-							}
-
-							// 3. Toggle Event
-							// Avoid adding multiple listeners if re-run
-							if (!link.dataset.accordionInit) {
-								link.onclick = function (e) {
-									e.preventDefault();
-									// Toggle active class
-									if (subContainer.classList.contains('active')) {
-										subContainer.classList.remove('active');
-										link.classList.remove('active-parent');
-									} else {
-										subContainer.classList.add('active');
-										link.classList.add('active-parent');
-									}
-								};
-								link.dataset.accordionInit = "true";
-							}
-						}
-					});
-				});
-			}
 
 			function polishCategoryText() {
 				// Select category elements in List and Detail views
@@ -611,13 +516,13 @@
 
 			if (document.readyState === 'loading') {
 				document.addEventListener('DOMContentLoaded', function () {
-					initAccordion();
+					// initAccordion(); // Moved to external script
 					polishCategoryText();
 					checkEmptyCategory();
 					initCommentPaginationV3();
 				});
 			} else {
-				initAccordion();
+				// initAccordion(); // Moved to external script
 				polishCategoryText();
 				checkEmptyCategory();
 				initCommentPaginationV3();

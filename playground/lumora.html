@@ -13,14 +13,12 @@
 	<![endif]-->
 	<!--[if gte IE 9]><!-->
 	<script src="//t1.daumcdn.net/tistory_admin/lib/jquery/jquery-3.2.1.min.js"></script>
-	<script src="./images/custom_v45.js"></script>
+	<script src="./images/custom_v50.js"></script>
 
 	<meta name="naver-site-verification" content="93f3a67981fe26e8b064b9447a9b6556b11e5a08" />
 	<!--<![endif]-->
 
-</head>
-
-<body id="[##_body_id_##]">
+	</hea <body id="[##_body_id_##]">
 	<s_t3>
 		<div id="container">
 
@@ -314,6 +312,8 @@
 														</s_rp_container>
 													</s_rp>
 												</div>
+												<!-- Comment Pagination Container -->
+												<div id="comment-paging" class="paging paging-comment"></div>
 											</div>
 										</div>
 									</div>
@@ -540,20 +540,270 @@
 			// Expose to window for inline calls
 			window.submitMobileSearch = submitMobileSearch;
 
+
+			// Comment Pagination
+			function initCommentPagination() {
+				const itemsPerPage = 15;
+				// Select Tistory comment list items (direct children of the ul in .commentlist)
+				const commentList = document.querySelector('.commentlist > s_rp_container > ul, .commentlist > ul'); /* Tistory structure varies, fallback selector */
+
+				// Standard Tistory structure: .commentlist > s_rp_container doesn't exist in DOM, usually just .commentlist ul li
+				// But we need to target the *list* container.
+				// Based on file view: <div class="commentlist"><s_rp><s_rp_container><ul> ...
+				const listContainer = document.querySelector('.commentlist ul');
+
+				if (!listContainer) return;
+
+				const items = Array.from(listContainer.children); // Get immediate LIs (comments)
+				if (items.length <= itemsPerPage) return;
+
+				const totalPages = Math.ceil(items.length / itemsPerPage);
+				const pagingContainer = document.getElementById('comment-paging');
+				if (!pagingContainer) return;
+
+				let currentPage = 1;
+
+				function showPage(page) {
+					currentPage = page;
+					const start = (page - 1) * itemsPerPage;
+					const end = start + itemsPerPage;
+
+					items.forEach((item, index) => {
+						item.style.display = (index >= start && index < end) ? '' : 'none';
+					});
+
+					renderControls();
+				}
+
+				function renderControls() {
+					let html = '';
+
+					// Prev
+					/* html += `<a href="#" class="${currentPage === 1 ? 'disabled' : ''}" onclick="window.changeCommentPage(${currentPage - 1}); return false;">◀</a>`; */
+
+					// Numbers
+					html += '<span class="numbox">';
+					for (let i = 1; i <= totalPages; i++) {
+						if (i === currentPage) {
+							html += `<span class="selected">${i}</span>`;
+						} else {
+							html += `<a href="#" onclick="window.changeCommentPage(${i}); return false;" class="num">${i}</a>`;
+						}
+					}
+					html += '</span>';
+
+					// Next
+					/* html += `<a href="#" class="${currentPage === totalPages ? 'disabled' : ''}" onclick="window.changeCommentPage(${currentPage + 1}); return false;">►</a>`; */
+
+					pagingContainer.innerHTML = html;
+				}
+
+				// Global expose for onclick
+				window.changeCommentPage = function (page) {
+					if (page < 1 || page > totalPages) return;
+					showPage(page);
+					// Optional: scroll to top of comments
+					// document.querySelector('.commentlist').scrollIntoView({ behavior: 'smooth' });
+				};
+
+				showPage(1);
+			}
+
 			if (document.readyState === 'loading') {
 				document.addEventListener('DOMContentLoaded', function () {
 					initAccordion();
 					polishCategoryText();
 					checkEmptyCategory();
+					initCommentPaginationV3();
 				});
 			} else {
 				initAccordion();
 				polishCategoryText();
 				checkEmptyCategory();
+				initCommentPaginationV3();
 			}
+			// Robust Pagination V2
+			function initCommentPaginationV2() {
+				const itemsPerPage = 15;
+				// Target ALL comment lists involved
+				const commentLists = document.querySelectorAll('.commentlist');
+
+				if (!commentLists.length) return;
+
+				commentLists.forEach((listWrapper, listIndex) => {
+					// Find the specific UL inside this wrapper
+					// Tistory structure: .commentlist > (s_rp_container) > ul / or just .commentlist > ul
+					let listContainer = listWrapper.querySelector('ul');
+
+					// If not found directly, maybe it is the wrapper itself? No, standard is inside.
+					if (!listContainer) return;
+
+					// Check items
+					// Tistory comments are <li> inside the main <ul>.
+					// Note: Reply comments might be nested <ul> inside <li>. We only want direct children.
+					const items = Array.from(listContainer.children).filter(el => el.tagName === 'LI');
+
+					if (items.length <= itemsPerPage) return;
+
+					// Valid list found with > 15 items. Initialize.
+					const totalPages = Math.ceil(items.length / itemsPerPage);
+
+					// Create Pagination Container dynamically
+					// Check if exists to avoid dupes on re-run
+					let pagingContainer = listWrapper.nextElementSibling;
+					if (!pagingContainer || !pagingContainer.classList.contains('paging-comment')) {
+						pagingContainer = document.createElement('div');
+						pagingContainer.className = 'paging paging-comment';
+						pagingContainer.id = `comment-paging-${listIndex}`;
+						// Check if parentNode exists, append after wrapper
+						if (listWrapper.parentNode) {
+							listWrapper.parentNode.insertBefore(pagingContainer, listWrapper.nextSibling);
+						}
+					}
+
+					let currentPage = 1;
+
+					// Define scoped render function
+					const render = () => {
+						const start = (currentPage - 1) * itemsPerPage;
+						const end = start + itemsPerPage;
+
+						items.forEach((item, index) => {
+							item.style.display = (index >= start && index < end) ? '' : 'none';
+						});
+
+						// Render Controls
+						let html = '<span class="numbox">';
+						for (let i = 1; i <= totalPages; i++) {
+							if (i === currentPage) {
+								html += `<span class="selected">${i}</span>`;
+							} else {
+								html += `<a href="#" data-page="${i}" class="num">${i}</a>`;
+							}
+						}
+						html += '</span>';
+						pagingContainer.innerHTML = html;
+
+						// Add event listeners to new links
+						const links = pagingContainer.querySelectorAll('a');
+						links.forEach(link => {
+							link.onclick = (e) => {
+								e.preventDefault();
+								currentPage = parseInt(e.target.dataset.page, 10);
+								render();
+							};
+						});
+					};
+
+					// Init
+					render();
+				});
+			}
+
+			// Robust Pagination V3 (Observer + Forced Styling)
+			function initCommentPaginationV3() {
+				const itemsPerPage = 15;
+				const commentLists = document.querySelectorAll('.commentlist');
+				if (!commentLists.length) return;
+
+				commentLists.forEach((listWrapper, listIndex) => {
+					// Function to setup pagination for a specific list
+					const setupList = () => {
+						const listContainer = listWrapper.querySelector('ul');
+						if (!listContainer) return;
+
+						// Identify items: Filter out nested replies if possible or just use direct children
+						const items = Array.from(listContainer.children).filter(el => el.tagName === 'LI');
+						if (items.length <= itemsPerPage) {
+							// If items reduced/none, hide paging if exists
+							const existingPaging = document.getElementById(`comment-paging-${listIndex}`);
+							if (existingPaging) existingPaging.style.display = 'none';
+							return;
+						}
+
+						const totalPages = Math.ceil(items.length / itemsPerPage);
+
+						// Create/Find Paging Container
+						let pagingContainer = document.getElementById(`comment-paging-${listIndex}`);
+						if (!pagingContainer) {
+							pagingContainer = document.createElement('div');
+							pagingContainer.className = 'paging paging-comment';
+							pagingContainer.id = `comment-paging-${listIndex}`;
+							if (listWrapper.parentNode) {
+								listWrapper.parentNode.insertBefore(pagingContainer, listWrapper.nextSibling);
+							}
+						}
+						// Ensure it's visible
+						pagingContainer.style.display = 'block';
+
+						let currentPage = 1;
+
+						// Render Function
+						const render = () => {
+							const start = (currentPage - 1) * itemsPerPage;
+							const end = start + itemsPerPage;
+
+							items.forEach((item, index) => {
+								if (index >= start && index < end) {
+									item.style.removeProperty('display');
+								} else {
+									item.style.setProperty('display', 'none', 'important');
+								}
+							});
+
+							// Render Controls
+							let html = '<span class="numbox">';
+							for (let i = 1; i <= totalPages; i++) {
+								if (i === currentPage) {
+									html += `<span class="selected">${i}</span>`;
+								} else {
+									html += `<a href="#" data-page="${i}" class="num">${i}</a>`;
+								}
+							}
+							html += '</span>';
+							pagingContainer.innerHTML = html;
+
+							// Bind events
+							const links = pagingContainer.querySelectorAll('a');
+							links.forEach(link => {
+								link.onclick = (e) => {
+									e.preventDefault();
+									currentPage = parseInt(e.target.dataset.page, 10);
+									render();
+									// UX Polish: Scroll to top of comment list
+									listWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+								};
+							});
+						};
+
+						// Initial Render
+						render();
+					};
+
+					// Run initial setup
+					setupList();
+
+					// Observe for changes (e.g. Tistory AJAX loading or Reply toggles)
+					const targetNode = listWrapper.querySelector('ul') || listWrapper;
+					const observer = new MutationObserver((mutations) => {
+						let shouldUpdate = false;
+						mutations.forEach(mutation => {
+							if (mutation.type === 'childList') {
+								shouldUpdate = true;
+							}
+						});
+						if (shouldUpdate) {
+							setupList();
+						}
+					});
+
+					observer.observe(targetNode, { childList: true, subtree: false });
+				});
+			}
+
 		})();
 	</script>
-</body>
+	</body>
 
 
 </html>

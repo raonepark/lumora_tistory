@@ -1892,11 +1892,26 @@ $(document).ready(function () {
     }
     window.submitMobileSearch = submitMobileSearch;
 
+    // Post Pagination: Hide container if single page (Smart Visibility)
+    function initSmartPostPagination() {
+        var paging = document.querySelector('#container .paging');
+        if (!paging) return;
+        
+        var prev = paging.querySelector('.no-more-prev');
+        var next = paging.querySelector('.no-more-next');
+        
+        // If both buttons are hidden (meaning 1 page total with no nav)
+        if (prev && next) {
+            paging.style.display = 'none';
+        }
+    }
+
     function runAll() {
         initAccordion();
         polishCategoryText();
         checkEmptyCategory();
         initCommentPaginationV3();
+        initSmartPostPagination();
     }
 
     if (document.readyState === 'loading') {

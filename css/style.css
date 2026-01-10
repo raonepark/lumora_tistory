@@ -209,6 +209,12 @@ figure.fileblock .name,
   color: #fff;
 }
 
+#container .paging>a.no-more-prev,
+#container .paging>a.no-more-next {
+  visibility: hidden;
+  cursor: default;
+}
+
 #container .paging .numbox a {
   color: #fff;
 }
@@ -4628,6 +4634,7 @@ figure[data-ke-type="opengraph"] {
   background-color: #2A2A2A !important;
   /* Unified Card BG */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2) !important;
+  overflow: hidden !important;
 }
 
 /* Text Container inside OG Card */
@@ -4655,4 +4662,121 @@ figure[data-ke-type="opengraph"] .og-desc {
 figure[data-ke-type="opengraph"] .og-host {
   color: #888888 !important;
   font-size: 0.85em !important;
+}
+
+/* ============ 23) Table of Contents (Navigation Card Design) ============ */
+.tableofcontents {
+  background-color: #252525 !important;
+
+  /* Card Design: Subtle Border & Floating Shadow */
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4) !important;
+
+  /* Layout & Spacing */
+  padding: 24px 22px !important;
+  margin: 40px 0 !important;
+  box-sizing: border-box;
+  min-width: 200px;
+}
+
+/* 1. Header Title "CONTENTS" */
+.tableofcontents::before {
+  content: "CONTENTS";
+  display: block;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #aaa;
+  /* Soft gray title */
+
+  /* Divider Line */
+  border-bottom: 2px solid #555;
+  /* User's Point Color: Gray */
+  padding-bottom: 12px;
+  margin-bottom: 18px;
+  /* Whitespace between title and list */
+}
+
+/* 2. List Items Common Styles */
+#detail_page .article .tableofcontents p {
+  font-family: 'Pretendard', 'Noto Sans KR', sans-serif !important;
+  letter-spacing: -0.01em !important;
+  font-size: 14px !important;
+  /* Increased size for readability */
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  margin: 0 0 6px 0 !important;
+
+  color: #888 !important;
+  /* Default soft text */
+  cursor: pointer;
+  padding: 4px 8px 4px 12px !important;
+  /* Clickable area padding */
+  border-radius: 6px;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+/* Hover Effect: Card feel */
+#detail_page .article .tableofcontents p:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  transform: translateX(4px);
+}
+
+/* Active State */
+#detail_page .article .tableofcontents p.on {
+  color: #fff !important;
+  font-weight: 600 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* H1/H2 (Main Titles) */
+#detail_page .article .tableofcontents p.toc-h1,
+#detail_page .article .tableofcontents p.toc-h2 {
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  /* Reduced from 600 */
+  color: #ddd !important;
+  line-height: 1.4 !important;
+  /* Tighter text block for multi-line titles */
+
+  /* Spacing Rhythm: Increased for distinct section separation */
+  margin-top: 24px !important;
+  margin-bottom: 8px !important;
+  /* Slightly more space before sub-items */
+
+  /* Remove indentation for main items */
+  padding-left: 8px !important;
+}
+
+/* Reset spacing for first item */
+#detail_page .article .tableofcontents p.toc-h1:first-of-type,
+#detail_page .article .tableofcontents p.toc-h2:first-of-type {
+  margin-top: 0 !important;
+}
+
+/* H3/H4 (Sub Items) */
+#detail_page .article .tableofcontents p.toc-h3,
+#detail_page .article .tableofcontents p.toc-h4 {
+  font-size: 14px !important;
+  /* Increased from 13.5px */
+  color: #bbb !important;
+  /* Brightened from #777 */
+  padding-left: 20px !important;
+  /* Indent */
+}
+
+#detail_page .article .tableofcontents p.toc-h3:hover,
+#detail_page .article .tableofcontents p.toc-h4:hover {
+  color: #fff !important;
+}
+
+/* Maintain reset */
+.tableofcontents ul,
+.tableofcontents li {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }

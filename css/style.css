@@ -4397,23 +4397,91 @@ html body #container #sidebar .sub-category-item .view-all-item a:hover {
   }
 }
 
-/* ============ 19) Comment Pagination (Local Override) ============ */
+/* ============ 19) Comment Pagination (Dark Mode Box Style & Fixed Layout) ============ */
 #container .paging.paging-comment {
   width: 100%;
   margin-left: 0;
   height: auto;
   background: transparent;
-  padding: 30px 0;
+  padding: 40px 0;
   margin-top: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  display: block !important;
-  /* Force visibility */
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  /* Gap between buttons */
 }
 
+/* Common Button Style (Unified Box Look) */
+#container .paging.paging-comment a,
 #container .paging.paging-comment .numbox .num,
 #container .paging.paging-comment .numbox span {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  background-color: #444;
+  /* Dark Gray BG (Unselected) */
+  color: #fff;
+  /* White Text */
+  border-radius: 6px;
+  /* Rounded Box */
+  text-decoration: none;
   font-size: 14px;
-  padding: 5px 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  line-height: normal;
+  /* Fix vertical alignment */
+  box-sizing: border-box;
+  /* Maintain size */
+  border: none;
+}
+
+/* Hover State */
+#container .paging.paging-comment a:not(.disabled):hover,
+#container .paging.paging-comment .numbox .num:hover {
+  background-color: #555;
+  /* Lighter Gray on hover */
+  transform: translateY(-2px);
+}
+
+/* Active State (Current Page) */
+#container .paging.paging-comment .numbox .selected,
+#container .paging.paging-comment .numbox span.selected {
+  background-color: #fff !important;
+  /* White BG */
+  color: #111 !important;
+  /* Black Text */
+  font-weight: 700;
+  pointer-events: none;
+  /* Non-clickable */
+}
+
+/* Navigation Buttons (< >) & Disabled State */
+#container .paging.paging-comment .prev,
+#container .paging.paging-comment .next {
+  font-family: inherit;
+  font-size: 16px;
+  background-color: #444 !important;
+  /* Same as unselected */
+  border: none;
+}
+
+#container .paging.paging-comment a.disabled {
+  visibility: hidden;
+  /* Takes up space but invisible */
+  pointer-events: none;
+}
+
+/* Numbox Wrapper (Flex container for numbers) */
+#container .paging.paging-comment .numbox {
+  display: flex;
+  gap: 8px;
+  margin: 0 10px;
 }
 
 /* ============ 20) Dark Mode Table Override (Card Style) ============ */

@@ -4396,3 +4396,263 @@ html body #container #sidebar .sub-category-item .view-all-item a:hover {
     padding-bottom: 10px;
   }
 }
+
+/* ============ 19) Comment Pagination (Dark Mode Box Style & Fixed Layout) ============ */
+#container .paging.paging-comment {
+  width: 100%;
+  margin-left: 0;
+  height: auto;
+  background: transparent;
+  padding: 40px 0;
+  margin-top: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  /* Gap between buttons */
+}
+
+/* Common Button Style (Unified Box Look) */
+#container .paging.paging-comment a,
+#container .paging.paging-comment .numbox .num,
+#container .paging.paging-comment .numbox span {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  background-color: #444;
+  /* Dark Gray BG (Unselected) */
+  color: #fff;
+  /* White Text */
+  border-radius: 6px;
+  /* Rounded Box */
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  line-height: normal;
+  /* Fix vertical alignment */
+  box-sizing: border-box;
+  /* Maintain size */
+  border: none;
+}
+
+/* Hover State */
+#container .paging.paging-comment a:not(.disabled):hover,
+#container .paging.paging-comment .numbox .num:hover {
+  background-color: #555;
+  /* Lighter Gray on hover */
+  transform: translateY(-2px);
+}
+
+/* Active State (Current Page) */
+#container .paging.paging-comment .numbox .selected,
+#container .paging.paging-comment .numbox span.selected {
+  background-color: #fff !important;
+  /* White BG */
+  color: #111 !important;
+  /* Black Text */
+  font-weight: 700;
+  pointer-events: none;
+  /* Non-clickable */
+}
+
+/* Navigation Buttons (< >) & Disabled State */
+#container .paging.paging-comment .prev,
+#container .paging.paging-comment .next {
+  font-family: inherit;
+  font-size: 16px;
+  background-color: #444 !important;
+  /* Same as unselected */
+  border: none;
+}
+
+#container .paging.paging-comment a.disabled {
+  visibility: hidden;
+  /* Takes up space but invisible */
+  pointer-events: none;
+}
+
+/* Numbox Wrapper (Flex container for numbers) */
+#container .paging.paging-comment .numbox {
+  display: flex;
+  gap: 8px;
+  margin: 0 10px;
+}
+
+/* ============ 20) Dark Mode Table Override (Card Style) ============ */
+.article table,
+.tt_article_useless_p_margin table,
+table[data-ke-style] {
+  width: 100% !important;
+  border-collapse: separate !important;
+  /* Required for border-radius */
+  border-spacing: 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  /* Outer Border */
+  border-radius: 12px !important;
+  /* Rounded Corners */
+  overflow: hidden !important;
+  /* Clip content */
+  background: #252525 !important;
+  /* Unified Dark Background */
+  margin: 20px 0 !important;
+  box-shadow: none !important;
+}
+
+/* Header Cells (th) */
+.article table th,
+.tt_article_useless_p_margin table th,
+table[data-ke-style] th,
+.article table thead th,
+table[data-ke-style] thead th {
+  background-color: transparent !important;
+  /* Inherit Main Table BG */
+  color: #d1d1d1 !important;
+  /* Unified Text Color */
+  font-weight: 600 !important;
+  padding: 12px 15px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  /* Subtle inner border */
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-top: none !important;
+  border-left: none !important;
+}
+
+/* Body Cells (td) */
+.article table td,
+.tt_article_useless_p_margin table td,
+table[data-ke-style] td {
+  background-color: transparent !important;
+  /* Inherit Main Table BG */
+  color: #d1d1d1 !important;
+  padding: 12px 15px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-top: none !important;
+  border-left: none !important;
+}
+
+/* Remove Right Border for Last Column */
+.article table th:last-child,
+.article table td:last-child,
+.tt_article_useless_p_margin table th:last-child,
+.tt_article_useless_p_margin table td:last-child {
+  border-right: none !important;
+}
+
+/* Remove Bottom Border for Last Row in Tbody */
+.article table tbody tr:last-child td,
+.tt_article_useless_p_margin table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* Fix for Mobile Overflow */
+.article .timetable,
+.article table {
+  display: block;
+  width: 100% !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media screen and (min-width: 768px) {
+
+  .tt_article_useless_p_margin table {
+    display: table !important;
+  }
+}
+
+/* ============ 21) Dark Mode Blockquote Override (Info Box) ============ */
+.article blockquote,
+.tt_article_useless_p_margin blockquote,
+div[data-ke-type="blockquote"] {
+  background-color: #333333 !important;
+  /* Dark Box BG */
+  border: none !important;
+  border-left: 4px solid #777 !important;
+  /* Gray Accent */
+  border-radius: 8px !important;
+  /* Rounded Corners */
+  padding: 20px 25px !important;
+  margin: 20px 0 !important;
+  color: #E0E0E0 !important;
+  /* Bright Text */
+  text-align: left !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  /* Subtle Shadow */
+}
+
+/* Force Text Color Inside Blockquote */
+.article blockquote p,
+.article blockquote span,
+.article blockquote li,
+.tt_article_useless_p_margin blockquote p,
+div[data-ke-type="blockquote"] p {
+  color: #E0E0E0 !important;
+  line-height: 1.6 !important;
+}
+
+/* Reset any specific alignment weirdness */
+.article blockquote::before,
+.article blockquote::after {
+  content: none !important;
+  /* Remove giant quote marks if any */
+}
+
+/* ============ 22) Dark Mode Link & OpenGraph Card Override ============ */
+
+/* 1. General Text Links in Article */
+.article a {
+  color: #ffca28 !important;
+  /* Amber Gold for visibility */
+  text-decoration: none !important;
+  border-bottom: 1px dashed rgba(255, 202, 40, 0.4);
+  transition: all 0.3s ease;
+}
+
+.article a:hover {
+  background-color: rgba(255, 202, 40, 0.1);
+  border-bottom: 1px solid #ffca28;
+}
+
+/* 2. OpenGraph Link Card (The "Box" Link) */
+figure[data-ke-type="opengraph"] a,
+figure[data-ke-type="opengraph"] {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  background-color: #2A2A2A !important;
+  /* Unified Card BG */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Text Container inside OG Card */
+figure[data-ke-type="opengraph"] .og-text {
+  background-color: transparent !important;
+  /* Remove any white bg */
+  color: #d1d1d1 !important;
+}
+
+/* Title */
+figure[data-ke-type="opengraph"] .og-title {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 1.1em !important;
+}
+
+/* Description */
+figure[data-ke-type="opengraph"] .og-desc {
+  color: #bbbbbb !important;
+  font-size: 0.95em !important;
+  line-height: 1.5 !important;
+}
+
+/* Host/URL */
+figure[data-ke-type="opengraph"] .og-host {
+  color: #888888 !important;
+  font-size: 0.85em !important;
+}

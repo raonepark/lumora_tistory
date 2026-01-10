@@ -2,6 +2,28 @@
 <html lang="ko">
 
 <head>
+	<script>
+		// FOUC Fix: Immediately apply loading class to avoid white flash
+		document.documentElement.classList.add('loading');
+	</script>
+	<style>
+		/* Critical CSS: Hidden State & Dark Background */
+		html.loading {
+			background-color: #333;
+		}
+
+		html.loading body {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		/* Smooth Reveal Transition */
+		body {
+			transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
+			opacity: 1;
+			visibility: visible;
+		}
+	</style>
 	<meta charset="UTF-8">
 	<meta name="viewport"
 		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
@@ -13,7 +35,8 @@
 	<![endif]-->
 	<!--[if gte IE 9]><!-->
 	<script src="//t1.daumcdn.net/tistory_admin/lib/jquery/jquery-3.2.1.min.js"></script>
-	<script src="./images/custom_v45.js"></script>
+	<!-- Custom Scripts (Bundled) -->
+	<script src="./images/custom_v56.js"></script>
 
 	<meta name="naver-site-verification" content="93f3a67981fe26e8b064b9447a9b6556b11e5a08" />
 	<!--<![endif]-->
@@ -314,6 +337,8 @@
 														</s_rp_container>
 													</s_rp>
 												</div>
+												<!-- Comment Pagination Container -->
+												<div id="comment-paging" class="paging paging-comment"></div>
 											</div>
 										</div>
 									</div>
@@ -375,182 +400,20 @@
 	<script src="./images/custom_dropdown_fix_v3.js"></script>
 
 
+
 	<script>
+		// FOUC Fix: Reveal Content
 		(function () {
-			function initAccordion() {
-				console.log("Gemini Patch: Organizing Categories (Dynamic)...");
-
-				const containers = ['#sidebar', '.m-cat-body'];
-
-				containers.forEach(containerSelector => {
-					const container = document.querySelector(containerSelector);
-					if (!container) return;
-
-					// Scope selection to the current container
-					// Select all LIs that are direct children of the main category ULs
-					// For Tistory, .tt_category li is the standard, but sidebar might have .category ul li
-					const listItems = container.querySelectorAll('li');
-
-					listItems.forEach(li => {
-						const link = li.querySelector('a');
-						if (!link) return;
-
-						// 1. Universal Count Polish
-						// Ensure count is wrapped in span for styling
-						// Helper to extract count
-						const getCount = (el) => {
-							const match = el.textContent.match(/\((\d+)\)/);
-							return match ? match[1] : '0';
-						};
-
-						if (!link.querySelector('.cat-count')) {
-							// Helper to safely get clean name
-							const getName = (el) => {
-								return el.textContent.replace(/\s+/g, ' ').replace(/\(\d+\)\s*$/, '').trim();
-							};
-
-							const name = getName(link);
-							const count = getCount(link);
-							// Reconstruct HTML. Note: This clears potential children in the link, but Tistory category links usually just contain text.
-							link.innerHTML = `${name} <span class="cat-count">(${count})</span>`;
-						}
-
-						// Skip if "분류 전체보기" (Root Item) to keep categories visible
-						// getName logic is reused or we can just check safeName if we stored it, but doing it simpler here:
-						if (link.textContent.indexOf('분류 전체보기') !== -1) return;
-
-						// 2. Dynamic Accordion Logic
-						// Check if this LI has a child UL (sub-category list)
-						const subContainer = li.querySelector('ul');
-
-						if (subContainer) {
-							// It is a parent category
-							// Ensure subContainer has the class for styling
-							subContainer.classList.add('sub-category-item');
-
-							// Mark parent link for styling (Chevron)
-							link.classList.add('accordion-parent');
-
-							// Feature: Standardized View All with Count
-							// Check if we already added it (to avoid duplicates on reruns)
-							if (!subContainer.querySelector('.view-all-item')) {
-								const count = getCount(link);
-
-								const viewAllLi = document.createElement('li');
-								viewAllLi.className = 'view-all-item';
-
-								const viewAllLink = document.createElement('a');
-								// Use the parent's HREF
-								viewAllLink.href = link.href;
-								viewAllLink.innerHTML = `전체 글 <span class="cat-count">(${count})</span>`;
-
-								viewAllLi.appendChild(viewAllLink);
-
-								// Insert as FIRST item in sub-list
-								if (subContainer.firstChild) {
-									subContainer.insertBefore(viewAllLi, subContainer.firstChild);
-								} else {
-									subContainer.appendChild(viewAllLi);
-								}
-							}
-
-							// 3. Toggle Event
-							// Avoid adding multiple listeners if re-run
-							if (!link.dataset.accordionInit) {
-								link.onclick = function (e) {
-									e.preventDefault();
-									// Toggle active class
-									if (subContainer.classList.contains('active')) {
-										subContainer.classList.remove('active');
-										link.classList.remove('active-parent');
-									} else {
-										subContainer.classList.add('active');
-										link.classList.add('active-parent');
-									}
-								};
-								link.dataset.accordionInit = "true";
-							}
-						}
-					});
-				});
+			function reveal() {
+				if (!document.documentElement.classList.contains('loading')) return;
+				document.documentElement.classList.remove('loading');
 			}
-
-			function polishCategoryText() {
-				// Select category elements in List and Detail views
-				var catNodes = document.querySelectorAll('.list_content .category, .titleWrap .category a');
-
-				catNodes.forEach(function (node) {
-					// Check for slash and replace with Middle Dot (·)
-					// Using opacity for subtleness
-					if (node.innerHTML.indexOf('/') !== -1) {
-						node.innerHTML = node.innerHTML.replace(/\//g, '&nbsp;<span style="opacity:0.5; font-size:0.9em;">·</span>&nbsp;');
-					}
-				});
-			}
-
-			function checkEmptyCategory() {
-				// Run only on category pages
-				if (window.location.pathname.indexOf('/category/') === -1) return;
-
-				// Check for articles
-				const hasList = document.querySelector('.list_content');
-				const hasDetail = document.getElementById('detail_page');
-
-				// If no content found
-				if (!hasList && !hasDetail) {
-					const contentArea = document.getElementById('content');
-					if (!contentArea) return;
-
-					// Extract Category Name from URL
-					let catName = '이 카테고리';
-					try {
-						const parts = window.location.pathname.split('/category/');
-						if (parts[1]) {
-							let decoded = decodeURIComponent(parts[1]);
-							if (decoded.endsWith('/')) decoded = decoded.slice(0, -1);
-
-							// Polish: Replace slash with Dot for consistency with new design
-							decoded = decoded.replace(/\//g, ' · ');
-
-							catName = decoded;
-						}
-					} catch (e) { console.error(e); }
-
-					// Inject Empty State HTML
-					contentArea.innerHTML = `
-                        <div class="empty-state">
-                            <p class="empty-text">
-                                ‘<span class="highlight" style="max-width: 60vw; display: inline-block; vertical-align: bottom; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${catName}</span>’<br/>
-                                아직 글이 없어요.
-                            </p>
-                            <a href="/" class="empty-btn">전체 글 보기</a>
-                        </div>
-                    `;
-				}
-			}
-
-			// Mobile Search Redirect (Fix for race condition)
-			function submitMobileSearch() {
-				var input = document.querySelector('.m-search-form input');
-				if (input && input.value.trim().length > 0) {
-					// Force global search redirect
-					window.location.href = '/search/' + encodeURIComponent(input.value);
-				}
-			}
-			// Expose to window for inline calls
-			window.submitMobileSearch = submitMobileSearch;
-
-			if (document.readyState === 'loading') {
-				document.addEventListener('DOMContentLoaded', function () {
-					initAccordion();
-					polishCategoryText();
-					checkEmptyCategory();
-				});
-			} else {
-				initAccordion();
-				polishCategoryText();
-				checkEmptyCategory();
-			}
+			// Wait for full load (including CSS/images)
+			window.addEventListener('load', reveal);
+			// Fallback: Force reveal after 3 seconds if external assets hang
+			setTimeout(reveal, 3000);
+			// Also reveal on DOMContentLoaded just in case (optional, but 'load' is safer for styles)
+			// document.addEventListener('DOMContentLoaded', reveal); 
 		})();
 	</script>
 </body>

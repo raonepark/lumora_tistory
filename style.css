@@ -1,0 +1,806 @@
+@charset "utf-8";
+
+/* =========================================
+   1. Global Resets & Tistory Overrides
+   ========================================= */
+#tistory-toolbar,
+.tt_toolbar_container,
+.plugin_author,
+div[data-tistory-react-app="Namecard"],
+.tt_adsense_bottom,
+#tistorytoolbarid,
+.tt_menubar,
+#kakaoWrap #kakaoHead,
+.tistoryProfileLayerTrigger {
+    display: none !important;
+}
+
+/* Force Vertical Scrollbar to prevent layout shift */
+html {
+    overflow-y: scroll;
+}
+
+/* Guestbook Input Reset */
+input[type="text"],
+input[type="password"],
+textarea {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+/* Mobile Scrollbar Hide */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Syntax Highlighting */
+.hljs {
+    background: #18181b !important;
+    border-radius: 8px;
+    padding: 1em !important;
+}
+
+/* Prose Image Radius */
+.prose img {
+    border-radius: 12px;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Remove default P margins */
+.tt_article_useless_p_margin p {
+    margin: 1.5em 0;
+}
+
+/* =========================================
+   2. Layout & Post Limits
+   ========================================= */
+/* Ensure desktop has height for 9 posts + pagination */
+#main-layout main {
+    position: relative !important;
+    min-height: 1600px !important;
+    padding-bottom: 120px !important;
+}
+
+@media (max-width: 1280px) {
+    #main-layout main {
+        min-height: 2000px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #main-layout main {
+        min-height: auto !important;
+        padding-bottom: 80px !important;
+    }
+}
+
+/* Hide posts > 9 */
+#main-layout main>article:nth-of-type(n+10) {
+    display: none !important;
+}
+
+/* =========================================
+   3. Pagination Design
+   ========================================= */
+/* =========================================
+   3. Pagination Design
+   ========================================= */
+.pagination {
+    position: relative !important;
+    /* Flow naturally after content */
+    margin-top: 60px !important;
+    /* Space from content */
+    margin-bottom: 40px !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px;
+    z-index: 10;
+}
+
+/* Anti-Flicker Cloak */
+.cloak-until-loaded {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+.cloak-until-loaded.loaded {
+    opacity: 1;
+}
+
+.pagination a,
+.pagination span {
+    pointer-events: auto;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: #27272a;
+    color: #a1a1aa;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.pagination .selected,
+.pagination .current {
+    background: #c084fc;
+    color: white;
+    font-weight: bold;
+}
+
+/* =========================================
+   4. FOUC Prevention (Fade-In Animation)
+   ========================================= */
+/* 4. FOUC Prevention (JS-Triggered Fade-In) */
+#sidebar-desktop,
+#toc-container,
+#guestbook-container,
+#guestbook-list,
+#guestbook-form {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* State when JS adds this class */
+#sidebar-desktop.is-loaded,
+#toc-container.is-loaded,
+#guestbook-container.is-loaded,
+#guestbook-list.is-loaded,
+#guestbook-form.is-loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 5. Sleek Dark Tag Design (Reference Match) */
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    /* Compact gap */
+    margin-top: 3rem;
+    font-size: 0 !important;
+}
+
+.tag-container a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    /* Slightly compact height */
+    padding: 0 16px;
+    font-size: 0.85rem;
+    font-weight: 400;
+    /* Regular weight */
+    color: #a1a1aa;
+    /* text-zinc-400 */
+    background: #18181b;
+    /* Dark specific bg matching reference */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    /* Soft rounded corners */
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+/* Add Hash (#) Prefix */
+.tag-container a::before {
+    content: "#";
+    margin-right: 2px;
+    color: #71717a;
+    /* Dimmer hash */
+}
+
+.tag-container a:hover {
+    background: #27272a;
+    /* Slightly lighter on hover */
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Hide the old icon if it exists in HTML, as reference doesn't emphasize it */
+.tag-container i {
+    display: none !important;
+}
+
+/* 6. HIDE Tistory Default Elements (Reset) */
+/* Sympathy, Share, Stats, Etc */
+.container_postbtn {
+    display: none !important;
+}
+
+/* Related Articles (Another Category) */
+.another_category {
+    display: none !important;
+}
+
+/* Additional Tistory Injected Layers (Statistics, Etc) */
+/* [Extended] 8. Modern Comment Section Styling */
+/* Input Box Visibility Fix */
+#comments-section textarea {
+    background-color: rgba(39, 39, 42, 0.6) !important;
+    /* Lighter bg */
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    /* Stronger border */
+    color: #f4f4f5 !important;
+}
+
+#comments-section textarea:focus {
+    background-color: rgba(39, 39, 42, 0.9) !important;
+    border-color: #c084fc !important;
+}
+
+/* Admin (Owner) Styling */
+/* Tistory adds 'rp_admin' class to the li if it's the owner */
+li.rp_admin .rp_admin-avatar {
+    border: 2px solid #c084fc !important;
+    /* Purple border for owner */
+}
+
+li.rp_admin .flex-1 .flex span:first-child {
+    color: #c084fc !important;
+    /* Purple name */
+}
+
+/* Add Checkmark Badge for Owner */
+li.rp_admin .flex-1 .flex span:first-child::after {
+    content: '\f058';
+    /* FontAwesome Check Circle */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-left: 6px;
+    font-size: 0.85rem;
+    color: #c084fc;
+}
+
+/* Secret Comment Styling */
+/* Secret Comment Styling - Clean Text Only */
+li.rp_secret .text-zinc-300 {
+    color: #a1a1aa !important;
+    font-size: 0.95rem;
+    /* Standard size */
+    opacity: 0.8;
+}
+
+/* Remove the previous lock from content */
+li.rp_secret .text-zinc-300::before {
+    content: none !important;
+}
+
+/* Add Lock Icon to Header (Next to Date/Report) */
+/* Lock Icon Removed as per preference */
+li.rp_secret .flex.items-baseline::after {
+    content: none !important;
+}
+
+/* Avatar Placeholder Random Colors (Simulation) */
+/* Guest Avatars (DiceBear Enhanced) */
+/* Only target images that are explicitly avatars */
+li:not(.rp_admin) img.guest-avatar-enhanced,
+li:not(.rp_admin) .profile-image img {
+    background-color: #f4f4f5;
+    padding: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s ease;
+}
+
+li:not(.rp_admin):hover img.guest-avatar-enhanced {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Fix Emojis & Content Images */
+/* Ensure emojis inside the comment text content do NOT get avatar styling */
+.text-zinc-300 img {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    display: inline-block !important;
+    vertical-align: middle;
+    margin: 0 2px;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Input Form Focus Effects */
+textarea:focus {
+    box-shadow: none !important;
+    /* Remove default browser rings */
+}
+
+/* Checkbox Customization */
+input[type="checkbox"]:checked {
+    background-color: transparent !important;
+    border-color: #c084fc !important;
+    color: #c084fc !important;
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23c084fc' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e") !important;
+}
+
+
+color: #e4e4e7 !important;
+/* text-zinc-200 */
+text-decoration: none !important;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+max-width: 60vw;
+/* Prevent overflow */
+}
+
+.another_category tr:hover td a {
+    color: #c084fc !important;
+}
+
+/* Date */
+.another_category td.date {
+    font-size: 0.85rem !important;
+    color: #71717a !important;
+    /* text-zinc-500 */
+    min-width: 80px;
+    text-align: right;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          Link Embed (OpenGraph) Styling                    */
+/* -------------------------------------------------------------------------- */
+figure[data-ke-type="opengraph"] {
+    margin: 2rem 0;
+    width: 100%;
+}
+
+figure[data-ke-type="opengraph"] a {
+    display: flex !important;
+    height: 150px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    background-color: rgba(24, 24, 27, 0.6) !important;
+    /* zinc-900/60 */
+    text-decoration: none !important;
+    overflow: hidden !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+figure[data-ke-type="opengraph"] a:hover {
+    background-color: rgba(39, 39, 42, 0.8) !important;
+    /* zinc-800/80 */
+    border-color: rgba(192, 132, 252, 0.3) !important;
+    /* accent/30 */
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Section */
+figure[data-ke-type="opengraph"] .og-image {
+    width: 25% !important;
+    min-width: 140px !important;
+    max-width: 200px !important;
+    height: 100% !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    background-size: cover !important;
+    background-position: center !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle overlay on image */
+figure[data-ke-type="opengraph"] .og-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+}
+
+/* Text Container */
+figure[data-ke-type="opengraph"] .og-text {
+    flex: 1 !important;
+    padding: 1.25rem 1.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    background: transparent !important;
+}
+
+/* Title */
+figure[data-ke-type="opengraph"] .og-title {
+    font-family: 'Pretendard', sans-serif !important;
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    color: #f4f4f5 !important;
+    /* zinc-100 */
+    margin-bottom: 0.5rem !important;
+    line-height: 1.4 !important;
+
+    /* Ellipsis */
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+}
+
+/* Description */
+figure[data-ke-type="opengraph"] .og-desc {
+    font-family: 'Pretendard', sans-serif !important;
+    font-size: 0.875rem !important;
+    /* 14px */
+    color: #a1a1aa !important;
+    /* zinc-400 */
+    line-height: 1.5 !important;
+    margin-bottom: auto !important;
+
+    /* Multi-line ellipsis (2 lines) */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    white-space: normal !important;
+}
+
+/* Host/URL */
+figure[data-ke-type="opengraph"] .og-host {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.75rem !important;
+    /* 12px */
+    color: #71717a !important;
+    /* zinc-500 */
+    margin-top: 0.75rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem;
+}
+
+figure[data-ke-type="opengraph"] .og-host::before {
+    content: '\f0c1';
+    /* Link Icon */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.7rem;
+    color: #c084fc;
+    /* accent */
+    opacity: 0.7;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 640px) {
+    figure[data-ke-type="opengraph"] a {
+        height: auto !important;
+        flex-direction: column !important;
+    }
+
+    figure[data-ke-type="opengraph"] .og-image {
+        width: 100% !important;
+        max-width: none !important;
+        height: 160px !important;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    figure[data-ke-type="opengraph"] .og-text {
+        padding: 1rem !important;
+    }
+
+    figure[data-ke-type="opengraph"] .og-title {
+        font-size: 0.95rem !important;
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                        Refined Comment Form Styling                        */
+/* -------------------------------------------------------------------------- */
+
+/* 1. Comment Form Container */
+.comment-form-box {
+    background: linear-gradient(145deg, rgba(39, 39, 42, 0.4), rgba(24, 24, 27, 0.95)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* 2. Textarea Styling */
+.comment-form-box textarea {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    padding: 1.25rem !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+    color: #f4f4f5 !important;
+    /* zinc-100 */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    height: 120px !important;
+}
+
+.comment-form-box textarea::placeholder {
+    color: rgba(161, 161, 170, 0.8) !important;
+    /* zinc-400/80 - More visible */
+    font-weight: 500;
+}
+
+.comment-form-box textarea:focus {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    border-color: rgba(192, 132, 252, 0.6) !important;
+    /* accent/60 */
+    box-shadow: 0 0 0 4px rgba(192, 132, 252, 0.15) !important;
+}
+
+/* 3. Submit Button Styling */
+.comment-form-box button {
+    background: #7c3aed !important;
+    /* Solid Violet 600 - Calmer, deep purple */
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border: none !important;
+    padding: 0.6rem 2rem !important;
+    border-radius: 9999px !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.02em !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Standard subtle shadow, no glow */
+    cursor: pointer;
+}
+
+.comment-form-box button:hover {
+    background: #6d28d9 !important;
+    /* Violet 700 hover */
+    transform: translateY(-1px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+.comment-form-box button:active {
+    transform: translateY(0);
+}
+
+/* 4. Guest Input Fields - Completely Hidden (Logged-in only) */
+.comment-form-box input[type="text"],
+.comment-form-box input[type="password"] {
+    display: none !important;
+}
+
+/* 5. Secret Checkbox Styling */
+.comment-form-box label {
+    margin-right: 1.5rem !important;
+    /* More spacing after checkbox */
+    display: flex !important;
+    align-items: center !important;
+}
+
+.comment-form-box label span {
+    font-size: 0.9rem !important;
+    color: #a1a1aa !important;
+    /* zinc-400 */
+    font-weight: 500;
+}
+
+.comment-form-box label:hover span {
+    color: #c084fc !important;
+}
+
+.comment-form-box input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    border: 1.5px solid rgba(161, 161, 170, 0.5) !important;
+    border-radius: 4px !important;
+    /* Slightly less rounded */
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    vertical-align: middle;
+    margin-right: 8px !important;
+}
+
+.comment-form-box input[type="checkbox"]:checked {
+    background-color: #c084fc !important;
+    border-color: #c084fc !important;
+}
+
+.comment-form-box input[type="checkbox"]:checked::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.75rem;
+    color: #ffffff;
+    /* White check for better contrast */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.comment-form-box input[type="checkbox"]:hover {
+    border-color: #c084fc !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          Blockquote / Quote Styling                        */
+/* -------------------------------------------------------------------------- */
+.prose blockquote,
+.tt_article_useless_p_margin blockquote {
+    font-style: normal !important;
+    font-weight: 400 !important;
+    color: #e4e4e7 !important;
+    /* zinc-200 */
+    border-left: 4px solid #c084fc !important;
+    /* accent */
+    background: rgba(255, 255, 255, 0.03) !important;
+    padding: 1.5rem 2rem !important;
+    margin: 2rem 0 !important;
+    border-radius: 0 12px 12px 0 !important;
+    position: relative;
+    quotes: none;
+}
+
+.prose blockquote p,
+.tt_article_useless_p_margin blockquote p {
+    margin: 0 !important;
+    line-height: 1.7 !important;
+}
+
+/* Optional: Small Quote Icon Overlay */
+.prose blockquote::before,
+.tt_article_useless_p_margin blockquote::before {
+    content: '\f10d';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: #c084fc;
+    opacity: 0.2;
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                        Post Navigation (Prev/Next)                         */
+/* -------------------------------------------------------------------------- */
+.nav-card {
+    position: relative;
+    background-color: #18181b !important;
+    /* zinc-900 */
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 1rem !important;
+    padding: 1.5rem !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 140px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none !important;
+}
+
+.nav-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(192, 132, 252, 0.5) !important;
+    box-shadow: 0 10px 30px -5px rgba(192, 132, 252, 0.15);
+}
+
+/* Gradient Overlay */
+.nav-card .hover-gradient {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.nav-card:hover .hover-gradient {
+    opacity: 1;
+}
+
+/* Prev Card Gradient */
+.nav-card.prev .hover-gradient {
+    background: linear-gradient(135deg, rgba(192, 132, 252, 0.1), transparent);
+}
+
+/* Next Card Gradient */
+.nav-card.next .hover-gradient {
+    background: linear-gradient(225deg, rgba(192, 132, 252, 0.1), transparent);
+}
+
+/* Content Layer */
+.nav-card .relative {
+    position: relative;
+    z-index: 10;
+}
+
+/* Icon Circle */
+.nav-card .icon-circle {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    background-color: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.nav-card:hover .icon-circle {
+    background-color: #c084fc;
+    color: #000;
+}
+
+.nav-card:hover .icon-circle i {
+    color: #000 !important;
+}
+
+/* Text Styles */
+.nav-card h4 {
+    font-size: 1.125rem !important;
+    font-weight: 700 !important;
+    color: #e4e4e7 !important;
+    line-height: 1.4 !important;
+    margin-top: 0.5rem !important;
+    transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.nav-card:hover h4 {
+    color: #ffffff !important;
+}
+
+.nav-card .label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #71717a;
+    /* zinc-500 */
+    transition: color 0.3s ease;
+}
+
+.nav-card:hover .label {
+    color: #c084fc;
+}
+
+/* Custom Tag Styling - Subtle/Text Only */
+.tag-container a {
+    /* Reset Box Properties */
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 0.35rem 0 0 !important;
+    /* Extremely tight right spacing */
+
+    /* Typography */
+    color: #52525b !important;
+    font-size: 0.7rem !important;
+    /* 11px equivalent */
+    line-height: 1 !important;
+    /* Compact vertical height */
+    font-weight: 400 !important;
+    font-family: monospace, ui-monospace, SFMono-Regular !important;
+    /* Tech feel */
+    text-decoration: none !important;
+
+    /* Transition */
+    transition: color 0.2s ease !important;
+    display: inline-block !important;
+}
+
+.tag-container a:hover {
+    color: #c084fc !important;
+    /* Accent Color on Hover */
+    background: transparent !important;
+    text-decoration: none !important;
+}
+
+/* Optional: Add hash if missing (Visual flair) */
+.tag-container a::before {
+    content: "#";
+    margin-right: 1px;
+    opacity: 0.5;
+}

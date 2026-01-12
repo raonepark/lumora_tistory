@@ -696,7 +696,7 @@
 
                                 <!-- Right Sidebar: Table of Contents (Placeholder) -->
                                 <aside id="toc-container"
-                                    class="hidden 2xl:block absolute left-[100%] ml-12 top-0 w-64 z-50">
+                                    class="hidden xl:block absolute left-[100%] ml-12 top-0 w-64 z-50">
                                     <!-- JS will populate this -->
                                 </aside>
                             </div>
@@ -979,7 +979,10 @@
             <!-- Footer -->
             <footer
                 class="py-12 text-center text-textSub text-xs border-t border-zinc-800/50 mt-auto relative z-10 bg-bgBody/50 backdrop-blur-sm">
-                <p class="font-mono opacity-60">&copy; 2026 [##_title_##] All rights reserved.</p>
+                <p class="font-mono opacity-60 mb-2">&copy; 2026 [##_title_##] All rights reserved.</p>
+                <p class="font-mono opacity-40 text-[10px]">
+                    Designed by <span class="text-accent">Lumora</span>
+                </p>
             </footer>
             <!-- Custom Script (Versioning) -->
             <script src="./images/script_v32.js"></script>
@@ -1119,9 +1122,12 @@
 
                                 // 1. Sticky Logic
                                 function onScrollSticky() {
-                                    // Only apply if visible (2xl breakpoint is 1536px)
-                                    // We can check display style or window width
-                                    if (window.getComputedStyle(tocContainer).display === 'none') return;
+                                    // Only apply if visible (XL breakpoint is 1280px)
+                                    // We check display style mainly, but also sync with CSS breakpoint logic if needed.
+                                    if (window.innerWidth < 1280 || window.getComputedStyle(tocContainer).display === 'none') {
+                                        tocContainer.style.top = '0px';
+                                        return;
+                                    }
 
                                     const scrollTop = window.scrollY || document.documentElement.scrollTop;
                                     const articleRect = articleContainer.getBoundingClientRect();

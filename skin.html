@@ -48,6 +48,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Code Syntax Highlighting (Atom One Dark) -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
     <link rel="stylesheet" href="./style.css?v=1.0.10">
 </head>
 
@@ -430,17 +437,23 @@
                                         <div
                                             class="bg-bgCard/30 p-6 md:p-12 rounded-3xl border border-white/5 shadow-sm mb-8">
                                             <div class="tt_article_useless_p_margin items-center
-                                         prose prose-lg prose-invert max-w-none 
+                                         prose prose md:prose-lg prose-invert max-w-none 
                                          prose-headings:text-gray-100 prose-headings:font-bold prose-headings:tracking-tight
-                                         prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:border-l-4 prose-h2:border-accent prose-h2:pl-4
-                                         prose-h3:text-xl prose-h3:text-accentBlue
-                                         prose-p:text-zinc-300 prose-p:leading-8 prose-p:font-light
-                                         prose-a:text-accent prose-a:no-underline hover:prose-a:underline
+                                         prose-h2:text-xl md:prose-h2:text-2xl prose-h2:mt-10 md:prose-h2:mt-12 prose-h2:mb-4 md:prose-h2:mb-6 prose-h2:border-l-4 prose-h2:border-accent prose-h2:pl-4
+                                         prose-h3:text-lg md:prose-h3:text-xl prose-h3:text-accentBlue prose-h3:mt-8 md:prose-h3:mt-10
+                                         prose-p:text-zinc-300 prose-p:leading-7 md:prose-p:leading-8 prose-p:font-light
+                                         prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-a:transition-colors
                                          prose-strong:text-white prose-strong:font-semibold
-                                         prose-blockquote:border-l-accent prose-blockquote:bg-white/5 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:text-zinc-300
-                                         prose-ul:list-disc prose-ul:pl-6 prose-li:text-zinc-300 prose-li:marker:text-zinc-600
-                                         prose-code:text-accentBlue prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-normal prose-code:before:content-none prose-code:after:content-none
-                                         prose-pre:bg-[#18181b] prose-pre:border prose-pre:border-white/10 prose-pre:rounded-xl prose-pre:shadow-lg
+                                         prose-blockquote:border-l-4 prose-blockquote:border-accent prose-blockquote:bg-white/5 prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:text-zinc-300 prose-blockquote:shadow-sm
+                                         prose-ul:list-disc prose-ul:pl-6 prose-li:text-zinc-300 prose-li:marker:text-zinc-500
+                                         prose-ol:list-decimal prose-ol:pl-6 prose-ol:text-zinc-300 prose-ol:marker:text-zinc-500
+                                         prose-code:text-accentBlue prose-code:bg-zinc-800/80 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+                                         prose-pre:bg-[#18181b] prose-pre:border prose-pre:border-white/10 prose-pre:rounded-xl prose-pre:shadow-lg prose-pre:p-4
+                                         prose-img:rounded-xl prose-img:drop-shadow-lg prose-img:mx-auto
+                                         prose-hr:border-none prose-hr:h-px prose-hr:bg-gradient-to-r prose-hr:from-transparent prose-hr:via-zinc-700 prose-hr:to-transparent prose-hr:my-8
+                                         prose-table:text-sm prose-table:text-zinc-300
+                                         prose-th:text-white prose-th:font-semibold prose-th:border-b prose-th:border-white/10 prose-th:p-2 prose-th:text-left
+                                         prose-td:border-b prose-td:border-white/5 prose-td:p-2 prose-td:align-top
                                      ">
                                                 [##_article_rep_desc_##]
                                             </div>

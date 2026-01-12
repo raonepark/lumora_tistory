@@ -706,9 +706,13 @@
                                 <div
                                     class="bg-[#1e1e20]/80 backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 shadow-[0_0_40px_-10px_rgba(0,0,0,0.8)] flex gap-8 items-center justify-center ring-1 ring-white/5">
 
-                                    <!-- Like Button -->
-                                    <button class="flex flex-col items-center gap-1 group relative">
-                                        <div
+                                    <!-- Like Button (Linked to Tistory Like) -->
+                                    <div class="hidden">
+                                        [##_article_rep_like_btn_##]
+                                    </div>
+                                    <button id="custom-like-btn" onclick="toggleLike()"
+                                        class="flex flex-col items-center gap-1 group relative">
+                                        <div id="custom-like-icon"
                                             class="text-xl transition-all duration-300 group-hover:-translate-y-1 text-zinc-400 group-hover:text-red-400">
                                             <i class="fa-regular fa-heart"></i>
                                         </div>
@@ -717,8 +721,8 @@
                                     <div class="w-px h-6 bg-white/10"></div>
 
                                     <!-- Comment Button -->
-                                    <button
-                                        onclick="document.getElementById('comments-section').scrollIntoView({ behavior: 'smooth' })"
+                                    <button id="custom-comment-btn"
+                                        onclick="document.getElementById('comments-section').scrollIntoView({ behavior: 'smooth' }); highlightButton('custom-comment-btn', 'text-accent');"
                                         class="flex flex-col items-center gap-1 group">
                                         <div
                                             class="text-zinc-400 text-xl group-hover:text-accent transition-all duration-300 group-hover:-translate-y-1">
@@ -729,7 +733,8 @@
                                     <div class="w-px h-6 bg-white/10"></div>
 
                                     <!-- Scroll Top -->
-                                    <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' });"
+                                    <button id="custom-top-btn"
+                                        onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); highlightButton('custom-top-btn', 'text-accentBlue');"
                                         class="flex flex-col items-center gap-1 group">
                                         <div
                                             class="text-zinc-400 text-xl group-hover:text-accentBlue transition-all duration-300 group-hover:-translate-y-1">
@@ -1106,6 +1111,71 @@
                                     console.log("Script Error", e);
                                 }
                             }, 500);
+                            // ---------------------------------------------------------
+                            // Interactive Floating Action Bar
+                            // ---------------------------------------------------------
+                            window.toggleLike = function () {
+                                const btn = document.getElementById('custom-like-btn');
+                                const iconDiv = document.getElementById('custom-like-icon');
+                                const icon = iconDiv.querySelector('i');
+
+                                // Find native Tistory like button
+                                // It usually has class .uoc-icon or .like_btn inside the container we added
+                                const nativeBtn = document.querySelector('.uoc-icon') || document.querySelector('.like_btn');
+
+                                if (nativeBtn) {
+                                    nativeBtn.click();
+                                    // Visual update might happen via sync, but let's force it for instant feedback
+                                    // With Tistory's native like, clicking it might toggle state async.
+                                    // We will wait for sync observer or just toggle visually optimistically?
+                                    // Optimistic toggle is safer for UX responsiveness.
+
+                                    // Note: If Tistory script is slow, this might desync, but we have a load observer below.
+                                }
+
+                                // Toggle Visual State (optimistic)
+                                const isLiked = icon.classList.contains('fa-solid');
+                                if (isLiked) {
+                                    icon.classList.remove('fa-solid', 'text-red-500');
+                                    icon.classList.add('fa-regular');
+                                    iconDiv.classList.remove('text-red-500');
+                                    iconDiv.classList.add('text-zinc-400');
+                                } else {
+                                    icon.classList.remove('fa-regular');
+                                    icon.classList.add('fa-solid'); // Solid heart
+                                    iconDiv.classList.remove('text-zinc-400');
+                                    iconDiv.classList.add('text-red-500'); // Color it red
+                                }
+                            };
+
+                            window.highlightButton = function (btnId, colorClass) {
+                                const btn = document.getElementById(btnId);
+                                const div = btn.querySelector('div');
+
+                                // Temporarily add color
+                                div.classList.remove('text-zinc-400');
+                                div.classList.add(colorClass);
+
+                                // After 0.5s, revert (since Comments/Top are actions, not states)
+                                setTimeout(() => {
+                                    div.classList.remove(colorClass);
+                                    div.classList.add('text-zinc-400');
+                                }, 500);
+                            };
+
+                            // Sync Initial Like State (on load)
+                            setTimeout(() => {
+                                // Check if Tistory's like button is in 'liked' state
+                                const nativeLiked = document.querySelector('.uoc-icon.like_on') || document.querySelector('.like_btn.like_on');
+                                if (nativeLiked) {
+                                    const iconDiv = document.getElementById('custom-like-icon');
+                                    const icon = iconDiv.querySelector('i');
+                                    icon.classList.remove('fa-regular');
+                                    icon.classList.add('fa-solid');
+                                    iconDiv.classList.remove('text-zinc-400');
+                                    iconDiv.classList.add('text-red-500');
+                                }
+                            }, 1500); // Slight delay to ensure Tistory JS renders the like button status
 
                             // ---------------------------------------------------------
                             // TOC Sticky & Scroll Spy Logic

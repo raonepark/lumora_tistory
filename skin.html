@@ -361,7 +361,7 @@
                                         [##_article_rep_title_##]
                                     </h3>
                                     <p
-                                        class="text-[15px] text-zinc-400 line-clamp-4 leading-relaxed break-keep font-light mt-auto">
+                                        class="item-summary text-[15px] text-zinc-400 line-clamp-4 leading-relaxed break-keep font-light mt-auto">
                                         [##_article_rep_summary_##]
                                     </p>
                                 </div>
@@ -1297,6 +1297,17 @@
                         console.log("Avatar sync failed", e);
                     }
                 })();
+            </script>
+            <script>
+                // Post Summary Whitespace Trimmer
+                document.addEventListener("DOMContentLoaded", function () {
+                    const summaries = document.querySelectorAll('.item-summary');
+                    summaries.forEach(function (summary) {
+                        if (summary.firstChild && summary.firstChild.nodeType === 3) {
+                            summary.firstChild.nodeValue = summary.firstChild.nodeValue.trimStart();
+                        }
+                    });
+                });
             </script>
 </body>
 

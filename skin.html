@@ -9,6 +9,15 @@
     <!-- Tailwind CSS with Typography Plugin -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>
+        // Force Scroll to Top on Home Page Refresh
+        if (window.location.pathname === '/' || window.location.pathname === '/index') {
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            window.scrollTo(0, 0);
+        }
+    </script>
+    <script>
         tailwind.config = {
             theme: {
                 extend: {
@@ -35,8 +44,8 @@
                     },
                     keyframes: {
                         fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
                         }
                     }
                 },
@@ -70,7 +79,7 @@
         </div>
 
         <!-- Header -->
-        <header class="border-b border-white/5 bg-bgBody/80 backdrop-blur-md sticky top-0 z-50 transition-all">
+        <header class="border-b border-white/5 bg-bgBody/80 backdrop-blur-md sticky top-0 z-50">
             <div class="container mx-auto max-w-[1800px] px-4 lg:px-8 py-5 flex justify-between items-center">
                 <!-- Logo -->
                 <a href="[##_blog_link_##]"
@@ -80,7 +89,7 @@
                     Lumora<span class="text-accent">-</span>Lab
                 </a>
 
-                <div class="flex items-center gap-6">
+                <div class="flex items-center gap-6 mr-14">
                     <!-- Desktop Nav -->
                     <nav class="hidden sm:flex items-center gap-8 text-[15px] text-textSub font-medium">
                         <a href="[##_guestbook_link_##]"
@@ -554,479 +563,368 @@
 
 
                                             <!-- Comments Custom Redesign -->
-                                            <div id="comments-section" class="mt-12 max-w-4xl mx-auto">
-                                                <!-- Header (Moved Outside) -->
-                                                <div class="flex items-center gap-2 mb-6">
-                                                    <i class="fa-regular fa-comments text-2xl text-[#c084fc]"></i>
-                                                    <h3 class="text-2xl font-bold text-white">Comments</h3>
-                                                    <span
-                                                        class="text-xl text-zinc-500 font-normal">([##_article_rep_rp_cnt_##])</span>
-                                                </div>
-                                                <s_rp>
-                                                    <div class="">
-                                                        <!-- Header (Removed from inside s_rp to be placed outside) -->
+                                            <s_rp>
+                                                <div id="comments-section" class="mt-12 max-w-4xl mx-auto">
+                                                    <!-- Header -->
+                                                    <div class="flex items-center gap-2 mb-6">
+                                                        <i class="fa-regular fa-comments text-2xl text-[#c084fc]"></i>
+                                                        <h3 class="text-2xl font-bold text-white">Comments</h3>
+                                                    </div>
 
-                                                        <!-- Input Form -->
-                                                        <s_rp_input_form>
-                                                            <div
-                                                                class="comment-form-box bg-[#18181b] rounded-2xl p-6 border border-white/5 mb-12 shadow-lg">
-                                                                <div class="flex gap-4">
-                                                                    <!-- Avatar Placeholder -->
-                                                                    <div
-                                                                        class="mt-1.5 shrink-0 w-10 h-10 rounded-full bg-zinc-700 overflow-hidden border border-white/10 flex items-center justify-center relative">
-                                                                        <!-- Default: FontAwesome Icon (Safe Fallback) -->
-                                                                        <i id="comment-writer-icon"
-                                                                            class="fa-solid fa-user text-zinc-400 text-sm"></i>
-                                                                        <!-- Dynamic Image (Hidden by default, shown by script) -->
-                                                                        <img id="comment-writer-avatar" src=""
-                                                                            class="absolute inset-0 w-full h-full object-cover hidden">
-                                                                    </div>
-                                                                    <!-- Header moved outside of s_rp to ensure variable scope -->
-                                                                    <!-- Script to Sync Avatar from Tistory Toolbar -->
-                                                                    <script>
-                                                                        document.addEventListener("DOMContentLoaded", function () {
-                                                                            // Sync Tistory Toolbar Avatar
-                                                                            const updateAvatar = () => {
-                                                                                const textInput = document.querySelector('textarea[name="comment"]'); // Tistory default name often 'comment' or user defined
-                                                                                // Try multiple selectors for the toolbar avatar
-                                                                                const toolbarAvatar = document.querySelector('.kakao_profile img, .tistory_profile img, #tistory-toolbar .img_profile');
-                                                                                const myAvatar = document.getElementById('comment-writer-avatar');
-                                                                                const myIcon = document.getElementById('comment-writer-icon');
+                                                    <!-- Input Form -->
+                                                    <s_rp_input_form>
+                                                        <div
+                                                            class="comment-form-box bg-[#18181b] rounded-2xl p-6 border border-white/5 mb-12 shadow-lg">
+                                                            <div class="flex gap-4">
+                                                                <!-- Avatar Placeholder -->
+                                                                <div
+                                                                    class="mt-1.5 shrink-0 w-10 h-10 rounded-full bg-zinc-700 overflow-hidden border border-white/10 flex items-center justify-center relative">
+                                                                    <!-- Default: FontAwesome Icon (Safe Fallback) -->
+                                                                    <i id="comment-writer-icon"
+                                                                        class="fa-solid fa-user text-zinc-400 text-sm"></i>
+                                                                    <!-- Dynamic Image (Hidden by default, shown by script) -->
+                                                                    <img id="comment-writer-avatar" src=""
+                                                                        class="absolute inset-0 w-full h-full object-cover hidden">
+                                                                </div>
+                                                                <!-- Script to Sync Avatar from Tistory Toolbar -->
 
-                                                                                if (toolbarAvatar && myAvatar && toolbarAvatar.src) {
-                                                                                    myAvatar.src = toolbarAvatar.src;
-                                                                                    myAvatar.classList.remove('hidden');
-                                                                                    if (myIcon) myIcon.classList.add('hidden');
-                                                                                }
-                                                                            };
+                                                                <!-- Input Area -->
+                                                                <div class="flex-1">
+                                                                    <textarea name="[##_rp_input_comment_##]"
+                                                                        placeholder="댓글을 작성하세요..."
+                                                                        class="w-full bg-transparent text-zinc-200 placeholder:text-zinc-600 text-sm resize-none h-24 focus:outline-none mb-4"></textarea>
 
-                                                                            // Poll for a few seconds as toolbar loads dynamically
-                                                                            updateAvatar();
-                                                                            let attempts = 0;
-                                                                            const interval = setInterval(() => {
-                                                                                updateAvatar();
-                                                                                attempts++;
-                                                                                if (attempts > 10) clearInterval(interval);
-                                                                            }, 500);
-                                                                        });
-                                                                    </script>
+                                                                    <!-- Bottom Controls -->
+                                                                    <div class="flex items-center justify-end gap-4">
+                                                                        <!-- Secret Checkbox -->
+                                                                        <label
+                                                                            class="flex items-center gap-2 cursor-pointer group">
+                                                                            <input type="checkbox"
+                                                                                name="[##_rp_input_is_secret_##]"
+                                                                                class="w-4 h-4 rounded border-zinc-600 bg-transparent text-[#c084fc] focus:ring-0 focus:ring-offset-0">
+                                                                            <span
+                                                                                class="text-xs text-zinc-500 group-hover:text-zinc-300 transition-colors">비밀글</span>
+                                                                        </label>
 
-                                                                    <!-- Input Area -->
-                                                                    <div class="flex-1">
-                                                                        <textarea name="[##_rp_input_comment_##]"
-                                                                            placeholder="댓글을 작성하세요..."
-                                                                            class="w-full bg-transparent text-zinc-200 placeholder:text-zinc-600 text-sm resize-none h-24 focus:outline-none mb-4"></textarea>
+                                                                        <!-- Guest Inputs (Hidden if logged in) -->
+                                                                        <s_rp_guest>
+                                                                            <input type="text"
+                                                                                name="[##_rp_input_name_##]"
+                                                                                placeholder="이름"
+                                                                                class="bg-zinc-800 text-xs text-zinc-300 px-3 py-2 rounded-lg border border-white/5 focus:border-[#c084fc] focus:outline-none">
+                                                                            <input type="password"
+                                                                                name="[##_rp_input_password_##]"
+                                                                                placeholder="비밀번호"
+                                                                                class="bg-zinc-800 text-xs text-zinc-300 px-3 py-2 rounded-lg border border-white/5 focus:border-[#c084fc] focus:outline-none">
+                                                                        </s_rp_guest>
 
-                                                                        <!-- Bottom Controls -->
-                                                                        <div
-                                                                            class="flex items-center justify-end gap-4">
-                                                                            <!-- Secret Checkbox -->
-                                                                            <label
-                                                                                class="flex items-center gap-2 cursor-pointer group">
-                                                                                <input type="checkbox"
-                                                                                    name="[##_rp_input_is_secret_##]"
-                                                                                    class="w-4 h-4 rounded border-zinc-600 bg-transparent text-[#c084fc] focus:ring-0 focus:ring-offset-0">
-                                                                                <span
-                                                                                    class="text-xs text-zinc-500 group-hover:text-zinc-300 transition-colors">비밀글</span>
-                                                                            </label>
-
-                                                                            <!-- Guest Inputs (Hidden if logged in) -->
-                                                                            <s_rp_guest>
-                                                                                <input type="text"
-                                                                                    name="[##_rp_input_name_##]"
-                                                                                    placeholder="이름"
-                                                                                    class="bg-zinc-800 text-xs text-zinc-300 px-3 py-2 rounded-lg border border-white/5 focus:border-[#c084fc] focus:outline-none">
-                                                                                <input type="password"
-                                                                                    name="[##_rp_input_password_##]"
-                                                                                    placeholder="비밀번호"
-                                                                                    class="bg-zinc-800 text-xs text-zinc-300 px-3 py-2 rounded-lg border border-white/5 focus:border-[#c084fc] focus:outline-none">
-                                                                            </s_rp_guest>
-
-                                                                            <!-- Submit Button -->
-                                                                            <button
-                                                                                onclick="if(validateComment(this)) [##_rp_onclick_submit_##]"
-                                                                                class="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold px-6 py-2.5 rounded-lg border border-white/5 transition-all">
-                                                                                등록
-                                                                            </button>
-                                                                        </div>
+                                                                        <!-- Submit Button -->
+                                                                        <button
+                                                                            onclick="if(validateComment(this)) [##_rp_onclick_submit_##]"
+                                                                            class="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold px-6 py-2.5 rounded-lg border border-white/5 transition-all">
+                                                                            등록
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                    </div>
-                                                    </s_rp_input_form>
+                                                        </div>
+                                                </div>
+                                                </s_rp_input_form>
 
-                                                    <!-- Comment List -->
-                                                    <div class="flex flex-col gap-8">
-                                                        <s_rp_container>
-                                                            <ol class="flex flex-col gap-8">
-                                                                <s_rp_rep>
-                                                                    <li id="[##_rp_rep_id_##]"
-                                                                        class="[##_rp_rep_class_##]">
-                                                                        <div class="flex gap-4 group">
-                                                                            <!-- Avatar -->
-                                                                            <div class="shrink-0">
-                                                                                <img src="[##_rp_rep_logo_##]"
-                                                                                    class="w-10 h-10 rounded-full object-cover border border-white/10 [##_rp_rep_class_##]-avatar">
+                                                <!-- Comment List -->
+                                                <div class="flex flex-col gap-8">
+                                                    <s_rp_container>
+                                                        <ol class="flex flex-col gap-8">
+                                                            <s_rp_rep>
+                                                                <li id="[##_rp_rep_id_##]" class="[##_rp_rep_class_##]">
+                                                                    <div class="flex gap-4 group">
+                                                                        <!-- Avatar -->
+                                                                        <div class="shrink-0">
+                                                                            <img src="[##_rp_rep_logo_##]"
+                                                                                class="w-10 h-10 rounded-full object-cover border border-white/10 [##_rp_rep_class_##]-avatar">
+                                                                        </div>
+                                                                        <!-- Content -->
+                                                                        <div class="flex-1">
+                                                                            <div class="flex items-baseline gap-3 mb-1">
+                                                                                <span
+                                                                                    class="text-[0.95rem] font-bold text-zinc-200 cursor-pointer hover:underline"
+                                                                                    onclick="[##_rp_rep_onclick_dropdown_##]">[##_rp_rep_name_##]</span>
+                                                                                <span
+                                                                                    class="text-xs text-zinc-600 font-mono">[##_rp_rep_date_##]</span>
                                                                             </div>
-                                                                            <!-- Content -->
-                                                                            <div class="flex-1">
-                                                                                <div
-                                                                                    class="flex items-baseline gap-3 mb-1">
-                                                                                    <span
-                                                                                        class="text-[0.95rem] font-bold text-zinc-200 cursor-pointer hover:underline"
-                                                                                        onclick="[##_rp_rep_onclick_dropdown_##]">[##_rp_rep_name_##]</span>
-                                                                                    <span
-                                                                                        class="text-xs text-zinc-600 font-mono">[##_rp_rep_date_##]</span>
-                                                                                </div>
 
-                                                                                <div
-                                                                                    class="text-[0.95rem] text-zinc-300 leading-7 mb-2 [##_rp_rep_class_##]-content">
-                                                                                    [##_rp_rep_desc_##]
-                                                                                </div>
+                                                                            <div
+                                                                                class="text-[0.95rem] text-zinc-300 leading-7 mb-2 [##_rp_rep_class_##]-content">
+                                                                                [##_rp_rep_desc_##]
+                                                                            </div>
 
-                                                                                <div
-                                                                                    class="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-zinc-500">
-                                                                                    <a href="#"
-                                                                                        onclick="[##_rp_rep_onclick_reply_##]"
-                                                                                        class="hover:text-zinc-300">답글</a>
-                                                                                    <a href="#"
-                                                                                        onclick="[##_rp_rep_onclick_delete_##]"
-                                                                                        class="hover:text-red-400">수정/삭제</a>
-                                                                                </div>
+                                                                            <div
+                                                                                class="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-zinc-500">
+                                                                                <a href="#"
+                                                                                    onclick="[##_rp_rep_onclick_reply_##]"
+                                                                                    class="hover:text-zinc-300">답글</a>
+                                                                                <a href="#"
+                                                                                    onclick="[##_rp_rep_onclick_delete_##]"
+                                                                                    class="hover:text-red-400">수정/삭제</a>
                                                                             </div>
                                                                         </div>
+                                                                    </div>
 
-                                                                        <!-- Replies -->
-                                                                        <s_rp2_container>
-                                                                            <ul class="mt-6 ml-14 flex flex-col gap-6">
-                                                                                <s_rp2_rep>
-                                                                                    <li id="[##_rp_rep_id_##]"
-                                                                                        class="[##_rp_rep_class_##]">
-                                                                                        <div class="flex gap-4 group">
-                                                                                            <div class="shrink-0">
-                                                                                                <img src="[##_rp_rep_logo_##]"
-                                                                                                    class="w-9 h-9 rounded-full object-cover border border-white/10 [##_rp_rep_class_##]-avatar">
+                                                                    <!-- Replies -->
+                                                                    <s_rp2_container>
+                                                                        <ul class="mt-6 ml-14 flex flex-col gap-6">
+                                                                            <s_rp2_rep>
+                                                                                <li id="[##_rp_rep_id_##]"
+                                                                                    class="[##_rp_rep_class_##]">
+                                                                                    <div class="flex gap-4 group">
+                                                                                        <div class="shrink-0">
+                                                                                            <img src="[##_rp_rep_logo_##]"
+                                                                                                class="w-9 h-9 rounded-full object-cover border border-white/10 [##_rp_rep_class_##]-avatar">
+                                                                                        </div>
+                                                                                        <div class="flex-1">
+                                                                                            <div
+                                                                                                class="flex items-center gap-2 mb-1">
+                                                                                                <span
+                                                                                                    class="text-sm font-bold text-zinc-200">[##_rp_rep_name_##]</span>
+                                                                                                <span
+                                                                                                    class="text-xs text-zinc-600 font-mono">[##_rp_rep_date_##]</span>
                                                                                             </div>
-                                                                                            <div class="flex-1">
-                                                                                                <div
-                                                                                                    class="flex items-center gap-2 mb-1">
-                                                                                                    <span
-                                                                                                        class="text-sm font-bold text-zinc-200">[##_rp_rep_name_##]</span>
-                                                                                                    <span
-                                                                                                        class="text-xs text-zinc-600 font-mono">[##_rp_rep_date_##]</span>
-                                                                                                </div>
-                                                                                                <div
-                                                                                                    class="text-sm text-zinc-300 leading-relaxed mb-2">
-                                                                                                    [##_rp_rep_desc_##]
-                                                                                                </div>
-                                                                                                <div
-                                                                                                    class="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-zinc-500">
-                                                                                                    <a href="#"
-                                                                                                        onclick="[##_rp_rep_onclick_delete_##]"
-                                                                                                        class="hover:text-red-400">수정/삭제</a>
-                                                                                                </div>
+                                                                                            <div
+                                                                                                class="text-sm text-zinc-300 leading-relaxed mb-2">
+                                                                                                [##_rp_rep_desc_##]
+                                                                                            </div>
+                                                                                            <div
+                                                                                                class="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-zinc-500">
+                                                                                                <a href="#"
+                                                                                                    onclick="[##_rp_rep_onclick_delete_##]"
+                                                                                                    class="hover:text-red-400">수정/삭제</a>
                                                                                             </div>
                                                                                         </div>
-                                                                                    </li>
-                                                                                </s_rp2_rep>
-                                                                            </ul>
-                                                                        </s_rp2_container>
-                                                                    </li>
-                                                                </s_rp_rep>
-                                                            </ol>
-                                                        </s_rp_container>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </s_rp2_rep>
+                                                                        </ul>
+                                                                    </s_rp2_container>
+                                                                </li>
+                                                            </s_rp_rep>
+                                                        </ol>
+                                                    </s_rp_container>
 
-                                                        <!-- Comment Pagination (Fixed: Tags must be on single line) -->
-                                                        <s_paging>
-                                                            <div
-                                                                class="flex justify-center items-center gap-2 mt-10 mb-4 animate-fadeIn">
-                                                                <a [##_prev_page_##]
-                                                                    class="[##_no_more_prev_##] w-8 h-8 flex items-center justify-center rounded-full bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white transition-colors text-xs disabled:opacity-30 disabled:hover:bg-zinc-800 disabled:cursor-not-allowed"><i
-                                                                        class="fa-solid fa-chevron-left"></i></a>
-                                                                <div class="flex items-center gap-1.5 px-2">
-                                                                    <s_paging_rep><a [##_paging_rep_link_##]
-                                                                            class="w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium text-zinc-400 hover:bg-zinc-800 hover:text-white transition-all font-mono">[##_paging_rep_link_num_##]</a>
-                                                                    </s_paging_rep>
-                                                                </div>
-                                                                <a [##_next_page_##]
-                                                                    class="[##_no_more_next_##] w-8 h-8 flex items-center justify-center rounded-full bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white transition-colors text-xs disabled:opacity-30 disabled:hover:bg-zinc-800 disabled:cursor-not-allowed"><i
-                                                                        class="fa-solid fa-chevron-right"></i></a>
-                                                            </div>
-                                                        </s_paging>
-                                                    </div>
-                                            </div>
-                                            </s_rp>
-                                    </article>
 
-                                    <!-- Right Sidebar: Table of Contents (Placeholder) -->
-                                    <aside id="toc-container"
-                                        class="hidden xl:block absolute left-[100%] ml-12 top-0 w-64 z-50">
-                                        <!-- JS will populate this -->
-                                    </aside>
-                                </div>
-
-                                <!-- End of Content Container -->
-                            </div>
-
-                            <!-- Floating Bottom Action Bar (Like/Share) - Moved Outside to fix 'fixed' positioning -->
-                            <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 w-auto">
-                                <div
-                                    class="bg-[#1e1e20]/80 backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 shadow-[0_0_40px_-10px_rgba(0,0,0,0.8)] flex gap-8 items-center justify-center ring-1 ring-white/5">
-
-                                    <!-- Like Button (Linked to Tistory Like) -->
-                                    <div class="hidden">
-                                        [##_article_rep_like_btn_##]
-                                    </div>
-                                    <button id="custom-like-btn" onclick="toggleLike()"
-                                        class="flex flex-col items-center gap-1 group relative">
-                                        <div id="custom-like-icon"
-                                            class="text-xl transition-all duration-300 group-hover:-translate-y-1 text-zinc-400 group-hover:text-red-400">
-                                            <i class="fa-regular fa-heart"></i>
-                                        </div>
-                                    </button>
-
-                                    <div class="w-px h-6 bg-white/10"></div>
-
-                                    <!-- Comment Button -->
-                                    <button id="custom-comment-btn"
-                                        onclick="document.getElementById('comments-section').scrollIntoView({ behavior: 'smooth' }); highlightButton('custom-comment-btn', 'text-accent');"
-                                        class="flex flex-col items-center gap-1 group">
-                                        <div
-                                            class="text-zinc-400 text-xl group-hover:text-accent transition-all duration-300 group-hover:-translate-y-1">
-                                            <i class="fa-regular fa-comment-dots"></i>
-                                        </div>
-                                    </button>
-
-                                    <div class="w-px h-6 bg-white/10"></div>
-
-                                    <!-- Scroll Top -->
-                                    <button id="custom-top-btn"
-                                        onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); highlightButton('custom-top-btn', 'text-accentBlue');"
-                                        class="flex flex-col items-center gap-1 group">
-                                        <div
-                                            class="text-zinc-400 text-xl group-hover:text-accentBlue transition-all duration-300 group-hover:-translate-y-1">
-                                            <i class="fa-solid fa-arrow-up"></i>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        </s_permalink_article_rep>
-                    </s_article_rep>
-
-                    <!-- Guestbook Module -->
-                    <s_guest>
-                        <div id="guestbook-container" class="col-span-full">
-                            <!-- Home Button (Top Right) -->
-                            <div class="flex justify-end mb-2">
-                                <a href="[##_blog_link_##]"
-                                    class="flex items-center gap-2 px-4 py-2 rounded-lg bg-bgCard border border-white/5 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all text-sm group">
-                                    <i
-                                        class="fa-solid fa-house text-xs group-hover:-translate-x-0.5 transition-transform"></i>
-                                    <span>Home</span>
-                                </a>
-                            </div>
-
-                            <!-- Header -->
-                            <div class="text-center mb-16 relative">
-                                <div
-                                    class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-accent/20 rounded-full blur-[80px] pointer-events-none">
-                                </div>
-                                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 relative z-10">Guestbook</h2>
-                                <p class="text-zinc-400 font-light relative z-10">자유롭게 방명록을 남겨주세요.</p>
-                            </div>
-
-                            <!-- Input Form Moved Below -->
-
-                            <!-- Guestbook List -->
-                            <div id="guestbook-list" class="max-w-3xl mx-auto w-full flex flex-col gap-6">
-                                <s_guest_container>
-                                    <s_guest_rep>
-                                        <div id="[##_guest_rep_id_##]"
-                                            class="bg-[#27272a] rounded-2xl p-6 border border-white/5 hover:border-white/10 transition-colors group relative overflow-hidden">
-
-                                            <div class="flex gap-4 items-start relative z-10">
-                                                <!-- Avatar (Dynamic Profile) -->
-                                                <div
-                                                    class="flex-shrink-0 w-12 h-12 rounded-xl bg-zinc-800 overflow-hidden border border-white/5 shadow-inner">
-                                                    <img src="[##_guest_rep_logo_##]" alt="Profile"
-                                                        class="w-full h-full object-cover">
                                                 </div>
+                                </div>
+                                </s_rp>
+                                </article>
 
-                                                <div class="flex-1 min-w-0">
-                                                    <div class="flex items-center gap-3 mb-1">
-                                                        <span
-                                                            class="text-zinc-200 font-bold hover:text-accent transition-colors cursor-pointer">
-                                                            [##_guest_rep_name_##]
-                                                        </span>
-                                                        <span
-                                                            class="text-xs text-zinc-500 font-mono">[##_guest_rep_date_##]</span>
-                                                    </div>
-
-                                                    <div
-                                                        class="text-zinc-300 leading-relaxed text-[15px] break-keep font-light mb-3">
-                                                        [##_guest_rep_desc_##]
-                                                    </div>
-
-                                                    <div
-                                                        class="flex gap-3 text-xs font-mono text-zinc-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                        <a href="#" onclick="[##_guest_rep_onclick_delete_##]"
-                                                            class="hover:text-red-400 transition-colors">Delete</a>
-                                                        <a href="#" onclick="[##_guest_rep_onclick_reply_##]"
-                                                            class="hover:text-accent transition-colors">Reply</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Reply List -->
-                                            <s_guest_reply_container>
-                                                <div class="relative mt-3 pt-3">
-                                                    <!-- Vertical Connector Spine -->
-                                                    <div
-                                                        class="absolute left-6 md:left-8 top-0 bottom-6 w-px bg-gradient-to-b from-zinc-700/50 to-transparent">
-                                                    </div>
-
-                                                    <ul class="flex flex-col gap-3 ml-10 md:ml-14">
-                                                        <s_guest_reply_rep>
-                                                            <li id="[##_guest_reply_rep_id_##]"
-                                                                class="[##_guest_reply_rep_class_##] relative group/reply">
-                                                                <!-- Curved Connector -->
-                                                                <div
-                                                                    class="absolute -left-4 md:-left-6 top-4 w-3 md:w-5 h-px bg-zinc-700/50">
-                                                                </div>
-
-                                                                <div
-                                                                    class="flex gap-3 items-start bg-[#2a2a2d] rounded-xl p-4 border border-white/5 hover:border-white/10 transition-colors">
-                                                                    <!-- Blog Owner Avatar for Reply (Fallback to Icon) -->
-                                                                    <div
-                                                                        class="flex-shrink-0 w-8 h-8 rounded-full bg-zinc-700 overflow-hidden border border-white/10 mt-0.5">
-                                                                        <img src="[##_blog_image_##]" alt="Profile"
-                                                                            class="w-full h-full object-cover"
-                                                                            onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-user text-zinc-400 text-sm flex items-center justify-center w-full h-full\'></i>';">
-                                                                    </div>
-
-                                                                    <div class="flex-1 min-w-0">
-                                                                        <div class="flex items-center gap-2 mb-1">
-                                                                            <span
-                                                                                class="text-zinc-200 font-bold text-sm hover:text-accent cursor-pointer transition-colors">[##_guest_reply_rep_name_##]</span>
-                                                                            <div
-                                                                                class="w-1 h-1 rounded-full bg-zinc-700">
-                                                                            </div>
-                                                                            <span
-                                                                                class="text-[10px] text-zinc-500 font-mono">[##_guest_reply_rep_date_##]</span>
-                                                                        </div>
-                                                                        <!-- Content Fix: Simplified Wrapper -->
-                                                                        <div class="text-zinc-300 text-sm">
-                                                                            [##_guest_reply_rep_desc_##]
-                                                                        </div>
-
-                                                                        <div
-                                                                            class="flex gap-2 mt-2 text-[10px] text-zinc-600 opacity-0 group-hover/reply:opacity-100 transition-opacity">
-                                                                            <a href="#"
-                                                                                onclick="[##_guest_reply_rep_onclick_delete_##]"
-                                                                                class="hover:text-red-400 flex items-center gap-1">
-                                                                                <i class="fa-solid fa-trash-can"></i>
-                                                                                <span>삭제</span>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </s_guest_reply_rep>
-                                                    </ul>
-                                                </div>
-                                            </s_guest_reply_container>
-                                        </div>
-                                    </s_guest_rep>
-                                </s_guest_container>
+                                <!-- Right Sidebar: Table of Contents (Placeholder) -->
+                                <aside id="toc-container"
+                                    class="hidden xl:block absolute left-[100%] ml-12 top-0 w-64 z-50">
+                                    <!-- JS will populate this -->
+                                </aside>
                             </div>
 
-                            <!-- Input Form (Moved to Bottom) -->
-                            <div id="guestbook-form" class="max-w-3xl mx-auto w-full mb-16">
-                                <s_guest_input_form>
-                                    <s_guest_member>
-                                        <div
-                                            class="bg-[#27272a] rounded-2xl p-8 border border-white/5 shadow-2xl relative overflow-hidden group">
-                                            <!-- Decorative top line -->
-                                            <div
-                                                class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500">
-                                            </div>
-
-                                            <div class="flex flex-col gap-2 mb-6">
-                                                <label
-                                                    class="text-xs font-bold text-zinc-500 uppercase tracking-wider font-mono">Message</label>
-                                                <textarea name="[##_guest_input_comment_##]"
-                                                    placeholder="따뜻한 한 마디를 남겨주세요..."
-                                                    class="w-full h-32 bg-[#18181b] border border-white/5 rounded-xl px-4 py-3 text-zinc-200 outline-none focus:border-accent/50 focus:bg-[#202022] transition-all placeholder:text-zinc-600 resize-none"></textarea>
-                                            </div>
-
-                                            <div class="flex justify-end">
-                                                <button onclick="[##_guest_onclick_submit_##]"
-                                                    class="bg-accent hover:bg-accent/90 text-white font-bold py-3 px-8 rounded-xl shadow-[0_0_20px_-5px_#a855f7] hover:shadow-[0_0_30px_-5px_#a855f7] hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                                                    <i class="fa-solid fa-paper-plane text-sm"></i>
-                                                    <span>등록하기</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </s_guest_member>
-
-                                    <!-- Guests: Login Prompt -->
-                                    <s_guest_guest>
-                                        <div
-                                            class="bg-[#27272a] rounded-2xl p-12 border border-white/5 border-dashed flex flex-col items-center justify-center text-center gap-4">
-                                            <div
-                                                class="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-500 text-2xl mb-2">
-                                                <i class="fa-solid fa-lock"></i>
-                                            </div>
-                                            <h3 class="text-xl font-bold text-zinc-300">Login Required</h3>
-                                            <p class="text-zinc-500 text-sm mb-4">방명록을 작성하려면 로그인이 필요합니다.</p>
-                                            <a href="https://www.tistory.com/auth/login"
-                                                class="bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-2.5 px-6 rounded-lg transition-colors border border-white/10 flex items-center gap-2">
-                                                <span>로그인하러 가기</span>
-                                                <i class="fa-solid fa-arrow-right text-xs"></i>
-                                            </a>
-                                        </div>
-                                    </s_guest_guest>
-                                </s_guest_input_form>
-                            </div>
-                        </div>
-                    </s_guest>
-
-                    <!-- Static Page Loop -->
-                    <s_page_rep>
-                        <div class="col-span-full bg-bgCard rounded-card p-12 border border-white/5">
-                            <h1 class="text-3xl font-bold text-white mb-8">[##_article_rep_title_##]</h1>
-                            <div class="prose prose-lg prose-invert max-w-none text-zinc-300">
-                                [##_article_rep_desc_##]
-                            </div>
-                        </div>
-                    </s_page_rep>
-
-                    <!-- Paging -->
-                    <s_paging>
-                        <div class="col-span-full pagination flex justify-center items-center gap-2 mt-12 mb-20">
-                            <a [##_prev_page_##]
-                                class="[##_no_more_prev_##] w-10 h-10 flex items-center justify-center rounded-lg bg-bgCard border border-white/5 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-all">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </a>
-                            <s_paging_rep>
-                                <a [##_paging_rep_link_##]
-                                    class="w-10 h-10 flex items-center justify-center rounded-lg bg-bgCard border border-white/5 text-zinc-400 hover:bg-accent hover:border-accent hover:text-white transition-all">[##_paging_rep_link_num_##]</a>
-                            </s_paging_rep>
-                            <a [##_next_page_##]
-                                class="[##_no_more_next_##] w-10 h-10 flex items-center justify-center rounded-lg bg-bgCard border border-white/5 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-all">
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </a>
-                        </div>
-                    </s_paging>
-                </main>
+                            <!-- End of Content Container -->
             </div>
+
+            <!-- Floating Bottom Action Bar (Like/Share) - Moved Outside to fix 'fixed' positioning -->
+            <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 w-auto">
+                <div
+                    class="bg-[#1e1e20]/80 backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 shadow-[0_0_40px_-10px_rgba(0,0,0,0.8)] flex gap-8 items-center justify-center ring-1 ring-white/5">
+
+                    <!-- Like Button (Linked to Tistory Like) -->
+                    <div class="hidden">
+                        [##_article_rep_like_btn_##]
+                    </div>
+                    <button id="custom-like-btn" onclick="toggleLike()"
+                        class="flex flex-col items-center gap-1 group relative">
+                        <div id="custom-like-icon"
+                            class="text-xl transition-all duration-300 group-hover:-translate-y-1 text-zinc-400 group-hover:text-red-400">
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
+                    </button>
+
+                    <div class="w-px h-6 bg-white/10"></div>
+
+                    <!-- Comment Button -->
+                    <button id="custom-comment-btn"
+                        onclick="document.getElementById('comments-section').scrollIntoView({ behavior: 'smooth' }); highlightButton('custom-comment-btn', 'text-accent');"
+                        class="flex flex-col items-center gap-1 group">
+                        <div
+                            class="text-zinc-400 text-xl group-hover:text-accent transition-all duration-300 group-hover:-translate-y-1">
+                            <i class="fa-regular fa-comment-dots"></i>
+                        </div>
+                    </button>
+
+                    <div class="w-px h-6 bg-white/10"></div>
+
+                    <!-- Scroll Top -->
+                    <button id="custom-top-btn"
+                        onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); highlightButton('custom-top-btn', 'text-accentBlue');"
+                        class="flex flex-col items-center gap-1 group">
+                        <div
+                            class="text-zinc-400 text-xl group-hover:text-accentBlue transition-all duration-300 group-hover:-translate-y-1">
+                            <i class="fa-solid fa-arrow-up"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            </s_permalink_article_rep>
+            </s_article_rep>
+
+            <!-- Guestbook Module -->
+            <s_guest>
+                <div id="guestbook-container" class="col-span-full">
+                    <!-- Home Button (Top Right) -->
+                    <div class="flex justify-end mb-2">
+                        <a href="[##_blog_link_##]"
+                            class="flex items-center gap-2 px-4 py-2 rounded-lg bg-bgCard border border-white/5 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all text-sm group">
+                            <i class="fa-solid fa-house text-xs group-hover:-translate-x-0.5 transition-transform"></i>
+                            <span>Home</span>
+                        </a>
+                    </div>
+
+                    <!-- Header -->
+                    <div class="text-center mb-16 relative">
+                        <div
+                            class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-accent/20 rounded-full blur-[80px] pointer-events-none">
+                        </div>
+                        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 relative z-10">Guestbook</h2>
+                        <p class="text-zinc-400 font-light relative z-10">자유롭게 방명록을 남겨주세요.</p>
+                    </div>
+
+                    <!-- Input Form Moved Below -->
+
+                    <!-- Guestbook List -->
+                    <div id="guestbook-list" class="max-w-3xl mx-auto w-full flex flex-col gap-6">
+                        <s_guest_container>
+                            <s_guest_rep>
+                                <div id="[##_guest_rep_id_##]"
+                                    class="bg-[#27272a] rounded-2xl p-6 border border-white/5 hover:border-white/10 transition-colors group relative overflow-hidden">
+
+                                    <div class="flex gap-4 items-start relative z-10">
+                                        <!-- Avatar (Dynamic Profile) -->
+                                        <div
+                                            class="flex-shrink-0 w-12 h-12 rounded-xl bg-zinc-800 overflow-hidden border border-white/5 shadow-inner">
+                                            <img src="[##_guest_rep_logo_##]" alt="Profile"
+                                                class="w-full h-full object-cover">
+                                        </div>
+
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center gap-3 mb-1">
+                                                <span
+                                                    class="text-zinc-200 font-bold hover:text-accent transition-colors cursor-pointer">
+                                                    [##_guest_rep_name_##]
+                                                </span>
+                                                <span
+                                                    class="text-xs text-zinc-500 font-mono">[##_guest_rep_date_##]</span>
+                                            </div>
+
+                                            <div
+                                                class="text-zinc-300 leading-relaxed text-[15px] break-keep font-light mb-3">
+                                                [##_guest_rep_desc_##]
+                                            </div>
+
+                                            <div
+                                                class="flex gap-3 text-xs font-mono text-zinc-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <a href="#" onclick="[##_guest_rep_onclick_delete_##]"
+                                                    class="hover:text-red-400 transition-colors">Delete</a>
+                                                <!-- Reply Button Removed (Feature Disabled) -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Reply List Removed (Feature Disabled) -->
+                                </div>
+                            </s_guest_rep>
+                        </s_guest_container>
+                    </div>
+
+                    <!-- Input Form (Moved to Bottom) -->
+                    <div id="guestbook-form" class="max-w-3xl mx-auto w-full mb-16">
+                        <s_guest_input_form>
+                            <s_guest_member>
+                                <div
+                                    class="bg-[#27272a] rounded-2xl p-8 border border-white/5 shadow-2xl relative overflow-hidden group">
+                                    <!-- Decorative top line -->
+                                    <div
+                                        class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500">
+                                    </div>
+
+                                    <div class="flex flex-col gap-2 mb-6">
+                                        <label
+                                            class="text-xs font-bold text-zinc-500 uppercase tracking-wider font-mono">Message</label>
+                                        <textarea name="[##_guest_input_comment_##]" placeholder="따뜻한 한 마디를 남겨주세요..."
+                                            class="w-full h-32 bg-[#18181b] border border-white/5 rounded-xl px-4 py-3 text-zinc-200 outline-none focus:border-accent/50 focus:bg-[#202022] transition-all placeholder:text-zinc-600 resize-none"></textarea>
+                                    </div>
+
+                                    <div class="flex justify-end">
+                                        <button onclick="[##_guest_onclick_submit_##]"
+                                            class="bg-accent hover:bg-accent/90 text-white font-bold py-3 px-8 rounded-xl shadow-[0_0_20px_-5px_#a855f7] hover:shadow-[0_0_30px_-5px_#a855f7] hover:-translate-y-0.5 transition-all flex items-center gap-2">
+                                            <i class="fa-solid fa-paper-plane text-sm"></i>
+                                            <span>등록하기</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </s_guest_member>
+
+                            <!-- Guests: Login Prompt -->
+                            <s_guest_guest>
+                                <div
+                                    class="bg-[#27272a] rounded-2xl p-12 border border-white/5 border-dashed flex flex-col items-center justify-center text-center gap-4">
+                                    <div
+                                        class="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-500 text-2xl mb-2">
+                                        <i class="fa-solid fa-lock"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-zinc-300">Login Required</h3>
+                                    <p class="text-zinc-500 text-sm mb-4">방명록을 작성하려면 로그인이 필요합니다.</p>
+                                    <a href="https://www.tistory.com/auth/login"
+                                        class="bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-2.5 px-6 rounded-lg transition-colors border border-white/10 flex items-center gap-2">
+                                        <span>로그인하러 가기</span>
+                                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                                    </a>
+                                </div>
+                            </s_guest_guest>
+                        </s_guest_input_form>
+                    </div>
+                </div>
+            </s_guest>
+
+            <!-- Static Page Loop -->
+            <s_page_rep>
+                <div class="col-span-full bg-bgCard rounded-card p-12 border border-white/5">
+                    <h1 class="text-3xl font-bold text-white mb-8">[##_article_rep_title_##]</h1>
+                    <div class="prose prose-lg prose-invert max-w-none text-zinc-300">
+                        [##_article_rep_desc_##]
+                    </div>
+                </div>
+            </s_page_rep>
+
+            <!-- Paging -->
+            <s_paging>
+                <div class="col-span-full pagination flex justify-center items-center gap-2 mt-12 mb-20">
+                    <a [##_prev_page_##]
+                        class="[##_no_more_prev_##] w-10 h-10 flex items-center justify-center rounded-lg bg-bgCard border border-white/5 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-all">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </a>
+                    <s_paging_rep>
+                        <a [##_paging_rep_link_##]
+                            class="w-10 h-10 flex items-center justify-center rounded-lg bg-bgCard border border-white/5 text-zinc-400 hover:bg-accent hover:border-accent hover:text-white transition-all">[##_paging_rep_link_num_##]</a>
+                    </s_paging_rep>
+                    <a [##_next_page_##]
+                        class="[##_no_more_next_##] w-10 h-10 flex items-center justify-center rounded-lg bg-bgCard border border-white/5 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-all">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+                </div>
+            </s_paging>
+            </main>
+        </div>
         </div>
 
         <!-- Search Overlay -->
         <div id="search-overlay"
             class="fixed inset-0 z-[70] bg-bgBody/95 backdrop-blur-xl hidden flex-col items-center justify-center animate-fadeIn">
             <button onclick="toggleSearch()"
-                class="absolute top-8 right-8 w-12 h-12 rounded-full bg-zinc-800/50 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-700 transition-all">
+                class="absolute top-8 right-28 w-12 h-12 rounded-full bg-zinc-800/50 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-700 transition-all">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
 
@@ -1353,12 +1251,27 @@
                 })();
             </script>
             <script>
-                // Post Summary Whitespace Trimmer
+                // Post Summary Whitespace Trimmer & Smart Line Clamping
                 document.addEventListener("DOMContentLoaded", function () {
-                    const summaries = document.querySelectorAll('.item-summary');
-                    summaries.forEach(function (summary) {
-                        if (summary.firstChild && summary.firstChild.nodeType === 3) {
+                    const articles = document.querySelectorAll('article');
+
+                    articles.forEach(function (article) {
+                        // 1. Whitespace Trimmer
+                        const summary = article.querySelector('.item-summary');
+                        if (summary && summary.firstChild && summary.firstChild.nodeType === 3) {
                             summary.firstChild.nodeValue = summary.firstChild.nodeValue.trimStart();
+                        }
+
+                        // 2. Smart Line Clamping
+                        const title = article.querySelector('h3');
+                        if (title && summary) {
+                            // Check title height to determine if it's 1 line or 2 lines
+                            // Standard line height allows us to check clientHeight.
+                            // If height is small (e.g., < 60px), it's likely 1 line.
+                            if (title.clientHeight < 60) {
+                                summary.classList.remove('line-clamp-4');
+                                summary.classList.add('line-clamp-6');
+                            }
                         }
                     });
                 });

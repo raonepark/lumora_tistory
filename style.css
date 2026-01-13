@@ -1215,3 +1215,134 @@ figure[data-ke-type="opengraph"] .og-host::before {
     font-size: 16px;
     line-height: normal;
 }
+
+/* Custom Line Clamp for Dynamic Summaries */
+.line-clamp-6 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+}
+
+/* Guestbook Reply Fix */
+#guestbook-list ul li {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+#guestbook-list ul li .group\/reply {
+    background: transparent !important;
+}
+
+/* Guestbook Reply Description Force */
+.reply-desc {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: #e4e4e7 !important;
+    /* Zinc-200 */
+    min-height: 20px;
+    height: auto !important;
+}
+
+.reply-desc * {
+    color: #e4e4e7 !important;
+}
+
+/* Guestbook Reply Meta Force */
+.guest-reply-name {
+    display: inline-block !important;
+    color: #e4e4e7 !important;
+    /* Zinc-200 */
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.guest-reply-date {
+    display: inline-block !important;
+    color: #71717a !important;
+    /* Zinc-500 */
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Styling Tistory 'Load More Comments' Button (System Generated) */
+.tt_more_preview_comments_wrap {
+    background-color: #27272a !important;
+    /* bg-zinc-800 */
+    border-radius: 9999px !important;
+    padding: 8px 16px !important;
+    margin: 20px auto !important;
+    width: fit-content !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    text-align: center !important;
+}
+
+.tt_more_preview_comments_wrap:hover {
+    background-color: #3f3f46 !important;
+    /* bg-zinc-700 */
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.tt_more_preview_comments_text {
+    color: #a1a1aa !important;
+    /* text-zinc-400 */
+    font-size: 0.875rem !important;
+    /* text-sm */
+    font-weight: 500 !important;
+}
+
+.tt_more_preview_comments_wrap:hover .tt_more_preview_comments_text {
+    color: #ffffff !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* TISTORY SYSTEM OVERRIDES (Anti-Wobble / CLS Fix) */
+/* -------------------------------------------------------------------------- */
+
+/* Hide Tistory Toolbar completely to prevent top-shift on load */
+#tistorytoolbarid,
+.tt_menubar,
+.tt-menubar {
+    display: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: -9999 !important;
+}
+
+/* Ensure body doesn't possess padding from Tistory scripts */
+body,
+html {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Fix for potential margin collapse on Home Page */
+#main-layout {
+    padding-top: 3rem !important;
+    /* Ensure consistent spacing */
+}
+
+/* -------------------------------------------------------------------------- */
+/* ANTI-FLICKER / CLOAK STYLES (Fixes Scroll Shift) */
+/* -------------------------------------------------------------------------- */
+.cloak-until-loaded {
+    /* Use visibility:hidden to PRESERVE SPACE during load */
+    /* Do NOT use display:none, causing CLS/Wobble */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+}
+
+.cloak-until-loaded.loaded {
+    visibility: visible;
+    opacity: 1;
+}

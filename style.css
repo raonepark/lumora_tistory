@@ -595,6 +595,14 @@ figure[data-ke-type="opengraph"] .og-host::before {
     backdrop-filter: blur(10px);
 }
 
+@media (max-width: 768px) {
+    .comment-form-box {
+        backdrop-filter: none !important;
+        background: #18181b !important;
+        /* Fallback solid color */
+    }
+}
+
 /* 2. Textarea Styling */
 .comment-form-box textarea {
     background-color: rgba(0, 0, 0, 0.3) !important;

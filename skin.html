@@ -714,48 +714,50 @@
                                 </aside>
                             </div>
 
-                            <!-- Floating Bottom Action Bar (Like/Share) -->
-                            <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 w-auto">
-                                <div
-                                    class="bg-[#1e1e20]/80 backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 shadow-[0_0_40px_-10px_rgba(0,0,0,0.8)] flex gap-8 items-center justify-center ring-1 ring-white/5">
+                            <!-- End of Content Container -->
+            </div>
 
-                                    <!-- Like Button (Linked to Tistory Like) -->
-                                    <div class="hidden">
-                                        [##_article_rep_like_btn_##]
-                                    </div>
-                                    <button id="custom-like-btn" onclick="toggleLike()"
-                                        class="flex flex-col items-center gap-1 group relative">
-                                        <div id="custom-like-icon"
-                                            class="text-xl transition-all duration-300 group-hover:-translate-y-1 text-zinc-400 group-hover:text-red-400">
-                                            <i class="fa-regular fa-heart"></i>
-                                        </div>
-                                    </button>
+            <!-- Floating Bottom Action Bar (Like/Share) - Moved Outside to fix 'fixed' positioning -->
+            <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 w-auto">
+                <div
+                    class="bg-[#1e1e20]/80 backdrop-blur-xl border border-white/10 rounded-full px-8 py-3 shadow-[0_0_40px_-10px_rgba(0,0,0,0.8)] flex gap-8 items-center justify-center ring-1 ring-white/5">
 
-                                    <div class="w-px h-6 bg-white/10"></div>
+                    <!-- Like Button (Linked to Tistory Like) -->
+                    <div class="hidden">
+                        [##_article_rep_like_btn_##]
+                    </div>
+                    <button id="custom-like-btn" onclick="toggleLike()"
+                        class="flex flex-col items-center gap-1 group relative">
+                        <div id="custom-like-icon"
+                            class="text-xl transition-all duration-300 group-hover:-translate-y-1 text-zinc-400 group-hover:text-red-400">
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
+                    </button>
 
-                                    <!-- Comment Button -->
-                                    <button id="custom-comment-btn"
-                                        onclick="document.getElementById('comments-section').scrollIntoView({ behavior: 'smooth' }); highlightButton('custom-comment-btn', 'text-accent');"
-                                        class="flex flex-col items-center gap-1 group">
-                                        <div
-                                            class="text-zinc-400 text-xl group-hover:text-accent transition-all duration-300 group-hover:-translate-y-1">
-                                            <i class="fa-regular fa-comment-dots"></i>
-                                        </div>
-                                    </button>
+                    <div class="w-px h-6 bg-white/10"></div>
 
-                                    <div class="w-px h-6 bg-white/10"></div>
+                    <!-- Comment Button -->
+                    <button id="custom-comment-btn"
+                        onclick="document.getElementById('comments-section').scrollIntoView({ behavior: 'smooth' }); highlightButton('custom-comment-btn', 'text-accent');"
+                        class="flex flex-col items-center gap-1 group">
+                        <div
+                            class="text-zinc-400 text-xl group-hover:text-accent transition-all duration-300 group-hover:-translate-y-1">
+                            <i class="fa-regular fa-comment-dots"></i>
+                        </div>
+                    </button>
 
-                                    <!-- Scroll Top -->
-                                    <button id="custom-top-btn"
-                                        onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); highlightButton('custom-top-btn', 'text-accentBlue');"
-                                        class="flex flex-col items-center gap-1 group">
-                                        <div
-                                            class="text-zinc-400 text-xl group-hover:text-accentBlue transition-all duration-300 group-hover:-translate-y-1">
-                                            <i class="fa-solid fa-arrow-up"></i>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
+                    <div class="w-px h-6 bg-white/10"></div>
+
+                    <!-- Scroll Top -->
+                    <button id="custom-top-btn"
+                        onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); highlightButton('custom-top-btn', 'text-accentBlue');"
+                        class="flex flex-col items-center gap-1 group">
+                        <div
+                            class="text-zinc-400 text-xl group-hover:text-accentBlue transition-all duration-300 group-hover:-translate-y-1">
+                            <i class="fa-solid fa-arrow-up"></i>
+                        </div>
+                    </button>
+                </div>
             </div>
             </s_permalink_article_rep>
             </s_article_rep>
@@ -1203,28 +1205,28 @@
 
                                 if (!tocContainer || !articleContainer) return;
 
-                                // 1. Sticky Logic
+                                // Helper: Throttle via rAF
+                                let ticking = false;
+
+                                // 1. Sticky Metrics & Logic
                                 function onScrollSticky() {
                                     // Only apply if visible (XL breakpoint is 1280px)
-                                    // We check display style mainly, but also sync with CSS breakpoint logic if needed.
                                     if (window.innerWidth < 1280 || window.getComputedStyle(tocContainer).display === 'none') {
                                         tocContainer.style.top = '0px';
                                         return;
                                     }
 
                                     const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                                    // Note: getBoundingClientRect causes reflow, but inside rAF it's managed.
+                                    // Ideally we cache articleTopAbs on resize, but this is acceptable for now.
                                     const articleRect = articleContainer.getBoundingClientRect();
                                     const articleTopAbs = scrollTop + articleRect.top;
 
-                                    // Offset: We want the TOC to stick at top: 100px relative to viewport
-                                    // Position inside container = (Current Scroll + 100) - Container Start
+                                    // Offset: stick at top: 100px relative to viewport
                                     let newTop = (scrollTop + 100) - articleTopAbs;
 
-                                    // Constraint 1: Can't be negative (can't go above container top)
                                     if (newTop < 0) newTop = 0;
 
-                                    // Constraint 2: Can't go past bottom
-                                    // Limit = Container Height - TOC Height - Bottom Padding
                                     const tocHeight = tocContainer.offsetHeight;
                                     const limit = articleContainer.offsetHeight - tocHeight - 100;
 
@@ -1232,54 +1234,62 @@
 
                                     tocContainer.style.top = newTop + 'px';
                                 }
-                                window.addEventListener('scroll', onScrollSticky, { passive: true });
-                                onScrollSticky(); // Initial check
-
 
                                 // 2. Scroll Spy Logic
-                                // Target specific Tistory content wrapper
                                 const contentArea = articleContainer.querySelector('.tt_article_useless_p_margin') || articleContainer.querySelector('article');
-
                                 if (!contentArea) return;
 
                                 const headers = contentArea.querySelectorAll('h1, h2, h3, h4');
-
-                                // Wait for TOC links to be populated (if not already)
-                                // Tistory TOC generation might be async? 
-                                // User said it's visible, so let's assume links are there.
+                                const tocLinks = tocContainer.querySelectorAll('a');
+                                let lastActiveId = null;
 
                                 function onScrollSpy() {
-                                    const tocLinks = tocContainer.querySelectorAll('a');
                                     if (headers.length === 0 || tocLinks.length === 0) return;
 
-                                    const scrollPos = (window.scrollY || document.documentElement.scrollTop) + 150; // Offset for header trigger
+                                    const scrollPos = (window.scrollY || document.documentElement.scrollTop) + 150; // Offset
 
                                     let currentId = null;
-                                    // Iterate headers to find the last one we've scrolled past
+                                    // Find the last header we've scrolled past
                                     headers.forEach(header => {
-                                        // Ensure header has ID. Tistory TOC usually adds IDs or we match by text?
-                                        // Tistory native TOC adds IDs to headers automatically.
                                         if (header.offsetTop <= scrollPos) {
                                             currentId = header.id;
                                         }
                                     });
 
-                                    tocLinks.forEach(link => {
-                                        // Reset styles
-                                        link.classList.remove('active', 'text-accent', 'font-bold');
-                                        link.classList.add('text-zinc-400', 'font-normal');
+                                    // Only update DOM if the active section has CHANGED
+                                    if (lastActiveId !== currentId) {
+                                        lastActiveId = currentId;
 
-                                        // Match link href to header ID
-                                        const href = link.getAttribute('href');
-                                        if (href && currentId && href.includes(currentId)) {
-                                            link.classList.add('active', 'text-accent', 'font-bold');
-                                            link.classList.remove('text-zinc-400', 'font-normal');
-                                        }
-                                    });
+                                        tocLinks.forEach(link => {
+                                            const href = link.getAttribute('href');
+                                            // Check if this link matches currentId
+                                            if (href && currentId && href.includes(currentId)) {
+                                                link.classList.add('active', 'text-accent', 'font-bold');
+                                                link.classList.remove('text-zinc-400', 'font-normal');
+                                            } else {
+                                                link.classList.remove('active', 'text-accent', 'font-bold');
+                                                link.classList.add('text-zinc-400', 'font-normal');
+                                            }
+                                        });
+                                    }
                                 }
 
-                                window.addEventListener('scroll', onScrollSpy, { passive: true });
-                                onScrollSpy(); // Initial check
+                                // Unified Scroll Handler using rAF
+                                function onScroll() {
+                                    if (!ticking) {
+                                        window.requestAnimationFrame(() => {
+                                            onScrollSticky();
+                                            onScrollSpy();
+                                            ticking = false;
+                                        });
+                                        ticking = true;
+                                    }
+                                }
+
+                                window.addEventListener('scroll', onScroll, { passive: true });
+                                // Initial Call
+                                onScrollSticky();
+                                onScrollSpy();
                             })();
 
                         });

@@ -582,7 +582,8 @@ figure[data-ke-type="opengraph"] .og-host::before {
 
     /* 0. Parent Figure: Flush Left Reset */
     html body figure[data-ke-type="opengraph"] {
-        margin: 0 !important;
+        margin: 20px 0 !important;
+        /* Mobile Vertical Spacing */
         padding: 0 !important;
         width: 100% !important;
         max-width: 100% !important;

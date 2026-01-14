@@ -449,7 +449,9 @@ figure[data-ke-type="opengraph"] {
 
 figure[data-ke-type="opengraph"] a {
     display: flex !important;
-    height: 150px !important;
+    min-height: 150px !important;
+    height: auto !important;
+    /* Allow growth */
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     border-radius: 16px !important;
     background-color: rgba(24, 24, 27, 0.6) !important;
@@ -494,10 +496,13 @@ figure[data-ke-type="opengraph"] .og-image::after {
 figure[data-ke-type="opengraph"] .og-text {
     flex: 1 !important;
     padding: 1.25rem 1.5rem !important;
+    /* Reverted padding */
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     background: transparent !important;
+    height: 100% !important;
+    /* Ensure full height for margin-top: auto to work */
 }
 
 /* Title */
@@ -525,7 +530,8 @@ figure[data-ke-type="opengraph"] .og-desc {
     color: #a1a1aa !important;
     /* zinc-400 */
     line-height: 1.5 !important;
-    margin-bottom: auto !important;
+    margin-bottom: 0 !important;
+    /* Removed auto margin from desc */
 
     /* Multi-line ellipsis (2 lines) */
     display: -webkit-box !important;
@@ -533,8 +539,12 @@ figure[data-ke-type="opengraph"] .og-desc {
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
     white-space: normal !important;
+    word-break: keep-all !important;
+    /* Prevent mid-word breaks for Korean */
 }
 
+/* Host/URL */
+/* Host/URL */
 /* Host/URL */
 figure[data-ke-type="opengraph"] .og-host {
     font-family: 'JetBrains Mono', monospace !important;
@@ -542,10 +552,17 @@ figure[data-ke-type="opengraph"] .og-host {
     /* 12px */
     color: #71717a !important;
     /* zinc-500 */
-    margin-top: 0.75rem !important;
+    margin-top: 0 !important;
+    position: absolute !important;
+    bottom: -17px !important;
+    left: 1.5rem !important;
+    width: calc(100% - 3rem) !important;
     display: flex !important;
     align-items: center !important;
     gap: 0.5rem;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
 
 figure[data-ke-type="opengraph"] .og-host::before {
@@ -560,26 +577,99 @@ figure[data-ke-type="opengraph"] .og-host::before {
 }
 
 /* Mobile Adjustments */
-@media (max-width: 640px) {
-    figure[data-ke-type="opengraph"] a {
-        height: auto !important;
-        flex-direction: column !important;
-    }
+/* Mobile Adjustments (Link Embed Card Style) */
+@media (max-width: 1024px) {
 
-    figure[data-ke-type="opengraph"] .og-image {
+    /* 0. Parent Figure: Flush Left Reset */
+    html body figure[data-ke-type="opengraph"] {
+        margin: 0 !important;
+        padding: 0 !important;
         width: 100% !important;
-        max-width: none !important;
-        height: 160px !important;
-        border-right: none !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        max-width: 100% !important;
     }
 
-    figure[data-ke-type="opengraph"] .og-text {
-        padding: 1rem !important;
+    /* 1. Container: Horizontal Flex Layout */
+    html body figure[data-ke-type="opengraph"] a {
+        display: flex !important;
+        /* Row Layout */
+        flex-direction: row !important;
+        height: 80px !important;
+        min-height: 80px !important;
+        /* Compact Height FORCE OVERRIDE */
+        margin: 0 !important;
+        padding: 0 !important;
+        text-decoration: none !important;
+        background: #18181b !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        /* Clip image corners */
     }
 
-    figure[data-ke-type="opengraph"] .og-title {
-        font-size: 0.95rem !important;
+    /* 2. Image: Thumbnail Style (Left) */
+    html body figure[data-ke-type="opengraph"] .og-image {
+        display: block !important;
+        width: 85px !important;
+        /* Larger Thumbnail */
+        min-width: 85px !important;
+        height: 100% !important;
+        margin: 0 !important;
+        border: none !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+        padding: 0 !important;
+        object-fit: cover !important;
+    }
+
+    /* 3. Text Container: Flex Grow (Right) */
+    html body figure[data-ke-type="opengraph"] .og-text {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        flex: 1 !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding: 0 1rem !important;
+        /* Side Padding */
+        text-align: left !important;
+        background: transparent !important;
+        border: none !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 4. Title */
+    html body figure[data-ke-type="opengraph"] .og-title {
+        display: -webkit-box !important;
+        /* Required for line-clamp */
+        -webkit-box-orient: vertical !important;
+        /* Required for line-clamp */
+        font-size: 0.75rem !important;
+        /* Compact Title */
+        line-height: 1.35 !important;
+        margin-bottom: 0.25rem !important;
+        white-space: normal !important;
+        word-break: break-all !important;
+        color: #f4f4f5 !important;
+        opacity: 1 !important;
+        -webkit-line-clamp: 2 !important;
+        /* Limit lines */
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    /* 5. Description: Hidden */
+    html body figure[data-ke-type="opengraph"] .og-desc {
+        display: none !important;
+    }
+
+    /* 6. Host / URL */
+    html body figure[data-ke-type="opengraph"] .og-host {
+        display: block !important;
+        position: static !important;
+        margin: 0 !important;
+        font-size: 0.7rem !important;
+        /* Smaller Host */
+        color: #a1a1aa !important;
+        opacity: 0.8 !important;
     }
 }
 
@@ -1099,6 +1189,9 @@ figure[data-ke-type="opengraph"] .og-host::before {
     /* zinc-200 (Bright for contrast) */
     font-weight: 900;
     letter-spacing: 12px;
+    text-indent: 12px !important;
+    /* Perfect center alignment */
+    margin-right: 0 !important;
 }
 
 /* Style 2: Thick Short Line (-) */
@@ -1345,4 +1438,61 @@ html {
 .cloak-until-loaded.loaded {
     visibility: visible;
     opacity: 1;
+}
+
+/* -------------------------------------------------------------------------- */
+/* MOBILE OPTIMIZATION: Separators & Blockquotes */
+/* -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+
+    /* Blockquote Adjustments */
+    .prose blockquote,
+    .tt_article_useless_p_margin blockquote {
+        margin: 1.5rem 0 !important;
+        padding: 1.25rem 1rem !important;
+    }
+
+    /* Style 1: Centered Quote (Icon) */
+    .prose blockquote[data-ke-style="style1"] .tt_article_useless_p_margin blockquote[data-ke-style="style1"] {
+        padding-top: 3rem !important;
+        font-size: 1rem !important;
+    }
+
+    /* Style 1 Icon Resize */
+    .prose blockquote[data-ke-style="style1"]::before,
+    .tt_article_useless_p_margin blockquote[data-ke-style="style1"]::before {
+        font-size: 1.75rem !important;
+        top: 0.25rem !important;
+    }
+
+    /* Horizontal Rule (HR) Adjustments */
+    .tt_article_useless_p_margin hr,
+    .prose hr {
+        margin: 2.5rem auto !important;
+    }
+
+    /* Style 1: Dots */
+    .tt_article_useless_p_margin hr[data-ke-style="style1"]::after,
+    .prose hr[data-ke-style="style1"]::after {
+        font-size: 28px !important;
+        font-size: 28px !important;
+        letter-spacing: 8px !important;
+        text-indent: 8px !important;
+        /* Perfect center alignment */
+        margin-right: 0 !important;
+    }
+
+    /* Style 3: Zigzag */
+    .tt_article_useless_p_margin hr[data-ke-style="style3"],
+    .prose hr[data-ke-style="style3"] {
+        width: 80px !important;
+        height: 12px !important;
+        background-size: 10px 5px !important;
+    }
+
+    /* Style 4: Vertical Line */
+    .tt_article_useless_p_margin hr[data-ke-style="style4"],
+    .prose hr[data-ke-style="style4"] {
+        height: 24px !important;
+    }
 }

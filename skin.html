@@ -89,7 +89,7 @@
                     Lumora<span class="text-accent">-</span>Lab
                 </a>
 
-                <div class="flex items-center gap-6 mr-14">
+                <div class="flex items-center gap-6 mr-0 sm:mr-14">
                     <!-- Desktop Nav -->
                     <nav class="hidden sm:flex items-center gap-8 text-[15px] text-textSub font-medium">
                         <a href="[##_guestbook_link_##]"
@@ -382,7 +382,7 @@
                             <div id="view-indicator-detail" class="hidden"></div>
                             <div class="col-span-full relative min-h-screen cloak-until-loaded">
                                 <!-- Top Navigation: Back Button -->
-                                <div class="mb-8 pt-2 animate-fadeIn flex justify-center lg:justify-start">
+                                <div class="mb-8 pt-2 animate-fadeIn flex justify-start">
                                     <a href="[##_blog_link_##]"
                                         class="group inline-flex items-center gap-3 text-sm text-textSub hover:text-white transition-colors px-2 py-2 rounded-lg hover:bg-white/5">
                                         <div
@@ -399,9 +399,9 @@
                                     <article class="animate-fadeIn w-full max-w-4xl pb-12 relative z-10">
 
                                         <!-- Post Header -->
-                                        <header class="mb-2 px-0 text-center lg:text-left">
+                                        <header class="mb-2 px-0 text-left">
                                             <div
-                                                class="flex flex-wrap items-center justify-center lg:justify-start gap-3 text-xs md:text-sm font-mono text-accentBlue mb-6">
+                                                class="flex flex-wrap items-center justify-start gap-3 text-xs md:text-sm font-mono text-accentBlue mb-6">
                                                 <span
                                                     class="bg-accentBlue/10 px-3 py-1 rounded-full border border-accentBlue/20">[##_article_rep_category_##]</span>
                                                 <span class="text-zinc-600">|</span>
@@ -409,7 +409,7 @@
                                             </div>
 
                                             <h1
-                                                class="text-2xl md:text-3xl lg:text-4xl font-bold text-zinc-100 mb-4 !leading-[1.4] break-keep">
+                                                class="text-[28px] md:text-3xl lg:text-4xl font-bold text-zinc-100 mb-4 !leading-[1.4] break-keep">
                                                 [##_article_rep_title_##]
                                             </h1>
 
@@ -448,9 +448,9 @@
                                             <div class="tt_article_useless_p_margin items-center
                                          prose prose md:prose-lg prose-invert max-w-none 
                                          prose-headings:text-gray-100 prose-headings:font-bold prose-headings:tracking-tight
-                                         prose-h2:text-xl md:prose-h2:text-2xl prose-h2:mt-10 md:prose-h2:mt-12 prose-h2:mb-4 md:prose-h2:mb-6 prose-h2:border-l-4 prose-h2:border-accent prose-h2:pl-4
-                                         prose-h3:text-lg md:prose-h3:text-xl prose-h3:text-accentBlue prose-h3:mt-8 md:prose-h3:mt-10
-                                         prose-p:text-zinc-300 prose-p:leading-7 md:prose-p:leading-8 prose-p:font-light
+                                         prose-h2:text-[24px] md:prose-h2:text-2xl prose-h2:mt-10 md:prose-h2:mt-12 prose-h2:mb-4 md:prose-h2:mb-6 prose-h2:border-l-4 prose-h2:border-accent prose-h2:pl-4
+                                         prose-h3:text-[21px] md:prose-h3:text-xl prose-h3:text-accentBlue prose-h3:mt-8 md:prose-h3:mt-10
+                                         prose-p:text-zinc-300 prose-p:text-[16px] md:prose-p:text-[17px] prose-p:leading-7 md:prose-p:leading-8 prose-p:font-light
                                          prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-a:transition-colors
                                          prose-strong:text-white prose-strong:font-semibold
                                          prose-blockquote:border-l-4 prose-blockquote:border-accent prose-blockquote:bg-white/5 prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:text-zinc-300 prose-blockquote:shadow-sm
@@ -924,7 +924,7 @@
         <div id="search-overlay"
             class="fixed inset-0 z-[70] bg-bgBody/95 backdrop-blur-xl hidden flex-col items-center justify-center animate-fadeIn">
             <button onclick="toggleSearch()"
-                class="absolute top-8 right-28 w-12 h-12 rounded-full bg-zinc-800/50 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-700 transition-all">
+                class="absolute top-8 right-8 md:right-28 w-12 h-12 rounded-full bg-zinc-800/50 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-700 transition-all">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
 
@@ -947,358 +947,373 @@
             </div>
         </div>
 
-        <s_t3>
-            <!-- Footer -->
-            <footer
-                class="py-12 text-center text-textSub text-xs border-t border-zinc-800/50 mt-auto relative z-10 bg-bgBody/50 backdrop-blur-sm">
-                <p class="font-mono opacity-60 mb-2">&copy; 2026 [##_title_##] All rights reserved.</p>
-                <p class="font-mono opacity-40 text-[10px]">
-                    Designed by <span class="text-accent">Lumora</span>
-                </p>
-            </footer>
-            <!-- Custom Script (Versioning) -->
-            <script src="./images/script_v32.js"></script>
+        <!-- Removed duplicate s_t3 tag -->
+        <!-- Footer -->
+        <footer
+            class="py-12 text-center text-textSub text-xs border-t border-zinc-800/50 mt-auto relative z-10 bg-bgBody/50 backdrop-blur-sm">
+            <p class="font-mono opacity-60 mb-2">&copy; 2026 [##_title_##] All rights reserved.</p>
+            <p class="font-mono opacity-40 text-[10px]">
+                Designed by <span class="text-accent">Lumora</span>
+            </p>
+        </footer>
+        <!-- Custom Script (Versioning) -->
+        <script src="./images/script_v32.js"></script>
 
-            <script>
-                // Validate Comment to prevent freezing
-                function validateComment(btn) {
-                    const form = btn.closest('.comment-form-box');
-                    if (!form) return true; // Fallback
-                    const textarea = form.querySelector('textarea');
-                    if (!textarea) return true;
+        <script>
+            // Validate Comment to prevent freezing
+            function validateComment(btn) {
+                const form = btn.closest('.comment-form-box');
+                if (!form) return true; // Fallback
+                const textarea = form.querySelector('textarea');
+                if (!textarea) return true;
 
-                    if (textarea.value.trim().length === 0) {
-                        alert('내용을 입력해주세요.');
-                        textarea.focus();
-                        return false;
-                    }
-                    return true;
+                if (textarea.value.trim().length === 0) {
+                    alert('내용을 입력해주세요.');
+                    textarea.focus();
+                    return false;
                 }
+                return true;
+            }
 
-                (function () {
-                    try {
-                        // ... existing avatar logic ...
-                        window.addEventListener('load', function () {
-                            // 0. Anti-Flicker Reveal (Categories)
-                            setTimeout(() => {
-                                document.querySelectorAll('.cloak-until-loaded').forEach(el => {
-                                    el.classList.add('loaded');
-                                });
-                            }, 100); // Slight delay to ensure JS transformation is done
+            (function () {
+                try {
+                    // ... existing avatar logic ...
+                    window.addEventListener('load', function () {
+                        // 0. Anti-Flicker Reveal (Categories)
+                        setTimeout(() => {
+                            document.querySelectorAll('.cloak-until-loaded').forEach(el => {
+                                el.classList.add('loaded');
+                            });
+                        }, 100); // Slight delay to ensure JS transformation is done
 
-                            // Visitor Count Animation
-                            (function animateVisitorCounts() {
-                                const counters = document.querySelectorAll('.count-animate');
-                                counters.forEach(counter => {
-                                    const originalText = counter.innerText;
-                                    // Remove non-numeric chars (commas)
-                                    const target = parseInt(originalText.replace(/,/g, ''), 10);
+                        // Visitor Count Animation
+                        (function animateVisitorCounts() {
+                            const counters = document.querySelectorAll('.count-animate');
+                            counters.forEach(counter => {
+                                const originalText = counter.innerText;
+                                // Remove non-numeric chars (commas)
+                                const target = parseInt(originalText.replace(/,/g, ''), 10);
 
-                                    if (isNaN(target)) return; // Skip if not a number
+                                if (isNaN(target)) return; // Skip if not a number
 
-                                    const duration = 1500; // Animation duration in ms
-                                    const start = 0;
-                                    const startTime = performance.now();
+                                const duration = 1500; // Animation duration in ms
+                                const start = 0;
+                                const startTime = performance.now();
 
-                                    function updateCount(currentTime) {
-                                        const elapsed = currentTime - startTime;
-                                        const progress = Math.min(elapsed / duration, 1);
+                                function updateCount(currentTime) {
+                                    const elapsed = currentTime - startTime;
+                                    const progress = Math.min(elapsed / duration, 1);
 
-                                        // Ease out quart
-                                        const ease = 1 - Math.pow(1 - progress, 4);
+                                    // Ease out quart
+                                    const ease = 1 - Math.pow(1 - progress, 4);
 
-                                        const current = Math.floor(ease * target);
+                                    const current = Math.floor(ease * target);
 
-                                        // Format with commas
-                                        counter.innerText = current.toLocaleString();
+                                    // Format with commas
+                                    counter.innerText = current.toLocaleString();
 
-                                        if (progress < 1) {
-                                            requestAnimationFrame(updateCount);
-                                        } else {
-                                            counter.innerText = target.toLocaleString(); // Ensure final value is exact
-                                        }
-                                    }
-
-                                    requestAnimationFrame(updateCount);
-                                });
-                            })();
-
-                            // TOC Fade-in (if TOC exists)
-                            // Parent container is cloaked, so TOC will appear with it.
-
-
-                            // 2. Deferred Logic: Comment Validation, Avatar Sync, etc.
-                            setTimeout(function () {
-                                try {
-                                    // 1. Prevent Login Popup on Textarea Click (for Guests)
-                                    const commentTextareas = document.querySelectorAll('.comment-form-box textarea');
-                                    commentTextareas.forEach(ta => {
-                                        ta.addEventListener('click', function (e) {
-                                            e.stopPropagation(); // Stop Tistory's global login check
-                                        });
-                                        // Also prevent on focus if attached there
-                                        ta.addEventListener('focus', function (e) {
-                                            e.stopPropagation();
-                                        });
-                                    });
-
-                                    // ... Avatar Sync Logic ...
-                                    // Try to find Tistory's logged-in user avatar
-                                    const toolbarAvatar = document.querySelector('.txt_id .thumb_profile');
-                                    const newToolbarAvatar = document.querySelector('.img_profile');
-                                    const tistoryCommentAvatar = document.querySelector('.tt_comment_profile_image');
-                                    const blogOwnerImage = "[##_image_##]";
-
-                                    // ... (Existing avatar logic is assumed to be here or handled by not overwriting deeply) 
-                                    // Wait, the previous view_file showed I DELETED the content between 1055 and 1111?
-                                    // No, I replaced content around 1055.
-                                    // The `view_file` showed line 1055: `} catch (e) {`
-                                    // This means I need to PUT BACK the content that was supposed to be there.
-                                    // The existing avatar logic (lines ~1070 in previous versions) seems to be MISSING if I just restore the try block?
-                                    // Let's look at the `view_file` again. 
-                                    // Lines 1055-1058 are just closing braces/catch.
-                                    // Lines 1060+ is my NEW TOC logic.
-                                    // The Avatar Logic (which was ~1070) is GONE?
-                                    // I must restore it from my memory or previous context.
-                                    // I viewed the file in step 1000-ish earlier.
-                                    // I see `... Avatar Sync Logic ...` comments in my previous edit proposal, so I intended to keep it.
-                                    // But I might have clobbered it.
-                                    // I will restore the standard "Avatar Sync" logic here.
-
-                                    if (toolbarAvatar && newToolbarAvatar) {
-                                        newToolbarAvatar.src = toolbarAvatar.src;
-                                    } else if (tistoryCommentAvatar && newToolbarAvatar) {
-                                        newToolbarAvatar.src = tistoryCommentAvatar.src;
+                                    if (progress < 1) {
+                                        requestAnimationFrame(updateCount);
                                     } else {
-                                        // Fallback to blog owner image if no login detected
-                                        if (newToolbarAvatar) newToolbarAvatar.src = blogOwnerImage;
+                                        counter.innerText = target.toLocaleString(); // Ensure final value is exact
                                     }
-
-                                } catch (e) {
-                                    console.log("Script Error", e);
                                 }
+
+                                requestAnimationFrame(updateCount);
+                            });
+                        })();
+
+                        // TOC Fade-in (if TOC exists)
+                        // Parent container is cloaked, so TOC will appear with it.
+
+
+                        // 2. Deferred Logic: Comment Validation, Avatar Sync, etc.
+                        setTimeout(function () {
+                            try {
+                                // 1. Prevent Login Popup on Textarea Click (for Guests)
+                                const commentTextareas = document.querySelectorAll('.comment-form-box textarea');
+                                commentTextareas.forEach(ta => {
+                                    ta.addEventListener('click', function (e) {
+                                        e.stopPropagation(); // Stop Tistory's global login check
+                                    });
+                                    // Also prevent on focus if attached there
+                                    ta.addEventListener('focus', function (e) {
+                                        e.stopPropagation();
+                                    });
+                                });
+
+                                // ... Avatar Sync Logic ...
+                                // Try to find Tistory's logged-in user avatar
+                                const toolbarAvatar = document.querySelector('.txt_id .thumb_profile');
+                                const newToolbarAvatar = document.querySelector('.img_profile');
+                                const tistoryCommentAvatar = document.querySelector('.tt_comment_profile_image');
+                                const blogOwnerImage = "[##_image_##]";
+
+                                // ... (Existing avatar logic is assumed to be here or handled by not overwriting deeply) 
+                                // Wait, the previous view_file showed I DELETED the content between 1055 and 1111?
+                                // No, I replaced content around 1055.
+                                // The `view_file` showed line 1055: `} catch (e) {`
+                                // This means I need to PUT BACK the content that was supposed to be there.
+                                // The existing avatar logic (lines ~1070 in previous versions) seems to be MISSING if I just restore the try block?
+                                // Let's look at the `view_file` again. 
+                                // Lines 1055-1058 are just closing braces/catch.
+                                // Lines 1060+ is my NEW TOC logic.
+                                // The Avatar Logic (which was ~1070) is GONE?
+                                // I must restore it from my memory or previous context.
+                                // I viewed the file in step 1000-ish earlier.
+                                // I see `... Avatar Sync Logic ...` comments in my previous edit proposal, so I intended to keep it.
+                                // But I might have clobbered it.
+                                // I will restore the standard "Avatar Sync" logic here.
+
+                                if (toolbarAvatar && newToolbarAvatar) {
+                                    newToolbarAvatar.src = toolbarAvatar.src;
+                                } else if (tistoryCommentAvatar && newToolbarAvatar) {
+                                    newToolbarAvatar.src = tistoryCommentAvatar.src;
+                                } else {
+                                    // Fallback to blog owner image if no login detected
+                                    if (newToolbarAvatar) newToolbarAvatar.src = blogOwnerImage;
+                                }
+
+                            } catch (e) {
+                                console.log("Script Error", e);
+                            }
+                        }, 500);
+                        // ---------------------------------------------------------
+                        // Interactive Floating Action Bar
+                        // ---------------------------------------------------------
+                        window.toggleLike = function () {
+                            const btn = document.getElementById('custom-like-btn');
+                            const iconDiv = document.getElementById('custom-like-icon');
+                            const icon = iconDiv.querySelector('i');
+
+                            // Find native Tistory like button
+                            // It usually has class .uoc-icon or .like_btn inside the container we added
+                            const nativeBtn = document.querySelector('.uoc-icon') || document.querySelector('.like_btn');
+
+                            if (nativeBtn) {
+                                nativeBtn.click();
+                                // Visual update might happen via sync, but let's force it for instant feedback
+                                // With Tistory's native like, clicking it might toggle state async.
+                                // We will wait for sync observer or just toggle visually optimistically?
+                                // Optimistic toggle is safer for UX responsiveness.
+
+                                // Note: If Tistory script is slow, this might desync, but we have a load observer below.
+                            }
+
+                            // Toggle Visual State (optimistic)
+                            const isLiked = icon.classList.contains('fa-solid');
+                            if (isLiked) {
+                                icon.classList.remove('fa-solid', 'text-red-500');
+                                icon.classList.add('fa-regular');
+                                iconDiv.classList.remove('text-red-500');
+                                iconDiv.classList.add('text-zinc-400');
+                            } else {
+                                icon.classList.remove('fa-regular');
+                                icon.classList.add('fa-solid'); // Solid heart
+                                iconDiv.classList.remove('text-zinc-400');
+                                iconDiv.classList.add('text-red-500'); // Color it red
+                            }
+                        };
+
+                        window.highlightButton = function (btnId, colorClass) {
+                            const btn = document.getElementById(btnId);
+                            const div = btn.querySelector('div');
+
+                            // Temporarily add color
+                            div.classList.remove('text-zinc-400');
+                            div.classList.add(colorClass);
+
+                            // After 0.5s, revert (since Comments/Top are actions, not states)
+                            setTimeout(() => {
+                                div.classList.remove(colorClass);
+                                div.classList.add('text-zinc-400');
                             }, 500);
-                            // ---------------------------------------------------------
-                            // Interactive Floating Action Bar
-                            // ---------------------------------------------------------
-                            window.toggleLike = function () {
-                                const btn = document.getElementById('custom-like-btn');
+                        };
+
+                        // Sync Initial Like State (on load)
+                        setTimeout(() => {
+                            // Check if Tistory's like button is in 'liked' state
+                            const nativeLiked = document.querySelector('.uoc-icon.like_on') || document.querySelector('.like_btn.like_on');
+                            if (nativeLiked) {
                                 const iconDiv = document.getElementById('custom-like-icon');
                                 const icon = iconDiv.querySelector('i');
+                                icon.classList.remove('fa-regular');
+                                icon.classList.add('fa-solid');
+                                iconDiv.classList.remove('text-zinc-400');
+                                iconDiv.classList.add('text-red-500');
+                            }
+                        }, 1500); // Slight delay to ensure Tistory JS renders the like button status
 
-                                // Find native Tistory like button
-                                // It usually has class .uoc-icon or .like_btn inside the container we added
-                                const nativeBtn = document.querySelector('.uoc-icon') || document.querySelector('.like_btn');
+                        // ---------------------------------------------------------
+                        // TOC Sticky & Scroll Spy Logic
+                        // ---------------------------------------------------------
+                        // ---------------------------------------------------------
+                        // TOC Sticky & Scroll Spy Logic
+                        // ---------------------------------------------------------
+                        (function () {
+                            const tocContainer = document.getElementById('toc-container');
+                            // Make sure we are on a permalink page (article container exists)
+                            const articleContainer = document.querySelector('.col-span-full.relative.min-h-screen');
 
-                                if (nativeBtn) {
-                                    nativeBtn.click();
-                                    // Visual update might happen via sync, but let's force it for instant feedback
-                                    // With Tistory's native like, clicking it might toggle state async.
-                                    // We will wait for sync observer or just toggle visually optimistically?
-                                    // Optimistic toggle is safer for UX responsiveness.
+                            if (!tocContainer || !articleContainer) return;
 
-                                    // Note: If Tistory script is slow, this might desync, but we have a load observer below.
+                            // Helper: Throttle via rAF
+                            let ticking = false;
+
+                            // 1. Sticky Metrics & Logic
+                            function onScrollSticky() {
+                                // Only apply if visible (XL breakpoint is 1280px)
+                                if (window.innerWidth < 1280 || window.getComputedStyle(tocContainer).display === 'none') {
+                                    tocContainer.style.top = '0px';
+                                    return;
                                 }
 
-                                // Toggle Visual State (optimistic)
-                                const isLiked = icon.classList.contains('fa-solid');
-                                if (isLiked) {
-                                    icon.classList.remove('fa-solid', 'text-red-500');
-                                    icon.classList.add('fa-regular');
-                                    iconDiv.classList.remove('text-red-500');
-                                    iconDiv.classList.add('text-zinc-400');
-                                } else {
-                                    icon.classList.remove('fa-regular');
-                                    icon.classList.add('fa-solid'); // Solid heart
-                                    iconDiv.classList.remove('text-zinc-400');
-                                    iconDiv.classList.add('text-red-500'); // Color it red
-                                }
-                            };
+                                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                                // Note: getBoundingClientRect causes reflow, but inside rAF it's managed.
+                                // Ideally we cache articleTopAbs on resize, but this is acceptable for now.
+                                const articleRect = articleContainer.getBoundingClientRect();
+                                const articleTopAbs = scrollTop + articleRect.top;
 
-                            window.highlightButton = function (btnId, colorClass) {
-                                const btn = document.getElementById(btnId);
-                                const div = btn.querySelector('div');
+                                // Offset: stick at top: 100px relative to viewport
+                                let newTop = (scrollTop + 100) - articleTopAbs;
 
-                                // Temporarily add color
-                                div.classList.remove('text-zinc-400');
-                                div.classList.add(colorClass);
+                                if (newTop < 0) newTop = 0;
 
-                                // After 0.5s, revert (since Comments/Top are actions, not states)
-                                setTimeout(() => {
-                                    div.classList.remove(colorClass);
-                                    div.classList.add('text-zinc-400');
-                                }, 500);
-                            };
+                                const tocHeight = tocContainer.offsetHeight;
+                                const limit = articleContainer.offsetHeight - tocHeight - 100;
 
-                            // Sync Initial Like State (on load)
-                            setTimeout(() => {
-                                // Check if Tistory's like button is in 'liked' state
-                                const nativeLiked = document.querySelector('.uoc-icon.like_on') || document.querySelector('.like_btn.like_on');
-                                if (nativeLiked) {
-                                    const iconDiv = document.getElementById('custom-like-icon');
-                                    const icon = iconDiv.querySelector('i');
-                                    icon.classList.remove('fa-regular');
-                                    icon.classList.add('fa-solid');
-                                    iconDiv.classList.remove('text-zinc-400');
-                                    iconDiv.classList.add('text-red-500');
-                                }
-                            }, 1500); // Slight delay to ensure Tistory JS renders the like button status
+                                if (newTop > limit) newTop = limit;
 
-                            // ---------------------------------------------------------
-                            // TOC Sticky & Scroll Spy Logic
-                            // ---------------------------------------------------------
-                            // ---------------------------------------------------------
-                            // TOC Sticky & Scroll Spy Logic
-                            // ---------------------------------------------------------
-                            (function () {
-                                const tocContainer = document.getElementById('toc-container');
-                                // Make sure we are on a permalink page (article container exists)
-                                const articleContainer = document.querySelector('.col-span-full.relative.min-h-screen');
+                                tocContainer.style.top = newTop + 'px';
+                            }
 
-                                if (!tocContainer || !articleContainer) return;
+                            // 2. Scroll Spy Logic
+                            const contentArea = articleContainer.querySelector('.tt_article_useless_p_margin') || articleContainer.querySelector('article');
+                            if (!contentArea) return;
 
-                                // Helper: Throttle via rAF
-                                let ticking = false;
+                            const headers = contentArea.querySelectorAll('h1, h2, h3, h4');
+                            const tocLinks = tocContainer.querySelectorAll('a');
+                            let lastActiveId = null;
 
-                                // 1. Sticky Metrics & Logic
-                                function onScrollSticky() {
-                                    // Only apply if visible (XL breakpoint is 1280px)
-                                    if (window.innerWidth < 1280 || window.getComputedStyle(tocContainer).display === 'none') {
-                                        tocContainer.style.top = '0px';
-                                        return;
+                            function onScrollSpy() {
+                                if (headers.length === 0 || tocLinks.length === 0) return;
+
+                                const scrollPos = (window.scrollY || document.documentElement.scrollTop) + 150; // Offset
+
+                                let currentId = null;
+                                // Find the last header we've scrolled past
+                                headers.forEach(header => {
+                                    if (header.offsetTop <= scrollPos) {
+                                        currentId = header.id;
                                     }
+                                });
 
-                                    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-                                    // Note: getBoundingClientRect causes reflow, but inside rAF it's managed.
-                                    // Ideally we cache articleTopAbs on resize, but this is acceptable for now.
-                                    const articleRect = articleContainer.getBoundingClientRect();
-                                    const articleTopAbs = scrollTop + articleRect.top;
+                                // Only update DOM if the active section has CHANGED
+                                if (lastActiveId !== currentId) {
+                                    lastActiveId = currentId;
 
-                                    // Offset: stick at top: 100px relative to viewport
-                                    let newTop = (scrollTop + 100) - articleTopAbs;
-
-                                    if (newTop < 0) newTop = 0;
-
-                                    const tocHeight = tocContainer.offsetHeight;
-                                    const limit = articleContainer.offsetHeight - tocHeight - 100;
-
-                                    if (newTop > limit) newTop = limit;
-
-                                    tocContainer.style.top = newTop + 'px';
-                                }
-
-                                // 2. Scroll Spy Logic
-                                const contentArea = articleContainer.querySelector('.tt_article_useless_p_margin') || articleContainer.querySelector('article');
-                                if (!contentArea) return;
-
-                                const headers = contentArea.querySelectorAll('h1, h2, h3, h4');
-                                const tocLinks = tocContainer.querySelectorAll('a');
-                                let lastActiveId = null;
-
-                                function onScrollSpy() {
-                                    if (headers.length === 0 || tocLinks.length === 0) return;
-
-                                    const scrollPos = (window.scrollY || document.documentElement.scrollTop) + 150; // Offset
-
-                                    let currentId = null;
-                                    // Find the last header we've scrolled past
-                                    headers.forEach(header => {
-                                        if (header.offsetTop <= scrollPos) {
-                                            currentId = header.id;
+                                    tocLinks.forEach(link => {
+                                        const href = link.getAttribute('href');
+                                        // Check if this link matches currentId
+                                        if (href && currentId && href.includes(currentId)) {
+                                            link.classList.add('active', 'text-accent', 'font-bold');
+                                            link.classList.remove('text-zinc-400', 'font-normal');
+                                        } else {
+                                            link.classList.remove('active', 'text-accent', 'font-bold');
+                                            link.classList.add('text-zinc-400', 'font-normal');
                                         }
                                     });
-
-                                    // Only update DOM if the active section has CHANGED
-                                    if (lastActiveId !== currentId) {
-                                        lastActiveId = currentId;
-
-                                        tocLinks.forEach(link => {
-                                            const href = link.getAttribute('href');
-                                            // Check if this link matches currentId
-                                            if (href && currentId && href.includes(currentId)) {
-                                                link.classList.add('active', 'text-accent', 'font-bold');
-                                                link.classList.remove('text-zinc-400', 'font-normal');
-                                            } else {
-                                                link.classList.remove('active', 'text-accent', 'font-bold');
-                                                link.classList.add('text-zinc-400', 'font-normal');
-                                            }
-                                        });
-                                    }
                                 }
-
-                                // Unified Scroll Handler using rAF
-                                function onScroll() {
-                                    if (!ticking) {
-                                        window.requestAnimationFrame(() => {
-                                            onScrollSticky();
-                                            onScrollSpy();
-                                            ticking = false;
-                                        });
-                                        ticking = true;
-                                    }
-                                }
-
-                                window.addEventListener('scroll', onScroll, { passive: true });
-                                // Initial Call
-                                onScrollSticky();
-                                onScrollSpy();
-                            })();
-
-                        });
-                    } catch (e) {
-                        console.log("Avatar sync failed", e);
-                    }
-                })();
-            </script>
-            <script>
-                // Post Summary Whitespace Trimmer & Smart Line Clamping
-                document.addEventListener("DOMContentLoaded", function () {
-                    const articles = document.querySelectorAll('article');
-
-                    articles.forEach(function (article) {
-                        // 1. Whitespace Trimmer
-                        const summary = article.querySelector('.item-summary');
-                        if (summary && summary.firstChild && summary.firstChild.nodeType === 3) {
-                            summary.firstChild.nodeValue = summary.firstChild.nodeValue.trimStart();
-                        }
-
-                        // 2. Smart Line Clamping
-                        const title = article.querySelector('h3');
-                        if (title && summary) {
-                            // Check title height to determine if it's 1 line or 2 lines
-                            // Standard line height allows us to check clientHeight.
-                            // If height is small (e.g., < 60px), it's likely 1 line.
-                            if (title.clientHeight < 60) {
-                                summary.classList.remove('line-clamp-4');
-                                summary.classList.add('line-clamp-6');
                             }
-                        }
-                    });
-                });
-            </script>
-            <script>
-                // Empty Category State Handler
-                document.addEventListener("DOMContentLoaded", function () {
-                    const listHeader = document.getElementById('list-header');
-                    if (listHeader) {
-                        const mainGrid = document.querySelector('main.grid');
-                        const articles = mainGrid.querySelectorAll('article');
 
-                        if (articles.length === 0) {
-                            const emptyState = document.createElement('div');
-                            emptyState.className = "col-span-full flex flex-col items-center justify-center py-20 text-center animate-fadeIn";
-                            emptyState.innerHTML = `
+                            // Unified Scroll Handler using rAF
+                            function onScroll() {
+                                if (!ticking) {
+                                    window.requestAnimationFrame(() => {
+                                        onScrollSticky();
+                                        onScrollSpy();
+                                        ticking = false;
+                                    });
+                                    ticking = true;
+                                }
+                            }
+
+                            window.addEventListener('scroll', onScroll, { passive: true });
+                            // Initial Call
+                            onScrollSticky();
+                            onScrollSpy();
+                        })();
+
+                    });
+                } catch (e) {
+                    console.log("Avatar sync failed", e);
+                }
+            })();
+        </script>
+        <script>
+            // Post Summary Whitespace Trimmer & Smart Line Clamping
+            document.addEventListener("DOMContentLoaded", function () {
+                const articles = document.querySelectorAll('article');
+
+                articles.forEach(function (article) {
+                    // 1. Whitespace Trimmer
+                    const summary = article.querySelector('.item-summary');
+                    if (summary && summary.firstChild && summary.firstChild.nodeType === 3) {
+                        summary.firstChild.nodeValue = summary.firstChild.nodeValue.trimStart();
+                    }
+
+                    // 2. Smart Line Clamping
+                    const title = article.querySelector('h3');
+                    if (title && summary) {
+                        // Check title height to determine if it's 1 line or 2 lines
+                        // Standard line height allows us to check clientHeight.
+                        // If height is small (e.g., < 60px), it's likely 1 line.
+                        if (title.clientHeight < 60) {
+                            summary.classList.remove('line-clamp-4');
+                            summary.classList.add('line-clamp-6');
+                        }
+                    }
+                });
+            });
+        </script>
+        <script>
+            // Empty Category State Handler
+            document.addEventListener("DOMContentLoaded", function () {
+                const listHeader = document.getElementById('list-header');
+                if (listHeader) {
+                    const mainGrid = document.querySelector('main.grid');
+                    const articles = mainGrid.querySelectorAll('article');
+
+                    if (articles.length === 0) {
+                        const emptyState = document.createElement('div');
+                        emptyState.className = "col-span-full flex flex-col items-center justify-center py-20 text-center animate-fadeIn";
+                        emptyState.innerHTML = `
                                 <div class="w-20 h-20 rounded-full bg-zinc-800/50 flex items-center justify-center mb-6">
                                     <i class="fa-solid fa-folder-open text-4xl text-zinc-600"></i>
                                 </div>
                                 <h3 class="text-xl font-bold text-zinc-300 mb-2">아직 작성된 글이 없습니다</h3>
                                 <p class="text-zinc-500 text-sm">새로운 글이 올라올 때까지 조금만 기다려주세요!</p>
                             `;
-                            listHeader.after(emptyState);
-                        }
+
+                        listHeader.after(emptyState);
+                    }
+                }
+            });
+        </script>
+        <script>
+            // Date Formatter: Removes time component (HH:mm) from date strings
+            document.addEventListener("DOMContentLoaded", function () {
+                const dateElements = document.querySelectorAll('.date-list, .date-detail');
+                dateElements.forEach(el => {
+                    // Pattern to match time at the end (e.g., " 21:38")
+                    // Tistory often renders as "YYYY. M. D. HH:mm"
+                    if (el.textContent.includes(':')) {
+                        el.textContent = el.textContent.replace(/\s?\d{1,2}:\d{2}\s*$/, '');
                     }
                 });
-            </script>
+            });
+        </script>
+    </s_t3>
 </body>
 
 </html>

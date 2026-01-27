@@ -39,10 +39,105 @@ textarea {
 }
 
 /* Syntax Highlighting */
+/* Syntax Highlighting & Code Blocks */
+.hljs,
+pre,
+code,
+.prose pre,
+.prose code {
+    background-color: #282c34 !important;
+    /* Atom One Dark BG */
+    color: #abb2bf !important;
+    /* Atom One Dark FG */
+    font-family: 'JetBrains Mono', monospace !important;
+}
+
 .hljs {
-    background: #18181b !important;
-    border-radius: 8px;
-    padding: 1em !important;
+    display: block;
+    overflow-x: auto;
+    padding: 1.25rem !important;
+    border-radius: 0.75rem !important;
+    line-height: 1.6 !important;
+    font-size: 0.9rem !important;
+}
+
+/* Atom One Dark Syntax Colors (Forced) */
+.hljs-comment,
+.hljs-quote {
+    color: #5c6370 !important;
+    font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+    color: #c678dd !important;
+    /* Purple */
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+    color: #e06c75 !important;
+    /* Red */
+}
+
+.hljs-literal {
+    color: #56b6c2 !important;
+    /* Cyan */
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta .hljs-string {
+    color: #98c379 !important;
+    /* Green */
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+    color: #d19a66 !important;
+    /* Orange */
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+    color: #60a5fa !important;
+    /* Brighter Blue */
+}
+
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-strong {
+    font-weight: bold;
+}
+
+.hljs-link {
+    text-decoration: underline;
+}
+
+/* Ensure contrast for inline code */
+.prose pre code {
+    background-color: transparent !important;
+    color: inherit !important;
+    padding: 0 !important;
+    border: none !important;
 }
 
 /* Prose Image Radius */
@@ -354,7 +449,9 @@ figure[data-ke-type="opengraph"] {
 
 figure[data-ke-type="opengraph"] a {
     display: flex !important;
-    height: 150px !important;
+    min-height: 150px !important;
+    height: auto !important;
+    /* Allow growth */
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     border-radius: 16px !important;
     background-color: rgba(24, 24, 27, 0.6) !important;
@@ -399,10 +496,13 @@ figure[data-ke-type="opengraph"] .og-image::after {
 figure[data-ke-type="opengraph"] .og-text {
     flex: 1 !important;
     padding: 1.25rem 1.5rem !important;
+    /* Reverted padding */
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     background: transparent !important;
+    height: 100% !important;
+    /* Ensure full height for margin-top: auto to work */
 }
 
 /* Title */
@@ -430,7 +530,8 @@ figure[data-ke-type="opengraph"] .og-desc {
     color: #a1a1aa !important;
     /* zinc-400 */
     line-height: 1.5 !important;
-    margin-bottom: auto !important;
+    margin-bottom: 0 !important;
+    /* Removed auto margin from desc */
 
     /* Multi-line ellipsis (2 lines) */
     display: -webkit-box !important;
@@ -438,8 +539,12 @@ figure[data-ke-type="opengraph"] .og-desc {
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
     white-space: normal !important;
+    word-break: keep-all !important;
+    /* Prevent mid-word breaks for Korean */
 }
 
+/* Host/URL */
+/* Host/URL */
 /* Host/URL */
 figure[data-ke-type="opengraph"] .og-host {
     font-family: 'JetBrains Mono', monospace !important;
@@ -447,10 +552,17 @@ figure[data-ke-type="opengraph"] .og-host {
     /* 12px */
     color: #71717a !important;
     /* zinc-500 */
-    margin-top: 0.75rem !important;
+    margin-top: 0 !important;
+    position: absolute !important;
+    bottom: -17px !important;
+    left: 1.5rem !important;
+    width: calc(100% - 3rem) !important;
     display: flex !important;
     align-items: center !important;
     gap: 0.5rem;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
 
 figure[data-ke-type="opengraph"] .og-host::before {
@@ -465,26 +577,100 @@ figure[data-ke-type="opengraph"] .og-host::before {
 }
 
 /* Mobile Adjustments */
-@media (max-width: 640px) {
-    figure[data-ke-type="opengraph"] a {
-        height: auto !important;
-        flex-direction: column !important;
-    }
+/* Mobile Adjustments (Link Embed Card Style) */
+@media (max-width: 1024px) {
 
-    figure[data-ke-type="opengraph"] .og-image {
+    /* 0. Parent Figure: Flush Left Reset */
+    html body figure[data-ke-type="opengraph"] {
+        margin: 20px 0 !important;
+        /* Mobile Vertical Spacing */
+        padding: 0 !important;
         width: 100% !important;
-        max-width: none !important;
-        height: 160px !important;
-        border-right: none !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        max-width: 100% !important;
     }
 
-    figure[data-ke-type="opengraph"] .og-text {
-        padding: 1rem !important;
+    /* 1. Container: Horizontal Flex Layout */
+    html body figure[data-ke-type="opengraph"] a {
+        display: flex !important;
+        /* Row Layout */
+        flex-direction: row !important;
+        height: 80px !important;
+        min-height: 80px !important;
+        /* Compact Height FORCE OVERRIDE */
+        margin: 0 !important;
+        padding: 0 !important;
+        text-decoration: none !important;
+        background: #18181b !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        /* Clip image corners */
     }
 
-    figure[data-ke-type="opengraph"] .og-title {
-        font-size: 0.95rem !important;
+    /* 2. Image: Thumbnail Style (Left) */
+    html body figure[data-ke-type="opengraph"] .og-image {
+        display: block !important;
+        width: 85px !important;
+        /* Larger Thumbnail */
+        min-width: 85px !important;
+        height: 100% !important;
+        margin: 0 !important;
+        border: none !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+        padding: 0 !important;
+        object-fit: cover !important;
+    }
+
+    /* 3. Text Container: Flex Grow (Right) */
+    html body figure[data-ke-type="opengraph"] .og-text {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        flex: 1 !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding: 0 1rem !important;
+        /* Side Padding */
+        text-align: left !important;
+        background: transparent !important;
+        border: none !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 4. Title */
+    html body figure[data-ke-type="opengraph"] .og-title {
+        display: -webkit-box !important;
+        /* Required for line-clamp */
+        -webkit-box-orient: vertical !important;
+        /* Required for line-clamp */
+        font-size: 0.75rem !important;
+        /* Compact Title */
+        line-height: 1.35 !important;
+        margin-bottom: 0.25rem !important;
+        white-space: normal !important;
+        word-break: break-all !important;
+        color: #f4f4f5 !important;
+        opacity: 1 !important;
+        -webkit-line-clamp: 2 !important;
+        /* Limit lines */
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    /* 5. Description: Hidden */
+    html body figure[data-ke-type="opengraph"] .og-desc {
+        display: none !important;
+    }
+
+    /* 6. Host / URL */
+    html body figure[data-ke-type="opengraph"] .og-host {
+        display: block !important;
+        position: static !important;
+        margin: 0 !important;
+        font-size: 0.7rem !important;
+        /* Smaller Host */
+        color: #a1a1aa !important;
+        opacity: 0.8 !important;
     }
 }
 
@@ -498,6 +684,14 @@ figure[data-ke-type="opengraph"] .og-host::before {
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3) !important;
     backdrop-filter: blur(10px);
+}
+
+@media (max-width: 768px) {
+    .comment-form-box {
+        backdrop-filter: none !important;
+        background: #18181b !important;
+        /* Fallback solid color */
+    }
 }
 
 /* 2. Textarea Styling */
@@ -621,20 +815,18 @@ figure[data-ke-type="opengraph"] .og-host::before {
 /* -------------------------------------------------------------------------- */
 /*                          Blockquote / Quote Styling                        */
 /* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                          Blockquote / Quote Styling                        */
+/* -------------------------------------------------------------------------- */
+
+/* Common Blockquote Reset */
 .prose blockquote,
 .tt_article_useless_p_margin blockquote {
-    font-style: normal !important;
-    font-weight: 400 !important;
+    margin: 2rem 0 !important;
+    padding: 1.5rem 2rem !important;
+    word-break: break-all;
     color: #e4e4e7 !important;
     /* zinc-200 */
-    border-left: 4px solid #c084fc !important;
-    /* accent */
-    background: rgba(255, 255, 255, 0.03) !important;
-    padding: 1.5rem 2rem !important;
-    margin: 2rem 0 !important;
-    border-radius: 0 12px 12px 0 !important;
-    position: relative;
-    quotes: none;
 }
 
 .prose blockquote p,
@@ -643,18 +835,87 @@ figure[data-ke-type="opengraph"] .og-host::before {
     line-height: 1.7 !important;
 }
 
-/* Optional: Small Quote Icon Overlay */
-.prose blockquote::before,
-.tt_article_useless_p_margin blockquote::before {
+/* Style 1: Centered Quote (인용1) - Editor Style Adapted */
+.prose blockquote[data-ke-style="style1"],
+.tt_article_useless_p_margin blockquote[data-ke-style="style1"] {
+    position: relative !important;
+    text-align: center !important;
+    background: transparent !important;
+    /* No box, like editor */
+    border: none !important;
+    padding-top: 4rem !important;
+    padding-bottom: 2rem !important;
+    font-size: 1.15rem !important;
+    font-weight: 500 !important;
+    color: #f4f4f5 !important;
+    /* Brighter text for focus */
+}
+
+/* Style 1 Icon (Replaces default BG image for better dark mode control) */
+.prose blockquote[data-ke-style="style1"]::before,
+.tt_article_useless_p_margin blockquote[data-ke-style="style1"]::before {
     content: '\f10d';
+    /* FontAwesome Quote Left */
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
-    font-size: 1.5rem;
-    color: #c084fc;
-    opacity: 0.2;
+    font-size: 2.5rem;
+    color: #71717a;
+    /* zinc-500 (Gray like editor) */
+    opacity: 0.5;
     position: absolute;
-    top: 1rem;
-    right: 1.5rem;
+    top: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Style 2: Left Line (인용2) */
+.prose blockquote[data-ke-style="style2"],
+.tt_article_useless_p_margin blockquote[data-ke-style="style2"] {
+    border-left: 4px solid #c084fc !important;
+    /* Accent */
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 0 8px 8px 0 !important;
+}
+
+/* Style 3: Box (인용3) */
+.prose blockquote[data-ke-style="style3"],
+.tt_article_useless_p_margin blockquote[data-ke-style="style3"] {
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    background: transparent !important;
+    border-radius: 12px !important;
+    color: #d4d4d8 !important;
+}
+
+/* Fallback / Default Blockquote Styling */
+.prose blockquote:not([data-ke-style]),
+.tt_article_useless_p_margin blockquote:not([data-ke-style]) {
+    border-left: 4px solid #71717a !important;
+    /* Neutral for user blocks */
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          Content Link Styling                              */
+/* -------------------------------------------------------------------------- */
+.tt_article_useless_p_margin a,
+.prose a {
+    color: #c084fc !important;
+    /* Accent Purple */
+    text-decoration: none !important;
+    border-bottom: 1px solid rgba(192, 132, 252, 0.3);
+    transition: all 0.2s ease;
+}
+
+.tt_article_useless_p_margin a:hover,
+.prose a:hover {
+    color: #d8b4fe !important;
+    /* Lighter Purple */
+    border-bottom-color: #d8b4fe;
+    background: rgba(192, 132, 252, 0.1);
+    border-radius: 2px;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -800,7 +1061,439 @@ figure[data-ke-type="opengraph"] .og-host::before {
 
 /* Optional: Add hash if missing (Visual flair) */
 .tag-container a::before {
+    /* ... previous content ... */
     content: "#";
     margin-right: 1px;
     opacity: 0.5;
+}
+
+/* =========================================
+   7. Content Typography System (Theme Match)
+   ========================================= */
+
+/* Main Content Wrapper */
+.tt_article_useless_p_margin,
+.prose {
+    color: #e4e4e7;
+    /* zinc-200 */
+    line-height: 1.75;
+}
+
+/* Title 1 (H2) - User liked this, keeping it prominent */
+.tt_article_useless_p_margin h2,
+.prose h2 {
+    font-size: 1.875rem !important;
+    /* 30px */
+    font-weight: 700 !important;
+    color: #f4f4f5 !important;
+    /* zinc-100 */
+    margin-top: 3.5rem !important;
+    margin-bottom: 1.25rem !important;
+    letter-spacing: -0.01em !important;
+    line-height: 1.3 !important;
+    border-bottom: none !important;
+    /* Clean look */
+}
+
+/* Title 2 (H3) - Requested to be smaller */
+.tt_article_useless_p_margin h3,
+.prose h3 {
+    font-size: 1.5rem !important;
+    /* 24px (Reduced from typical 1.5rem~1.8rem) */
+    font-weight: 600 !important;
+    color: #e4e4e7 !important;
+    /* zinc-200 */
+    margin-top: 2.5rem !important;
+    margin-bottom: 1rem !important;
+    line-height: 1.4 !important;
+}
+
+/* Title 3 (H4) - Distinct subsection style */
+.tt_article_useless_p_margin h4,
+.prose h4 {
+    font-size: 1.25rem !important;
+    /* 20px */
+    font-weight: 600 !important;
+    color: #d4d4d8 !important;
+    /* zinc-300 */
+    margin-top: 2rem !important;
+    margin-bottom: 0.75rem !important;
+    line-height: 1.5 !important;
+}
+
+/* Body Text (P) - Default Paragraph */
+.tt_article_useless_p_margin p,
+.prose p {
+    font-size: 1.0625rem !important;
+    /* 17px - optimal reading size */
+    color: #d4d4d8 !important;
+    /* zinc-300 */
+    margin-bottom: 1.5rem !important;
+    line-height: 1.8 !important;
+    /* Relaxed reading */
+    word-break: break-all;
+}
+
+/* List Styling */
+.tt_article_useless_p_margin ul,
+.tt_article_useless_p_margin ol {
+    margin-bottom: 1.5rem !important;
+    padding-left: 1.5rem !important;
+    color: #d4d4d8 !important;
+}
+
+.tt_article_useless_p_margin li {
+    margin-bottom: 0.5rem !important;
+    line-height: 1.7 !important;
+}
+
+.tt_article_useless_p_margin ul {
+    list-style-type: disc !important;
+}
+
+/* ... previous content ... */
+.tt_article_useless_p_margin ol {
+    list-style-type: decimal !important;
+}
+
+/* =========================================
+   8. Horizontal Rule (Divider) System
+   ========================================= */
+.tt_article_useless_p_margin hr,
+.prose hr {
+    display: block;
+    border: 0;
+    margin: 4rem auto !important;
+    opacity: 1 !important;
+    /* Ensure visibility */
+}
+
+/* Style 1: Dots (· · ·) - Kept as is */
+.tt_article_useless_p_margin hr[data-ke-style="style1"],
+.prose hr[data-ke-style="style1"] {
+    background: transparent !important;
+    height: 30px !important;
+    width: 100% !important;
+    position: relative;
+}
+
+.tt_article_useless_p_margin hr[data-ke-style="style1"]::after,
+.prose hr[data-ke-style="style1"]::after {
+    content: "· · ·";
+    font-size: 40px;
+    line-height: 0px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #e4e4e7;
+    /* zinc-200 (Bright for contrast) */
+    font-weight: 900;
+    letter-spacing: 12px;
+    text-indent: 12px !important;
+    /* Perfect center alignment */
+    margin-right: 0 !important;
+}
+
+/* Style 2: Thick Short Line (-) */
+.tt_article_useless_p_margin hr[data-ke-style="style2"],
+.prose hr[data-ke-style="style2"] {
+    height: 3px !important;
+    width: 50px !important;
+    background-color: #a1a1aa !important;
+    /* zinc-400 */
+    border-radius: 99px;
+}
+
+/* Style 3: Zigzag (~) - Brighter & Clean SVG */
+.tt_article_useless_p_margin hr[data-ke-style="style3"],
+.prose hr[data-ke-style="style3"] {
+    height: 15px !important;
+    width: 110px !important;
+    background-color: transparent !important;
+    /* Stroke brighten to #e4e4e7 */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 6'%3E%3Cpath d='M0 5L6 1L12 5' fill='none' stroke='%23e4e4e7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-repeat: repeat-x !important;
+    background-size: 12px 6px !important;
+    background-position: center !important;
+    border: none !important;
+    opacity: 1 !important;
+}
+
+/* Reset previous pseudo-element styling if any exists */
+.tt_article_useless_p_margin hr[data-ke-style="style3"]::after,
+.prose hr[data-ke-style="style3"]::after {
+    display: none !important;
+}
+
+/* Style 4: Vertical Line (|) */
+.tt_article_useless_p_margin hr[data-ke-style="style4"],
+.prose hr[data-ke-style="style4"] {
+    width: 2px !important;
+    height: 50px !important;
+    background-color: #a1a1aa !important;
+    /* zinc-400 */
+}
+
+/* Style 5: Full Solid Line (─) */
+.tt_article_useless_p_margin hr[data-ke-style="style5"],
+.prose hr[data-ke-style="style5"] {
+    height: 1px !important;
+    width: 100% !important;
+    background-color: #52525b !important;
+    /* zinc-600 */
+}
+
+/* Style 6: Double Line (=) */
+.tt_article_useless_p_margin hr[data-ke-style="style6"],
+.prose hr[data-ke-style="style6"] {
+    height: 6px !important;
+    width: 100% !important;
+    border-top: 1px solid #52525b !important;
+    border-bottom: 1px solid #52525b !important;
+    background: transparent !important;
+}
+
+/* Style 7: Diamond (-◇-) - Gradient Approach (Clean) */
+.tt_article_useless_p_margin hr[data-ke-style="style7"],
+.prose hr[data-ke-style="style7"] {
+    border: none !important;
+    height: 20px !important;
+    width: 100% !important;
+    position: relative;
+    /* Gradient line with gap */
+    background: linear-gradient(to right, #52525b 0%, #52525b 45%, transparent 45%, transparent 55%, #52525b 55%, #52525b 100%) !important;
+    background-size: 100% 1px !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.tt_article_useless_p_margin hr[data-ke-style="style7"]::after,
+.prose hr[data-ke-style="style7"]::after {
+    content: "◇";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: transparent !important;
+    color: #e4e4e7 !important;
+    /* zinc-200 (Bright) */
+    font-size: 16px;
+    line-height: normal;
+}
+
+/* Style 8: Circle (-○-) - Gradient Approach (Clean) */
+.tt_article_useless_p_margin hr[data-ke-style="style8"],
+.prose hr[data-ke-style="style8"] {
+    border: none !important;
+    height: 20px !important;
+    width: 100% !important;
+    position: relative;
+    /* Gradient line with gap */
+    background: linear-gradient(to right, #52525b 0%, #52525b 45%, transparent 45%, transparent 55%, #52525b 55%, #52525b 100%) !important;
+    background-size: 100% 1px !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.tt_article_useless_p_margin hr[data-ke-style="style8"]::after,
+.prose hr[data-ke-style="style8"]::after {
+    content: "○";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: transparent !important;
+    color: #e4e4e7 !important;
+    /* zinc-200 (Bright) */
+    font-size: 16px;
+    line-height: normal;
+}
+
+/* Custom Line Clamp for Dynamic Summaries */
+.line-clamp-6 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+}
+
+/* Guestbook Reply Fix */
+#guestbook-list ul li {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+#guestbook-list ul li .group\/reply {
+    background: transparent !important;
+}
+
+/* Guestbook Reply Description Force */
+.reply-desc {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: #e4e4e7 !important;
+    /* Zinc-200 */
+    min-height: 20px;
+    height: auto !important;
+}
+
+.reply-desc * {
+    color: #e4e4e7 !important;
+}
+
+/* Guestbook Reply Meta Force */
+.guest-reply-name {
+    display: inline-block !important;
+    color: #e4e4e7 !important;
+    /* Zinc-200 */
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.guest-reply-date {
+    display: inline-block !important;
+    color: #71717a !important;
+    /* Zinc-500 */
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Styling Tistory 'Load More Comments' Button (System Generated) */
+.tt_more_preview_comments_wrap {
+    background-color: #27272a !important;
+    /* bg-zinc-800 */
+    border-radius: 9999px !important;
+    padding: 8px 16px !important;
+    margin: 20px auto !important;
+    width: fit-content !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    text-align: center !important;
+}
+
+.tt_more_preview_comments_wrap:hover {
+    background-color: #3f3f46 !important;
+    /* bg-zinc-700 */
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.tt_more_preview_comments_text {
+    color: #a1a1aa !important;
+    /* text-zinc-400 */
+    font-size: 0.875rem !important;
+    /* text-sm */
+    font-weight: 500 !important;
+}
+
+.tt_more_preview_comments_wrap:hover .tt_more_preview_comments_text {
+    color: #ffffff !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* TISTORY SYSTEM OVERRIDES (Anti-Wobble / CLS Fix) */
+/* -------------------------------------------------------------------------- */
+
+/* Hide Tistory Toolbar completely to prevent top-shift on load */
+#tistorytoolbarid,
+.tt_menubar,
+.tt-menubar {
+    display: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: -9999 !important;
+}
+
+/* Ensure body doesn't possess padding from Tistory scripts */
+body,
+html {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Fix for potential margin collapse on Home Page */
+#main-layout {
+    padding-top: 3rem !important;
+    /* Ensure consistent spacing */
+}
+
+/* -------------------------------------------------------------------------- */
+/* ANTI-FLICKER / CLOAK STYLES (Fixes Scroll Shift) */
+/* -------------------------------------------------------------------------- */
+.cloak-until-loaded {
+    /* Use visibility:hidden to PRESERVE SPACE during load */
+    /* Do NOT use display:none, causing CLS/Wobble */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+}
+
+.cloak-until-loaded.loaded {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* -------------------------------------------------------------------------- */
+/* MOBILE OPTIMIZATION: Separators & Blockquotes */
+/* -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+
+    /* Blockquote Adjustments */
+    .prose blockquote,
+    .tt_article_useless_p_margin blockquote {
+        margin: 1.5rem 0 !important;
+        padding: 1.25rem 1rem !important;
+    }
+
+    /* Style 1: Centered Quote (Icon) */
+    .prose blockquote[data-ke-style="style1"] .tt_article_useless_p_margin blockquote[data-ke-style="style1"] {
+        padding-top: 3rem !important;
+        font-size: 1rem !important;
+    }
+
+    /* Style 1 Icon Resize */
+    .prose blockquote[data-ke-style="style1"]::before,
+    .tt_article_useless_p_margin blockquote[data-ke-style="style1"]::before {
+        font-size: 1.75rem !important;
+        top: 0.25rem !important;
+    }
+
+    /* Horizontal Rule (HR) Adjustments */
+    .tt_article_useless_p_margin hr,
+    .prose hr {
+        margin: 2.5rem auto !important;
+    }
+
+    /* Style 1: Dots */
+    .tt_article_useless_p_margin hr[data-ke-style="style1"]::after,
+    .prose hr[data-ke-style="style1"]::after {
+        font-size: 28px !important;
+        font-size: 28px !important;
+        letter-spacing: 8px !important;
+        text-indent: 8px !important;
+        /* Perfect center alignment */
+        margin-right: 0 !important;
+    }
+
+    /* Style 3: Zigzag */
+    .tt_article_useless_p_margin hr[data-ke-style="style3"],
+    .prose hr[data-ke-style="style3"] {
+        width: 80px !important;
+        height: 12px !important;
+        background-size: 10px 5px !important;
+    }
+
+    /* Style 4: Vertical Line */
+    .tt_article_useless_p_margin hr[data-ke-style="style4"],
+    .prose hr[data-ke-style="style4"] {
+        height: 24px !important;
+    }
 }

@@ -38,7 +38,7 @@ function toggleSearch() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Script v32 Loaded'); // Updated Version
+    console.log('Script v54 Loaded'); // Updated Version
 
     // 0. Format Dates (Remove Time) - Run First
     formatDates();
@@ -60,7 +60,107 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 6. Trigger FOUC Reveal (After initial processing)
     revealUI();
+
+    // 7. Guestbook Observer (Auto-Refresh on Modify)
+    initGuestbookObserver();
 });
+
+// 7. Auto-Refresh Observers (Guestbook & Comments)
+function initGuestbookObserver() {
+    initAutoRefreshObservers();
+}
+
+function initAutoRefreshObservers() {
+    // A. Unified XHR Interceptor
+    try {
+        const originalOpen = XMLHttpRequest.prototype.open;
+        const originalSend = XMLHttpRequest.prototype.send;
+
+        XMLHttpRequest.prototype.open = function (method, url) {
+            this._url = url;
+            this._method = method; // Track method
+            return originalOpen.apply(this, arguments);
+        };
+
+        XMLHttpRequest.prototype.send = function () {
+            this.addEventListener('load', function () {
+                // Check for Tistory Guestbook OR Comment Actions
+                const isGuestbookAction = this._url && (this._url.includes('/guestbook') || this._url.includes('guestbook'));
+                const isCommentAction = this._url && (this._url.includes('/comment') || this._url.includes('comment'));
+
+                // Must be a successful response (200-299)
+                if ((isGuestbookAction || isCommentAction) && this.status >= 200 && this.status < 300) {
+                    console.log('Detected Action (XHR Success):', this._url);
+                    // Reload slightly delayed to allow Tistory to "finish" its internal state
+                    setTimeout(() => location.reload(), 100);
+                }
+            });
+            return originalSend.apply(this, arguments);
+        };
+    } catch (e) { console.error('XHR Intercept failed', e); }
+
+    // B. DOM Observers
+    // 1. Guestbook Observer
+    setupObserver('guestbook-list', '수정');
+
+    // 2. Comment Observer
+    // Tistory usually wraps comments in a container. 
+    // In our skin, it's #comments-section -> s_rp_container -> ol/ul
+    setupObserver('comments-section', '수정');
+}
+
+function setupObserver(targetId, keyword) {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    let isEditing = false;
+
+    // Detect Entry into Edit Mode
+    target.addEventListener('click', (e) => {
+        const text = e.target.innerText || '';
+        if (text.includes(keyword) || e.target.closest('a')?.innerText.includes(keyword)) {
+            isEditing = true;
+            console.log(`Edit Mode Entered (${targetId})`);
+        }
+    });
+
+    const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+            // Check Removed Nodes (Fastest detection for Tistory Form Removal)
+            if (mutation.type === 'childList' && mutation.removedNodes.length > 0) {
+                for (const node of mutation.removedNodes) {
+                    if (node.nodeType === 1) {
+                        const isForm = node.tagName === 'FORM' || node.querySelector('form') || node.querySelector('textarea');
+                        if (isForm) {
+                            console.log(`Edit form removed in ${targetId}. Reloading.`);
+                            location.reload();
+                            return;
+                        }
+                    }
+                }
+            }
+
+            // Check Added Nodes (Unstyled Content)
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                for (const node of mutation.addedNodes) {
+                    if (node.nodeType === 1) {
+                        const isForm = node.tagName === 'FORM' || node.querySelector('form') || node.querySelector('textarea');
+
+                        // Strict check: In Editing Mode -> ANY non-form content -> Reload
+                        if (isEditing && !isForm && node.tagName !== 'SCRIPT') {
+                            console.log(`New content detected in ${targetId} after edit. Reloading.`);
+                            isEditing = false;
+                            location.reload();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    observer.observe(target, { childList: true, subtree: true });
+}
 
 // Format Dates: Remove HH:MM from date strings
 function formatDates() {

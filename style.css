@@ -88,7 +88,7 @@ code,
 .hljs-comment,
 .hljs-quote {
     color: #5c6370 !important;
-    font-style: italic;
+    font-style: normal !important;
 }
 
 .hljs-doctag,

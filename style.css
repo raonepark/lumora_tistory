@@ -444,14 +444,15 @@ input[type="checkbox"]:checked {
 }
 
 
-color: #e4e4e7 !important;
-/* text-zinc-200 */
-text-decoration: none !important;
-text-overflow: ellipsis;
-overflow: hidden;
-white-space: nowrap;
-max-width: 60vw;
-/* Prevent overflow */
+.another_category td a {
+    color: #e4e4e7 !important;
+    /* text-zinc-200 */
+    text-decoration: none !important;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 60vw;
+    /* Prevent overflow */
 }
 
 .another_category tr:hover td a {
@@ -471,8 +472,11 @@ max-width: 60vw;
 /*                          Link Embed (OpenGraph) Styling                    */
 /* -------------------------------------------------------------------------- */
 figure[data-ke-type="opengraph"] {
-    margin: 2rem 0;
+    margin: 0 !important;
+    padding: 0 !important;
     width: 100%;
+    display: block !important;
+    line-height: 0 !important;
 }
 
 figure[data-ke-type="opengraph"] a {
@@ -610,11 +614,13 @@ figure[data-ke-type="opengraph"] .og-host::before {
 
     /* 0. Parent Figure: Flush Left Reset */
     html body figure[data-ke-type="opengraph"] {
-        margin: 20px 0 !important;
+        margin: 0 !important;
         /* Mobile Vertical Spacing */
         padding: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
+        display: block !important;
+        line-height: 0 !important;
     }
 
     /* 1. Container: Horizontal Flex Layout */
@@ -1113,6 +1119,18 @@ figure[data-ke-type="opengraph"] .og-host::before {
     color: #e4e4e7;
     /* zinc-200 */
     line-height: 1.75;
+}
+
+/* Ensure Bold Tags are Visible in Dark Mode */
+b,
+strong,
+.tt_article_useless_p_margin b,
+.tt_article_useless_p_margin strong,
+.prose b,
+.prose strong {
+    font-weight: 700 !important;
+    color: #fff !important;
+    /* Force white for contrast */
 }
 
 /* Title 1 (H2) - User liked this, keeping it prominent */

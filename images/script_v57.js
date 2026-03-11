@@ -254,13 +254,15 @@ function initTOC() {
     if (tocContainer.dataset.tocInitialized) return;
 
     const headers = content.querySelectorAll('h2, h3');
-    if (headers.length === 0) return;
+    if (headers.length === 0) {
+        tocContainer.style.display = 'none';
+        return;
+    }
 
     tocContainer.dataset.tocInitialized = "true";
 
-    const tocWrapper = document.createElement('div');
-    tocWrapper.className = 'sticky top-28';
-    tocWrapper.innerHTML = `
+    // Build TOC HTML directly in container (no inner wrapper needed)
+    tocContainer.innerHTML = `
         <div class="mb-4 flex items-center gap-2 text-accent font-mono text-xs font-bold uppercase tracking-widest">
             <i class="fa-solid fa-list-ul"></i>
             On this page
@@ -270,8 +272,33 @@ function initTOC() {
             <ul class="flex flex-col gap-1" id="toc-list"></ul>
         </nav>
     `;
-    tocContainer.appendChild(tocWrapper);
-    const tocList = tocWrapper.querySelector('#toc-list');
+
+    // Use fixed positioning based on article's actual position
+    function positionTOC() {
+        const article = document.querySelector('article');
+        if (!article) return;
+        const rect = article.getBoundingClientRect();
+        const articleAbsRight = rect.right + window.scrollX;
+        const gap = 48;
+        const tocWidth = 256;
+        const spaceRight = window.innerWidth - rect.right;
+
+        if (spaceRight >= tocWidth + gap) {
+            tocContainer.style.position = 'fixed';
+            tocContainer.style.top = '112px';
+            tocContainer.style.left = (rect.right + gap) + 'px';
+            tocContainer.style.width = tocWidth + 'px';
+            tocContainer.style.display = 'block';
+            tocContainer.style.zIndex = '50';
+        } else {
+            tocContainer.style.display = 'none';
+        }
+    }
+
+    setTimeout(positionTOC, 300);
+    window.addEventListener('resize', positionTOC);
+
+    const tocList = tocContainer.querySelector('#toc-list');
 
     headers.forEach((header, index) => {
         if (!header.id) header.id = `toc-heading-${index}`;
@@ -543,7 +570,7 @@ function checkLayout() {
         const mainContent = document.querySelector('main');
         if (mainContent) {
             mainContent.classList.remove('md:grid-cols-2', 'xl:grid-cols-3', 'xl:gap-8');
-            mainContent.classList.add('w-full', 'max-w-4xl', 'mx-auto');
+            mainContent.classList.add('w-full', 'mx-auto');
         }
     }
 

@@ -38,7 +38,7 @@ function toggleSearch() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Script v54 Loaded'); // Updated Version
+    console.log('Script v61 Loaded'); // Updated Version
 
     // 0. Format Dates (Remove Time) - Run First
     formatDates();
@@ -261,6 +261,10 @@ function initTOC() {
 
     tocContainer.dataset.tocInitialized = "true";
 
+    // Move TOC to body level to ensure position:fixed is always relative to viewport
+    // (avoids being affected by ancestor transform/will-change/filter CSS)
+    document.body.appendChild(tocContainer);
+
     // Build TOC HTML directly in container (no inner wrapper needed)
     tocContainer.innerHTML = `
         <div class="mb-4 flex items-center gap-2 text-accent font-mono text-xs font-bold uppercase tracking-widest">
@@ -274,28 +278,34 @@ function initTOC() {
     `;
 
     // Use fixed positioning based on article's actual position
+    let cachedLeft = null;
+
     function positionTOC() {
         const article = document.querySelector('article');
         if (!article) return;
         const rect = article.getBoundingClientRect();
-        const articleAbsRight = rect.right + window.scrollX;
-        const gap = 48;
-        const tocWidth = 256;
+        const gap = 32;
+        const tocWidth = 224;
         const spaceRight = window.innerWidth - rect.right;
 
         if (spaceRight >= tocWidth + gap) {
-            tocContainer.style.position = 'fixed';
-            tocContainer.style.top = '112px';
-            tocContainer.style.left = (rect.right + gap) + 'px';
-            tocContainer.style.width = tocWidth + 'px';
-            tocContainer.style.display = 'block';
-            tocContainer.style.zIndex = '50';
+            const leftVal = rect.right + gap;
+            if (cachedLeft === null || Math.abs(leftVal - cachedLeft) > 1) {
+                cachedLeft = leftVal;
+                tocContainer.style.position = 'fixed';
+                tocContainer.style.top = '160px';
+                tocContainer.style.left = leftVal + 'px';
+                tocContainer.style.width = tocWidth + 'px';
+                tocContainer.style.display = 'block';
+                tocContainer.style.zIndex = '50';
+            }
         } else {
             tocContainer.style.display = 'none';
+            cachedLeft = null;
         }
     }
 
-    setTimeout(positionTOC, 300);
+    setTimeout(positionTOC, 200);
     window.addEventListener('resize', positionTOC);
 
     const tocList = tocContainer.querySelector('#toc-list');

@@ -718,7 +718,7 @@
                                 </article>
 
                                 <!-- Right Sidebar: Table of Contents (Placeholder) -->
-                                <aside id="toc-container" class="hidden xl:block w-64 flex-shrink-0 z-50">
+                                <aside id="toc-container" class="hidden xl:block w-64 flex-shrink-0 z-50 self-start sticky top-32">
                                     <!-- JS will populate this -->
                                 </aside>
                             </div>
@@ -1160,34 +1160,7 @@
                             // Helper: Throttle via rAF
                             let ticking = false;
 
-                            // 1. Sticky Metrics & Logic
-                            function onScrollSticky() {
-                                // Only apply if visible (XL breakpoint is 1280px)
-                                if (window.innerWidth < 1280 || window.getComputedStyle(tocContainer).display === 'none') {
-                                    tocContainer.style.top = '0px';
-                                    return;
-                                }
-
-                                const scrollTop = window.scrollY || document.documentElement.scrollTop;
-                                // Note: getBoundingClientRect causes reflow, but inside rAF it's managed.
-                                // Ideally we cache articleTopAbs on resize, but this is acceptable for now.
-                                const articleRect = articleContainer.getBoundingClientRect();
-                                const articleTopAbs = scrollTop + articleRect.top;
-
-                                // Offset: stick at top: 100px relative to viewport
-                                let newTop = (scrollTop + 100) - articleTopAbs;
-
-                                if (newTop < 0) newTop = 0;
-
-                                const tocHeight = tocContainer.offsetHeight;
-                                const limit = articleContainer.offsetHeight - tocHeight - 100;
-
-                                if (newTop > limit) newTop = limit;
-
-                                tocContainer.style.top = newTop + 'px';
-                            }
-
-                            // 2. Scroll Spy Logic
+                            // Scroll Spy Logic (CSS sticky handles the fixed positioning)
                             const contentArea = articleContainer.querySelector('.tt_article_useless_p_margin') || articleContainer.querySelector('article');
                             if (!contentArea) return;
 
@@ -1226,11 +1199,10 @@
                                 }
                             }
 
-                            // Unified Scroll Handler using rAF
+                            // Scroll Handler using rAF
                             function onScroll() {
                                 if (!ticking) {
                                     window.requestAnimationFrame(() => {
-                                        onScrollSticky();
                                         onScrollSpy();
                                         ticking = false;
                                     });
@@ -1240,7 +1212,6 @@
 
                             window.addEventListener('scroll', onScroll, { passive: true });
                             // Initial Call
-                            onScrollSticky();
                             onScrollSpy();
                         })();
 
@@ -1314,7 +1285,7 @@
             });
         </script>
         <!-- Custom Script (Versioning) -->
-        <script src="./images/script_v57.js"></script>
+        <script src="./images/script_v62.js"></script>
     </s_t3>
 </body>
 

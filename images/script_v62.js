@@ -38,7 +38,7 @@ function toggleSearch() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Script v61 Loaded'); // Updated Version
+    console.log('Script v62 Loaded');
 
     // 0. Format Dates (Remove Time) - Run First
     formatDates();
@@ -63,6 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 7. Guestbook Observer (Auto-Refresh on Modify)
     initGuestbookObserver();
+
+    // 8. Hide member comment form for guests
+    // #guest-indicator is rendered by Tistory server-side only for non-logged-in users
+    if (document.getElementById('guest-indicator')) {
+        const memberForm = document.getElementById('member-comment-form');
+        if (memberForm) memberForm.style.display = 'none';
+    }
 });
 
 // 7. Auto-Refresh Observers (Guestbook & Comments)

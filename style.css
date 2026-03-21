@@ -967,20 +967,31 @@ figure[data-ke-type="opengraph"] .og-host::before {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    justify-content: space-between;
+    flex-wrap: nowrap;
     width: 100%;
-}
-@media (min-width: 768px) {
-    .custom-nav-container {
-        flex-direction: row;
-    }
 }
 
 .custom-nav-card {
     width: 100%;
+    display: flex !important;
 }
+
+s_article_prev, s_article_next {
+    display: block;
+    width: 100%;
+}
+
 @media (min-width: 768px) {
+    .custom-nav-container {
+        flex-direction: row !important;
+    }
     .custom-nav-card {
-        width: calc(50% - 12px);
+        width: 100% !important;
+    }
+    s_article_prev, s_article_next {
+        width: calc(50% - 12px) !important;
+        flex-shrink: 0;
     }
 }
 

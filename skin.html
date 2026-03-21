@@ -492,13 +492,17 @@
                                         </div>
 
                                         <!-- Previous / Next Post Navigation -->
+                                        <style>
+                                            .nav-grid-container { display: grid; grid-template-columns: 1fr; gap: 1.5rem; width: 100%; }
+                                            @media (min-width: 768px) { .nav-grid-container { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+                                        </style>
                                         <s_article_prev_next>
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 mt-8 font-sans w-full">
+                                            <div class="nav-grid-container mb-12 mt-8 font-sans w-full">
                                                 <!-- Previous Post Container -->
                                                 <s_article_prev>
-                                                    <div class="w-full h-full">
+                                                    <div class="w-full">
                                                     <a href="[##_article_prev_link_##]"
-                                                        class="group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10 w-full h-full">
+                                                        class="group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center min-h-[140px] w-full transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
                                                         <!-- Hover Gradient -->
                                                         <div
                                                             class="absolute inset-0 bg-gradient-to-br from-[#c084fc]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -526,9 +530,9 @@
 
                                                 <!-- Next Post Container -->
                                                 <s_article_next>
-                                                    <div class="w-full h-full">
+                                                    <div class="w-full">
                                                     <a href="[##_article_next_link_##]"
-                                                        class="group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center items-end text-right min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10 w-full h-full">
+                                                        class="group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center items-end text-right min-h-[140px] w-full transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
                                                         <!-- Hover Gradient -->
                                                         <div
                                                             class="absolute inset-0 bg-gradient-to-bl from-[#c084fc]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">

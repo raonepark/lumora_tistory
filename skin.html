@@ -496,16 +496,16 @@
                                             .nav-flex-container { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; transition: all 0.3s ease; }
                                             .nav-flex-item { width: 100%; display: flex; flex-direction: column; }
                                             @media (min-width: 768px) { 
-                                                .nav-flex-container { flex-direction: row; justify-content: space-between; flex-wrap: nowrap; } 
-                                                .nav-prev { max-width: calc(50% - 12px) !important; flex-shrink: 0; margin-right: auto !important; }
-                                                .nav-next { max-width: calc(50% - 12px) !important; flex-shrink: 0; margin-left: auto !important; }
+                                                .nav-flex-container { flex-direction: row; justify-content: flex-start; flex-wrap: nowrap; } 
+                                                .nav-prev { max-width: calc(50% - 12px) !important; flex-shrink: 0; }
+                                                .nav-next { max-width: calc(50% - 12px) !important; flex-shrink: 0; }
                                             }
                                         </style>
                                         <s_article_prev_next>
                                             <div class="nav-flex-container mb-12 mt-8 font-sans w-full">
                                                 <!-- Previous Post Container -->
-                                                <div class="nav-flex-item nav-prev">
-                                                    <s_article_prev>
+                                                <s_article_prev>
+                                                    <div class="nav-flex-item nav-prev">
                                                     <a href="[##_article_prev_link_##]"
                                                         class="nav-card custom-nav-card mr-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
                                                         <!-- Hover Gradient -->
@@ -530,12 +530,12 @@
                                                             </h4>
                                                         </div>
                                                     </a>
-                                                    </s_article_prev>
-                                                </div>
+                                                    </div>
+                                                </s_article_prev>
 
                                                 <!-- Next Post Container -->
-                                                <div class="nav-flex-item nav-next">
-                                                    <s_article_next>
+                                                <s_article_next>
+                                                    <div class="nav-flex-item nav-next">
                                                     <a href="[##_article_next_link_##]"
                                                         class="nav-card custom-nav-card ml-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center items-end text-right min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
                                                         <!-- Hover Gradient -->
@@ -560,8 +560,8 @@
                                                             </h4>
                                                         </div>
                                                     </a>
-                                                    </s_article_next>
-                                                </div>
+                                                    </div>
+                                                </s_article_next>
                                             </div>
                                             <!-- </s_article_prev_next> -->
                                             <!-- Tags moved to header -->

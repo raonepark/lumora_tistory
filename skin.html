@@ -492,14 +492,13 @@
                                         </div>
 
                                         <!-- Previous / Next Post Navigation -->
-                                        <!-- Previous / Next Post Navigation -->
                                         <s_article_prev_next>
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 mt-8 font-sans">
                                                 <!-- Previous Post Container -->
-                                                <div class="w-full nav-ghost-wrapper">
+                                                <div class="w-full">
                                                     <s_article_prev>
                                                     <a href="[##_article_prev_link_##]"
-                                                        class="nav-card custom-nav-card mr-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center min-h-[140px] w-full h-full transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
+                                                        class="nav-card custom-nav-card mr-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
                                                         <!-- Hover Gradient -->
                                                         <div
                                                             class="absolute inset-0 bg-gradient-to-br from-[#c084fc]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -526,10 +525,10 @@
                                                 </div>
 
                                                 <!-- Next Post Container -->
-                                                <div class="w-full nav-ghost-wrapper">
+                                                <div class="w-full">
                                                     <s_article_next>
                                                     <a href="[##_article_next_link_##]"
-                                                        class="nav-card custom-nav-card ml-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center items-end text-right min-h-[140px] w-full h-full transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
+                                                        class="nav-card custom-nav-card ml-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center items-end text-right min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
                                                         <!-- Hover Gradient -->
                                                         <div
                                                             class="absolute inset-0 bg-gradient-to-bl from-[#c084fc]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -556,17 +555,6 @@
                                                 </div>
                                             </div>
                                             <!-- </s_article_prev_next> -->
-                                            
-                                            <!-- 빈 태그 유령 퇴마 스크립트 -->
-                                            <script>
-                                                document.addEventListener("DOMContentLoaded", function() {
-                                                    document.querySelectorAll(".nav-ghost-wrapper").forEach(function(wrapper) {
-                                                        if (!wrapper.querySelector("a")) {
-                                                            wrapper.style.display = "none";
-                                                        }
-                                                    });
-                                                });
-                                            </script>
                                             <!-- Tags moved to header -->
 
 

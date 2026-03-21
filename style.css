@@ -1552,3 +1552,21 @@ html {
         height: 24px !important;
     }
 }
+
+/* -------------------------------------------------------------------------- */
+/*                        Post Navigation (Prev/Next)                         */
+/* -------------------------------------------------------------------------- */
+.nav-stable-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    width: 100%;
+}
+.nav-grid-item {
+    width: 100%;
+}
+@media (min-width: 768px) {
+    .nav-stable-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

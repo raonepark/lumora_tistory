@@ -38,7 +38,7 @@ function toggleSearch() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Script v62 Loaded');
+    console.log('Script v64 Loaded');
 
     // 0. Format Dates (Remove Time) - Run First
     formatDates();

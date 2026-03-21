@@ -493,66 +493,62 @@
 
                                         <!-- Previous / Next Post Navigation -->
                                         <s_article_prev_next>
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 mt-8 font-sans">
+                                            <div class="flex flex-col md:flex-row gap-6 mb-12 mt-8 font-sans w-full">
                                                 <!-- Previous Post Container -->
-                                                <div class="w-full">
-                                                    <s_article_prev>
-                                                        <a href="[##_article_prev_link_##]"
-                                                            class="nav-card group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
-                                                            <!-- Hover Gradient -->
-                                                            <div
-                                                                class="absolute inset-0 bg-gradient-to-br from-[#c084fc]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                            </div>
+                                                <s_article_prev>
+                                                    <a href="[##_article_prev_link_##]"
+                                                        class="nav-card w-full md:w-[calc(50%-12px)] mr-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
+                                                        <!-- Hover Gradient -->
+                                                        <div
+                                                            class="absolute inset-0 bg-gradient-to-br from-[#c084fc]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                        </div>
 
-                                                            <div class="relative z-10">
-                                                                <div class="flex items-center gap-2 mb-3">
-                                                                    <div
-                                                                        class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#c084fc] group-hover:text-black transition-colors duration-300">
-                                                                        <i
-                                                                            class="fa-solid fa-arrow-left text-xs text-zinc-400 group-hover:text-black transition-colors"></i>
-                                                                    </div>
-                                                                    <span
-                                                                        class="text-xs font-bold text-zinc-500 uppercase tracking-wider group-hover:text-[#c084fc] transition-colors">Previous
-                                                                        Post</span>
+                                                        <div class="relative z-10">
+                                                            <div class="flex items-center gap-2 mb-3">
+                                                                <div
+                                                                    class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#c084fc] group-hover:text-black transition-colors duration-300">
+                                                                    <i
+                                                                        class="fa-solid fa-arrow-left text-xs text-zinc-400 group-hover:text-black transition-colors"></i>
                                                                 </div>
-                                                                <h4
-                                                                    class="text-lg font-bold text-zinc-200 leading-snug line-clamp-2 group-hover:text-white transition-colors">
-                                                                    [##_article_prev_title_##]
-                                                                </h4>
+                                                                <span
+                                                                    class="text-xs font-bold text-zinc-500 uppercase tracking-wider group-hover:text-[#c084fc] transition-colors">Previous
+                                                                    Post</span>
                                                             </div>
-                                                        </a>
-                                                    </s_article_prev>
-                                                </div>
+                                                            <h4
+                                                                class="text-lg font-bold text-zinc-200 leading-snug line-clamp-2 group-hover:text-white transition-colors">
+                                                                [##_article_prev_title_##]
+                                                            </h4>
+                                                        </div>
+                                                    </a>
+                                                </s_article_prev>
 
                                                 <!-- Next Post Container -->
-                                                <div class="w-full">
-                                                    <s_article_next>
-                                                        <a href="[##_article_next_link_##]"
-                                                            class="nav-card group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center items-end text-right min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
-                                                            <!-- Hover Gradient -->
-                                                            <div
-                                                                class="absolute inset-0 bg-gradient-to-bl from-[#c084fc]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                            </div>
+                                                <s_article_next>
+                                                    <a href="[##_article_next_link_##]"
+                                                        class="nav-card w-full md:w-[calc(50%-12px)] ml-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center items-end text-right min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
+                                                        <!-- Hover Gradient -->
+                                                        <div
+                                                            class="absolute inset-0 bg-gradient-to-bl from-[#c084fc]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                        </div>
 
-                                                            <div class="relative z-10 flex flex-col items-end">
-                                                                <div class="flex items-center gap-2 mb-3">
-                                                                    <span
-                                                                        class="text-xs font-bold text-zinc-500 uppercase tracking-wider group-hover:text-[#c084fc] transition-colors">Next
-                                                                        Post</span>
-                                                                    <div
-                                                                        class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#c084fc] group-hover:text-black transition-colors duration-300">
-                                                                        <i
-                                                                            class="fa-solid fa-arrow-right text-xs text-zinc-400 group-hover:text-black transition-colors"></i>
-                                                                    </div>
+                                                        <div class="relative z-10 flex flex-col items-end">
+                                                            <div class="flex items-center gap-2 mb-3">
+                                                                <span
+                                                                    class="text-xs font-bold text-zinc-500 uppercase tracking-wider group-hover:text-[#c084fc] transition-colors">Next
+                                                                    Post</span>
+                                                                <div
+                                                                    class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#c084fc] group-hover:text-black transition-colors duration-300">
+                                                                    <i
+                                                                        class="fa-solid fa-arrow-right text-xs text-zinc-400 group-hover:text-black transition-colors"></i>
                                                                 </div>
-                                                                <h4
-                                                                    class="text-lg font-bold text-zinc-200 leading-snug line-clamp-2 group-hover:text-white transition-colors">
-                                                                    [##_article_next_title_##]
-                                                                </h4>
                                                             </div>
-                                                        </a>
-                                                    </s_article_next>
-                                                </div>
+                                                            <h4
+                                                                class="text-lg font-bold text-zinc-200 leading-snug line-clamp-2 group-hover:text-white transition-colors">
+                                                                [##_article_next_title_##]
+                                                            </h4>
+                                                        </div>
+                                                    </a>
+                                                </s_article_next>
                                             </div>
                                             <!-- </s_article_prev_next> -->
 

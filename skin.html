@@ -493,17 +493,18 @@
 
                                         <!-- Previous / Next Post Navigation -->
                                         <style>
-                                            .nav-grid-container { display: grid; grid-template-columns: 1fr; gap: 1.5rem; width: 100%; }
+                                            .nav-flex-container { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; transition: all 0.3s ease; }
+                                            .nav-flex-item { width: 100%; display: flex; flex-direction: column; }
                                             @media (min-width: 768px) { 
-                                                .nav-grid-container { grid-template-columns: repeat(2, minmax(0, 1fr)); } 
-                                                .nav-prev { grid-column: 1; }
-                                                .nav-next { grid-column: 2; }
+                                                .nav-flex-container { flex-direction: row; justify-content: space-between; flex-wrap: nowrap; } 
+                                                .nav-prev { max-width: calc(50% - 12px) !important; flex-shrink: 0; margin-right: auto !important; }
+                                                .nav-next { max-width: calc(50% - 12px) !important; flex-shrink: 0; margin-left: auto !important; }
                                             }
                                         </style>
                                         <s_article_prev_next>
-                                            <div class="nav-grid-container mb-12 mt-8 font-sans">
+                                            <div class="nav-flex-container mb-12 mt-8 font-sans w-full">
                                                 <!-- Previous Post Container -->
-                                                <div class="w-full nav-prev">
+                                                <div class="nav-flex-item nav-prev">
                                                     <s_article_prev>
                                                     <a href="[##_article_prev_link_##]"
                                                         class="nav-card custom-nav-card mr-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
@@ -533,7 +534,7 @@
                                                 </div>
 
                                                 <!-- Next Post Container -->
-                                                <div class="w-full nav-next">
+                                                <div class="nav-flex-item nav-next">
                                                     <s_article_next>
                                                     <a href="[##_article_next_link_##]"
                                                         class="nav-card custom-nav-card ml-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center items-end text-right min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">

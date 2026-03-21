@@ -492,8 +492,12 @@
                                         </div>
 
                                         <!-- Previous / Next Post Navigation -->
+                                        <style>
+                                            .nav-grid-container { display: grid; grid-template-columns: 1fr; gap: 1.5rem; width: 100%; }
+                                            @media (min-width: 768px) { .nav-grid-container { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+                                        </style>
                                         <s_article_prev_next>
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 mt-8 font-sans">
+                                            <div class="nav-grid-container mb-12 mt-8 font-sans">
                                                 <!-- Previous Post Container -->
                                                 <div class="w-full">
                                                     <s_article_prev>

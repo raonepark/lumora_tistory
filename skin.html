@@ -576,6 +576,10 @@
                                                     <s_rp_input_form>
                                                         <!-- Guest (Not Logged In): Login Required Block -->
                                                         <s_rp_guest>
+                                                            <!-- Hide comment form for guests using CSS -->
+                                                            <style>
+                                                                .comment-form-box { display: none !important; }
+                                                            </style>
                                                             <div class="bg-[#18181b] rounded-2xl p-10 border border-white/5 mb-12 shadow-lg flex flex-col items-center justify-center text-center gap-3">
                                                                 <i class="fa-solid fa-lock text-3xl text-zinc-600 mb-1"></i>
                                                                 <h4 class="text-base font-bold text-zinc-300">Login Required</h4>
@@ -588,7 +592,6 @@
                                                             </div>
                                                         </s_rp_guest>
                                                         <!-- Member (Logged In): Comment Form -->
-                                                        <s_rp_member>
                                                         <div
                                                             class="comment-form-box bg-[#18181b] rounded-2xl p-6 border border-white/5 mb-12 shadow-lg">
                                                             <div class="flex gap-4">
@@ -634,8 +637,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                </div>
-                                                </s_rp_member>
                                                     </s_rp_input_form>
 
                                                 <!-- Comment List -->

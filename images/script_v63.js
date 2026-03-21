@@ -260,7 +260,8 @@ function initTOC() {
     if (!content || !tocContainer) return;
     if (tocContainer.dataset.tocInitialized) return;
 
-    const headers = content.querySelectorAll('h2, h3');
+    // Filter out Tistory plugins like ".another_category" injected inside prose
+    const headers = Array.from(content.querySelectorAll('h2, h3')).filter(h => !h.closest('.another_category') && !h.closest('#category-another-article'));
     if (headers.length === 0) {
         tocContainer.style.display = 'none';
         return;
@@ -295,8 +296,14 @@ function initTOC() {
         const tocWidth = 224;
         const spaceRight = window.innerWidth - rect.right;
 
-        if (spaceRight >= tocWidth + gap) {
-            const leftVal = rect.right + gap;
+        if (spaceRight >= tocWidth + gap || (rect.right > 0 && spaceRight > 20)) {
+            // Cap leftVal so it never pushes the TOC off the right side of the screen
+            let leftVal = rect.right + gap;
+            const maxLeft = window.innerWidth - tocWidth - 10;
+            if (leftVal > maxLeft) {
+                leftVal = maxLeft;
+            }
+            
             if (cachedLeft === null || Math.abs(leftVal - cachedLeft) > 1) {
                 cachedLeft = leftVal;
                 tocContainer.style.position = 'fixed';
@@ -316,6 +323,7 @@ function initTOC() {
     window.addEventListener('resize', positionTOC);
 
     const tocList = tocContainer.querySelector('#toc-list');
+    tocList.innerHTML = '';
 
     headers.forEach((header, index) => {
         if (!header.id) header.id = `toc-heading-${index}`;
@@ -570,7 +578,10 @@ function checkLayout() {
     let isDetail = document.getElementById('view-indicator-detail');
 
     const path = window.location.pathname;
-    if (!isDetail && (path.includes('/entry/') || /^\/(\d+|m\/entry\/)/.test(path) || path.includes('/guestbook'))) {
+    // Match /123, /m/entry/..., /entry/..., AND /category/Name/123
+    const isPostPattern = /^\/(\d+|m\/entry\/)/.test(path) || path.includes('/entry/') || path.includes('/guestbook') || /^\/category\/[^\/]+\/\d+/.test(path);
+    
+    if (!isDetail && isPostPattern) {
         isDetail = true;
     }
 

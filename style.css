@@ -963,6 +963,27 @@ figure[data-ke-type="opengraph"] .og-host::before {
 /* -------------------------------------------------------------------------- */
 /*                        Post Navigation (Prev/Next)                         */
 /* -------------------------------------------------------------------------- */
+.custom-nav-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+@media (min-width: 768px) {
+    .custom-nav-container {
+        flex-direction: row;
+    }
+}
+
+.custom-nav-card {
+    width: 100%;
+}
+@media (min-width: 768px) {
+    .custom-nav-card {
+        width: calc(50% - 12px);
+    }
+}
+
 .nav-card {
     position: relative;
     background-color: #18181b !important;
@@ -997,6 +1018,7 @@ figure[data-ke-type="opengraph"] .og-host::before {
 .nav-card:hover .hover-gradient {
     opacity: 1;
 }
+
 
 /* Prev Card Gradient */
 .nav-card.prev .hover-gradient {

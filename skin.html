@@ -492,13 +492,17 @@
                                         </div>
 
                                         <!-- Previous / Next Post Navigation -->
-                                        <s_article_prev_next>
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 mt-8 font-sans">
-                                                <!-- Previous Post Container -->
-                                                <div class="w-full">
-                                                    <s_article_prev>
+                                        <!-- Previous / Next Post Navigation -->
+                                        <style>
+                                            s_article_prev, s_article_next { display: contents !important; }
+                                        </style>
+                                        <div id="prev-next-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 mt-8 font-sans w-full">
+                                            <!-- Previous Post Container -->
+                                            <div id="prev-post-container" class="md:col-span-1 w-full h-full">
+                                                <s_article_prev>
+                                                    <div class="w-full h-full">
                                                     <a href="[##_article_prev_link_##]"
-                                                        class="nav-card custom-nav-card mr-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
+                                                        class="nav-card custom-nav-card mr-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center min-h-[140px] w-full h-full transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
                                                         <!-- Hover Gradient -->
                                                         <div
                                                             class="absolute inset-0 bg-gradient-to-br from-[#c084fc]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -521,14 +525,16 @@
                                                             </h4>
                                                         </div>
                                                     </a>
-                                                    </s_article_prev>
-                                                </div>
+                                                    </div>
+                                                </s_article_prev>
+                                            </div>
 
-                                                <!-- Next Post Container -->
-                                                <div class="w-full">
-                                                    <s_article_next>
+                                            <!-- Next Post Container -->
+                                            <div id="next-post-container" class="md:col-span-1 w-full h-full">
+                                                <s_article_next>
+                                                    <div class="w-full h-full">
                                                     <a href="[##_article_next_link_##]"
-                                                        class="nav-card custom-nav-card ml-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center items-end text-right min-h-[140px] transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
+                                                        class="nav-card custom-nav-card ml-auto group relative overflow-hidden rounded-2xl bg-[#18181b] border border-white/5 p-6 flex flex-col justify-center items-end text-right min-h-[140px] w-full h-full transition-all duration-300 hover:border-[#c084fc]/50 hover:shadow-xl hover:shadow-[#c084fc]/10">
                                                         <!-- Hover Gradient -->
                                                         <div
                                                             class="absolute inset-0 bg-gradient-to-bl from-[#c084fc]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -551,11 +557,45 @@
                                                             </h4>
                                                         </div>
                                                     </a>
-                                                    </s_article_next>
-                                                </div>
+                                                    </div>
+                                                </s_article_next>
                                             </div>
-                                            <!-- </s_article_prev_next> -->
-                                            <!-- Tags moved to header -->
+                                        </div>
+                                        
+                                        <script>
+                                        // 이전글/다음글 빈 상자 유동적 레이아웃 처리 스크립트
+                                        (function () {
+                                            var grid = document.getElementById('prev-next-grid');
+                                            var prevContainer = document.getElementById('prev-post-container');
+                                            var nextContainer = document.getElementById('next-post-container');
+                                            
+                                            var prevEmpty = prevContainer && prevContainer.innerHTML.trim() === '';
+                                            var nextEmpty = nextContainer && nextContainer.innerHTML.trim() === '';
+                                            
+                                            if (prevEmpty && nextEmpty) {
+                                                // 둘 다 없으면 전체 그리드 상자를 숨김
+                                                if (grid) grid.classList.add('hidden');
+                                            } else {
+                                                if (prevEmpty && prevContainer) {
+                                                    // 이전 글이 없으면 상자를 숨기고, 다음 글을 가로 전체로 확장(col-span-2)
+                                                    prevContainer.classList.add('hidden');
+                                                    if (nextContainer && !nextEmpty) {
+                                                        nextContainer.classList.remove('md:col-span-1');
+                                                        nextContainer.classList.add('md:col-span-2');
+                                                    }
+                                                }
+                                                if (nextEmpty && nextContainer) {
+                                                    // 다음 글이 없으면 상자를 숨기고, 이전 글을 가로 전체로 확장(col-span-2)
+                                                    nextContainer.classList.add('hidden');
+                                                    if (prevContainer && !prevEmpty) {
+                                                        prevContainer.classList.remove('md:col-span-1');
+                                                        prevContainer.classList.add('md:col-span-2');
+                                                    }
+                                                }
+                                            }
+                                        })();
+                                        </script>
+                                        <!-- Tags moved to header -->
 
 
 

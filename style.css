@@ -998,6 +998,7 @@ figure[data-ke-type="opengraph"] .og-host::before {
     opacity: 1;
 }
 
+
 /* Prev Card Gradient */
 .nav-card.prev .hover-gradient {
     background: linear-gradient(135deg, rgba(192, 132, 252, 0.1), transparent);
@@ -1549,5 +1550,23 @@ html {
     .tt_article_useless_p_margin hr[data-ke-style="style4"],
     .prose hr[data-ke-style="style4"] {
         height: 24px !important;
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                        Post Navigation (Prev/Next)                         */
+/* -------------------------------------------------------------------------- */
+.nav-stable-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    width: 100%;
+}
+.nav-grid-item {
+    width: 100%;
+}
+@media (min-width: 768px) {
+    .nav-stable-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }

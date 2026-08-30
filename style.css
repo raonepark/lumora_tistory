@@ -7,7 +7,17 @@
 .tt_toolbar_container,
 .plugin_author,
 div[data-tistory-react-app="Namecard"],
+.tt_adsense_top,
 .tt_adsense_bottom,
+.revenue_unit_wrap,
+.revenue_unit_item,
+.kakao_ad_area,
+div[data-ad-unit],
+div[data-tistory-react-app="Revenue"],
+.tt-article-ad,
+.tistory-ad-container,
+ins.adsbygoogle,
+div[class*="revenue_unit"],
 #tistorytoolbarid,
 .tt_menubar,
 #kakaoWrap #kakaoHead,
@@ -15,9 +25,40 @@ div[data-tistory-react-app="Namecard"],
     display: none !important;
 }
 
-/* Force Vertical Scrollbar to prevent layout shift */
+/* Force Vertical Scrollbar & Stability */
 html {
     overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
+}
+
+body {
+    overflow: visible !important;
+}
+
+/* Global Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 14px;
+}
+
+::-webkit-scrollbar-track {
+    background: #18181b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #27272a;
+    border-radius: 10px;
+    border: 4px solid #18181b;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3f3f46;
+}
+
+/* Firefox Support */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #27272a #18181b;
 }
 
 /* Guestbook Input Reset */
@@ -344,6 +385,19 @@ code,
 
 /* Additional Tistory Injected Layers (Statistics, Etc) */
 /* [Extended] 8. Modern Comment Section Styling */
+/* Guest (Not Logged In): Hide Comment & Guestbook Form when Login Required Prompt is Present */
+.guest-login-prompt ~ .tt_comment_form,
+.guest-login-prompt + .tt_comment_form,
+#comments-section:has(.guest-login-prompt) .tt_comment_form {
+    display: none !important;
+}
+
+.guestbook-login-prompt ~ .guestbook-write-box,
+.guestbook-login-prompt + .guestbook-write-box,
+#guestbook-form:has(.guestbook-login-prompt) .guestbook-write-box {
+    display: none !important;
+}
+
 /* Input Box Visibility Fix */
 #comments-section textarea {
     background-color: rgba(39, 39, 42, 0.6) !important;

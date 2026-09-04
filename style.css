@@ -216,9 +216,10 @@ code,
     height: auto;
 }
 
-/* Remove default P margins */
+/* Remove default P margins and match editor line spacing */
 .tt_article_useless_p_margin p {
-    margin: 1.5em 0;
+    margin-top: 0 !important;
+    margin-bottom: 0.65rem !important;
 }
 
 /* =========================================
@@ -1188,7 +1189,7 @@ strong,
     /* Force white for contrast */
 }
 
-/* Title 1 (H2) - User liked this, keeping it prominent */
+/* Title 1 (H2) - Harmonized with Editor */
 .tt_article_useless_p_margin h2,
 .prose h2 {
     font-size: 1.875rem !important;
@@ -1196,51 +1197,79 @@ strong,
     font-weight: 700 !important;
     color: #f4f4f5 !important;
     /* zinc-100 */
-    margin-top: 3.5rem !important;
-    margin-bottom: 1.25rem !important;
+    margin-top: 2.25rem !important;
+    margin-bottom: 0.75rem !important;
     letter-spacing: -0.01em !important;
     line-height: 1.3 !important;
     border-bottom: none !important;
-    /* Clean look */
 }
 
-/* Title 2 (H3) - Requested to be smaller */
+/* Title 2 (H3) - Harmonized with Editor */
 .tt_article_useless_p_margin h3,
 .prose h3 {
-    font-size: 1.5rem !important;
-    /* 24px (Reduced from typical 1.5rem~1.8rem) */
+    font-size: 1.375rem !important;
+    /* 22px */
     font-weight: 600 !important;
     color: #e4e4e7 !important;
     /* zinc-200 */
-    margin-top: 2.5rem !important;
-    margin-bottom: 1rem !important;
+    margin-top: 1.75rem !important;
+    margin-bottom: 0.5rem !important;
     line-height: 1.4 !important;
 }
 
 /* Title 3 (H4) - Distinct subsection style */
 .tt_article_useless_p_margin h4,
 .prose h4 {
-    font-size: 1.25rem !important;
-    /* 20px */
+    font-size: 1.15rem !important;
+    /* ~18.5px */
     font-weight: 600 !important;
     color: #d4d4d8 !important;
     /* zinc-300 */
-    margin-top: 2rem !important;
-    margin-bottom: 0.75rem !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
     line-height: 1.5 !important;
 }
 
-/* Body Text (P) - Default Paragraph */
+/* Body Text (P) - Matches Tistory Editor Spacing */
 .tt_article_useless_p_margin p,
 .prose p {
     font-size: 1.0625rem !important;
     /* 17px - optimal reading size */
     color: #d4d4d8 !important;
     /* zinc-300 */
-    margin-bottom: 1.5rem !important;
-    line-height: 1.8 !important;
-    /* Relaxed reading */
+    margin-top: 0 !important;
+    margin-bottom: 0.65rem !important;
+    line-height: 1.75 !important;
+    /* Natural reading flow */
     word-break: break-all;
+}
+
+/* Empty Linebreaks (Enter in Editor) - Prevents Double/Triple Gap Inflation */
+.tt_article_useless_p_margin p:empty,
+.prose p:empty,
+.tt_article_useless_p_margin p:has(> br:only-child),
+.prose p:has(> br:only-child) {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    height: 1.25rem !important;
+    min-height: 1.25rem !important;
+    line-height: 1.25rem !important;
+}
+
+/* Images & Figures - Balanced spacing with text */
+.prose :where(figure):not(:where([class~="not-prose"] *)),
+.tt_article_useless_p_margin figure,
+.tt_article_useless_p_margin .imageblock,
+.prose .imageblock,
+.tt_article_useless_p_margin p:has(img) {
+    margin-top: 1.25rem !important;
+    margin-bottom: 1.25rem !important;
+}
+
+.prose :where(img):not(:where([class~="not-prose"] *)),
+.tt_article_useless_p_margin img {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 /* List Styling */

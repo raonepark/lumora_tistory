@@ -44,6 +44,76 @@
         div[class*="revenue_unit"] {
             display: none !important;
         }
+
+        /* Precise Editor WYSIWYG Spacing Rules */
+        .tt_article_useless_p_margin p,
+        .prose p {
+            margin-top: 0 !important;
+            margin-bottom: 0.25rem !important;
+            line-height: 1.75 !important;
+        }
+
+        .tt_article_useless_p_margin p:empty,
+        .prose p:empty,
+        .tt_article_useless_p_margin p:has(> br:only-child),
+        .prose p:has(> br:only-child) {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            height: 1.25rem !important;
+            min-height: 1.25rem !important;
+            line-height: 1.25rem !important;
+        }
+
+        .tt_article_useless_p_margin h2,
+        .prose h2 {
+            margin-top: 1.75rem !important;
+            margin-bottom: 0.5rem !important;
+            line-height: 1.35 !important;
+        }
+        .tt_article_useless_p_margin h3,
+        .prose h3 {
+            margin-top: 1.35rem !important;
+            margin-bottom: 0.4rem !important;
+            line-height: 1.4 !important;
+        }
+        .tt_article_useless_p_margin h4,
+        .prose h4 {
+            margin-top: 1.15rem !important;
+            margin-bottom: 0.35rem !important;
+            line-height: 1.45 !important;
+        }
+
+        .tt_article_useless_p_margin h2 + p:has(> br:only-child),
+        .tt_article_useless_p_margin h3 + p:has(> br:only-child),
+        .tt_article_useless_p_margin h4 + p:has(> br:only-child),
+        .prose h2 + p:has(> br:only-child),
+        .prose h3 + p:has(> br:only-child),
+        .prose h4 + p:has(> br:only-child) {
+            display: none !important;
+        }
+
+        .prose :where(figure):not(:where([class~="not-prose"] *)),
+        .tt_article_useless_p_margin figure,
+        .tt_article_useless_p_margin .imageblock,
+        .prose .imageblock,
+        .tt_article_useless_p_margin p:has(img) {
+            margin-top: 0.65rem !important;
+            margin-bottom: 0.65rem !important;
+        }
+        .prose :where(img):not(:where([class~="not-prose"] *)),
+        .tt_article_useless_p_margin img {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        .tt_article_useless_p_margin figure + p:has(> br:only-child),
+        .tt_article_useless_p_margin .imageblock + p:has(> br:only-child),
+        .prose figure + p:has(> br:only-child),
+        .prose .imageblock + p:has(> br:only-child),
+        .tt_article_useless_p_margin p:has(> br:only-child) + figure,
+        .tt_article_useless_p_margin p:has(> br:only-child) + .imageblock {
+            display: none !important;
+        }
     </style>
     
 

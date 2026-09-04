@@ -102,6 +102,21 @@ code,
     font-size: 0.9rem !important;
 }
 
+/* Pre Codeblock Compact Spacing */
+pre,
+.prose pre,
+.tt_article_useless_p_margin pre {
+    margin-top: 0.85rem !important;
+    margin-bottom: 0.85rem !important;
+}
+
+.tt_article_useless_p_margin pre + p:has(> br:only-child),
+.tt_article_useless_p_margin p:has(> br:only-child) + pre,
+.prose pre + p:has(> br:only-child),
+.prose p:has(> br:only-child) + pre {
+    display: none !important;
+}
+
 /* Custom Scrollbar for Code Blocks */
 .hljs::-webkit-scrollbar {
     height: 8px;
@@ -911,8 +926,8 @@ figure[data-ke-type="opengraph"] .og-host::before {
 /* Common Blockquote Reset */
 .prose blockquote,
 .tt_article_useless_p_margin blockquote {
-    margin: 2rem 0 !important;
-    padding: 1.5rem 2rem !important;
+    margin: 0.85rem 0 !important;
+    padding: 0.85rem 1.35rem !important;
     word-break: break-all;
     color: #e4e4e7 !important;
     /* zinc-200 */
@@ -922,6 +937,14 @@ figure[data-ke-type="opengraph"] .og-host::before {
 .tt_article_useless_p_margin blockquote p {
     margin: 0 !important;
     line-height: 1.7 !important;
+}
+
+/* Remove Redundant Empty Lines Before/After Blockquotes */
+.tt_article_useless_p_margin blockquote + p:has(> br:only-child),
+.tt_article_useless_p_margin p:has(> br:only-child) + blockquote,
+.prose blockquote + p:has(> br:only-child),
+.prose p:has(> br:only-child) + blockquote {
+    display: none !important;
 }
 
 /* Remove Automatic Quotes (Tailwind Typography Reset) */
@@ -938,26 +961,22 @@ figure[data-ke-type="opengraph"] .og-host::before {
     position: relative !important;
     text-align: center !important;
     background: transparent !important;
-    /* No box, like editor */
     border: none !important;
-    padding-top: 4rem !important;
-    padding-bottom: 2rem !important;
+    padding-top: 3rem !important;
+    padding-bottom: 1rem !important;
     font-size: 1.15rem !important;
     font-weight: 500 !important;
     color: #f4f4f5 !important;
-    /* Brighter text for focus */
 }
 
 /* Style 1 Icon (Replaces default BG image for better dark mode control) */
 .prose blockquote[data-ke-style="style1"]::before,
 .tt_article_useless_p_margin blockquote[data-ke-style="style1"]::before {
     content: '\f10d';
-    /* FontAwesome Quote Left */
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #71717a;
-    /* zinc-500 (Gray like editor) */
     opacity: 0.5;
     position: absolute;
     top: 0.5rem;
@@ -969,12 +988,12 @@ figure[data-ke-type="opengraph"] .og-host::before {
 .prose blockquote[data-ke-style="style2"],
 .tt_article_useless_p_margin blockquote[data-ke-style="style2"] {
     border-left: 4px solid #c084fc !important;
-    /* Accent */
     border-right: none !important;
     border-top: none !important;
     border-bottom: none !important;
     background: rgba(255, 255, 255, 0.03) !important;
     border-radius: 0 8px 8px 0 !important;
+    padding: 0.85rem 1.25rem !important;
 }
 
 /* Style 3: Box (인용3) */
@@ -984,14 +1003,15 @@ figure[data-ke-type="opengraph"] .og-host::before {
     background: transparent !important;
     border-radius: 12px !important;
     color: #d4d4d8 !important;
+    padding: 0.85rem 1.25rem !important;
 }
 
 /* Fallback / Default Blockquote Styling */
 .prose blockquote:not([data-ke-style]),
 .tt_article_useless_p_margin blockquote:not([data-ke-style]) {
     border-left: 4px solid #71717a !important;
-    /* Neutral for user blocks */
     background: rgba(255, 255, 255, 0.02) !important;
+    padding: 0.85rem 1.25rem !important;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1292,24 +1312,34 @@ strong,
     display: none !important;
 }
 
-/* List Styling */
+/* List Styling - Compact & Natural */
 .tt_article_useless_p_margin ul,
-.tt_article_useless_p_margin ol {
-    margin-bottom: 1.5rem !important;
+.tt_article_useless_p_margin ol,
+.prose ul,
+.prose ol {
+    margin-top: 0.4rem !important;
+    margin-bottom: 0.65rem !important;
     padding-left: 1.5rem !important;
     color: #d4d4d8 !important;
 }
 
-.tt_article_useless_p_margin li {
-    margin-bottom: 0.5rem !important;
-    line-height: 1.7 !important;
+.tt_article_useless_p_margin li,
+.prose li {
+    margin-bottom: 0.2rem !important;
+    line-height: 1.65 !important;
+}
+
+.tt_article_useless_p_margin ul + p:has(> br:only-child),
+.tt_article_useless_p_margin ol + p:has(> br:only-child),
+.prose ul + p:has(> br:only-child),
+.prose ol + p:has(> br:only-child) {
+    display: none !important;
 }
 
 .tt_article_useless_p_margin ul {
     list-style-type: disc !important;
 }
 
-/* ... previous content ... */
 .tt_article_useless_p_margin ol {
     list-style-type: decimal !important;
 }
@@ -1321,9 +1351,16 @@ strong,
 .prose hr {
     display: block;
     border: 0;
-    margin: 4rem auto !important;
+    margin: 1.5rem auto !important;
     opacity: 1 !important;
-    /* Ensure visibility */
+}
+
+/* Remove Redundant Empty Lines Before/After HR */
+.tt_article_useless_p_margin hr + p:has(> br:only-child),
+.tt_article_useless_p_margin p:has(> br:only-child) + hr,
+.prose hr + p:has(> br:only-child),
+.prose p:has(> br:only-child) + hr {
+    display: none !important;
 }
 
 /* Style 1: Dots (· · ·) - Kept as is */

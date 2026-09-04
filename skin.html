@@ -114,6 +114,68 @@
         .tt_article_useless_p_margin p:has(> br:only-child) + .imageblock {
             display: none !important;
         }
+
+        /* Blockquote - Compact & Natural Spacing */
+        .prose blockquote,
+        .tt_article_useless_p_margin blockquote {
+            margin: 0.85rem 0 !important;
+            padding: 0.85rem 1.35rem !important;
+        }
+        .tt_article_useless_p_margin blockquote + p:has(> br:only-child),
+        .tt_article_useless_p_margin p:has(> br:only-child) + blockquote,
+        .prose blockquote + p:has(> br:only-child),
+        .prose p:has(> br:only-child) + blockquote {
+            display: none !important;
+        }
+
+        /* HR Divider - Balanced Spacing */
+        .tt_article_useless_p_margin hr,
+        .prose hr {
+            margin: 1.5rem auto !important;
+        }
+        .tt_article_useless_p_margin hr + p:has(> br:only-child),
+        .tt_article_useless_p_margin p:has(> br:only-child) + hr,
+        .prose hr + p:has(> br:only-child),
+        .prose p:has(> br:only-child) + hr {
+            display: none !important;
+        }
+
+        /* Codeblock (Pre) & Table Spacing */
+        .prose pre,
+        .tt_article_useless_p_margin pre,
+        .prose table,
+        .tt_article_useless_p_margin table,
+        .tt_article_useless_p_margin figure[data-ke-type="opengraph"] {
+            margin-top: 0.85rem !important;
+            margin-bottom: 0.85rem !important;
+        }
+        .tt_article_useless_p_margin pre + p:has(> br:only-child),
+        .tt_article_useless_p_margin p:has(> br:only-child) + pre,
+        .tt_article_useless_p_margin table + p:has(> br:only-child),
+        .tt_article_useless_p_margin p:has(> br:only-child) + table,
+        .tt_article_useless_p_margin figure[data-ke-type="opengraph"] + p:has(> br:only-child),
+        .tt_article_useless_p_margin p:has(> br:only-child) + figure[data-ke-type="opengraph"] {
+            display: none !important;
+        }
+
+        /* List Spacing */
+        .tt_article_useless_p_margin ul,
+        .tt_article_useless_p_margin ol,
+        .prose ul,
+        .prose ol {
+            margin-top: 0.4rem !important;
+            margin-bottom: 0.65rem !important;
+        }
+        .tt_article_useless_p_margin li,
+        .prose li {
+            margin-bottom: 0.2rem !important;
+        }
+        .tt_article_useless_p_margin ul + p:has(> br:only-child),
+        .tt_article_useless_p_margin ol + p:has(> br:only-child),
+        .prose ul + p:has(> br:only-child),
+        .prose ol + p:has(> br:only-child) {
+            display: none !important;
+        }
     </style>
     
 
